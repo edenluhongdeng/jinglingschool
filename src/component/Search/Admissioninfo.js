@@ -1,5 +1,6 @@
 /*  */
 import React, { Component } from "react";
+import { NavLink } from 'react-router-dom'
 import { Button } from "antd-mobile";
 import "./style.less";
 class Admissioninfo extends Component {
@@ -8,10 +9,11 @@ class Admissioninfo extends Component {
       <div className="Admissioninfo">
         {/* 导航 */}
         <div className="nva">
-        <span className="goback">&#8249;</span>
+        <NavLink to="./search" className="goback">&#8249;</NavLink>
         <span>准考证信息</span>
         <span></span>
       </div>
+      <div className="box">
         <div className="header">
           <span>2019年金陵中学河西分校国际部准考证</span>
         </div>
@@ -86,6 +88,7 @@ class Admissioninfo extends Component {
               请所有家长在前人报告厅参加家长学堂，考试期间，家长禁止进入考试区域
             </span>
           </div>
+        </div>
         </div>
       </div>
     );

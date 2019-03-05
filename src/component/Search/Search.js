@@ -1,5 +1,6 @@
 /*  */
 import React, { Component } from "react";
+import { NavLink } from 'react-router-dom'
 import { Button } from "antd-mobile";
 import "./style.less";
 class Search extends Component {
@@ -73,9 +74,12 @@ class Search extends Component {
           }
           onClick={this.onChangeAdmission}
         >
-          <span className="info_text">
+        <NavLink to="/admissioninfo" className="info_text">
+        准考证&nbsp;【获取2019年考试准考证信息】
+        </NavLink>
+          {/* <span className="info_text">
             准考证&nbsp;【获取2019年考试准考证信息】
-          </span>
+          </span> */}
         </div>
 
         <div
@@ -86,9 +90,12 @@ class Search extends Component {
           }
           onClick={this.onChangeResults}
         >
-          <span className="info_text info_notfind">
+        <NavLink to="/resultsquery" className="info_text info_notfind">
+        查询成绩&nbsp;【查询2019年国际部招生结果】
+        </NavLink>
+          {/* <span className="info_text info_notfind">
             查询成绩&nbsp;【查询2019年国际部招生结果】
-          </span>
+          </span> */}
         </div>
       </div>
     );

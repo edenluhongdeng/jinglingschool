@@ -1,5 +1,6 @@
 /*  */
 import React, { Component } from "react";
+import { NavLink } from 'react-router-dom'
 import { Button } from "antd-mobile";
 import "./style.less";
 class Resultsquery extends Component {
@@ -8,7 +9,7 @@ class Resultsquery extends Component {
       <div className="Resultsquery">
         {/* 导航 */}
         <div className="nva">
-        <span className="goback">&#8249;</span>
+        <NavLink to="./search" className="goback">&#8249;</NavLink>
         <span>准考证信息</span>
         <span></span>
       </div>
