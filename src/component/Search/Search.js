@@ -5,8 +5,8 @@ class Search extends Component {
     return (
       <div>
         查询页面
-        <Button>antd-mobile</Button>
-        <Buttonb type='primary'>antd</Buttonb>
+        {/* <Button>antd-mobile</Button>
+        <Buttonb type='primary'>antd</Buttonb> */}
       </div>
     );
   }
