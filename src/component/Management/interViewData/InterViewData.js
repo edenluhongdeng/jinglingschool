@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table,Pagination  } from 'antd';
+import { Table,Pagination } from 'antd';
 import {withRouter} from 'react-router-dom'
 
   const rowSelection = {

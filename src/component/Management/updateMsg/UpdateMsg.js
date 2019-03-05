@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon,Select ,Input  } from 'antd';
+import { Icon,Select ,Input,Row, Col  } from 'antd';
 import {withRouter} from 'react-router-dom'
 import './style.less'
 const Option = Select.Option;
@@ -19,18 +19,27 @@ handleChange = (value) => {
                 <div className = "info">
                     <h3>面试信息 <span>/Interview Information</span></h3>
                     <div className = "infoData">
-                        <li className = "infoList">
-                            <span>
-                                <i className = "hodale">准考证号：</i>
-                                <i>J20192500</i>
-                            </span>
-                            <span className = "studyName">
-                                <i className = "hodale">考生姓名：</i>
-                                <i>李孝利</i>
-                            </span>
-                        </li>
-                        <li>
-                            <div>
+                        <Row type="flex">
+                            <Col span={6} order={1}>
+                                <div >
+                                    <span>
+                                        <i className = "hodale">准考证号：</i>
+                                        <i>J20192500</i>
+                                    </span>
+                                </div>
+                            </Col>
+                            <Col span={6} order={2}>
+                                <div >
+                                    <span>
+                                        <i className = "hodale">考生姓名：</i>
+                                        <i>J20192500</i>
+                                    </span>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row type="flex">
+                            <Col span={6} order={1}>
+                                <div >
                                 <h5>面试结果：</h5>
                                 <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
                                     <Option value="jack">Jack</Option>
@@ -38,12 +47,115 @@ handleChange = (value) => {
                                     <Option value="disabled" disabled>Disabled</Option>
                                     <Option value="Yiminghe">yiminghe</Option>
                                 </Select>
-                            </div>
-                            <div>
+                                </div>
+                            </Col>
+                            <Col span={6} order={2}>
+                                <div >
                                 <h5>面试描述：</h5>
-                                <Input placeholder="Basic usage" />
-                            </div>
-                        </li>
+                                <Input placeholder="Basic usage" style={{width:900}}/>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row type="flex">
+                                <Col span={6} order={1}>
+                                <div >
+                                <h5>笔试结果：</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                                <Col span={6} order={2}>
+                                <div >
+                                <h5>缴费情况</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                                <Col span={6} order={3}>
+                                <div >
+                                <h5>中考分数</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                                <Col span={6} order={4}>
+                                <div >
+                                <h5>志愿填报情况</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                        </Row>
+                        <Row type="flex">
+                                <Col span={6} order={1}>
+                                <div >
+                                <h5>提档：</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                                <Col span={6} order={2}>
+                                <div >
+                                <h5>退费：</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                                <Col span={6} order={3}>
+                                <div >
+                                <h5>联系时间：</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                                <Col span={6} order={4}>
+                                <div >
+                                <h5>联系人：</h5>
+                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="disabled" disabled>Disabled</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                                </div>
+                                </Col>
+                        </Row>
+                        <Row type="flex">
+                        <Col span={6} order={1}>
+                                <div >
+                                <h5>备注记录：</h5>
+                                <Input placeholder="Basic usage" style={{width:1200}}/>
+                                </div>
+                                </Col>
+                        </Row>
                     </div>
                 </div>
             </div>
