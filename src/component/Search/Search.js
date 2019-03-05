@@ -8,7 +8,7 @@ class Search extends Component {
       <div>
         查询页面
         <Button>antd-mobile</Button>
-        <Buttonb>antd</Buttonb>
+        <Buttonb type='primary'>antd</Buttonb>
       </div>
     );
   }
