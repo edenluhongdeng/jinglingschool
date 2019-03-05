@@ -6,7 +6,8 @@ class Search extends Component {
   constructor() {
     super();
     this.state = {
-      onchagebutton: false
+      onchagebuttonAd: false,
+      onchagebuttonRe: false
     };
   }
 
@@ -16,18 +17,26 @@ class Search extends Component {
   /* 选择准考证 */
   onChangeAdmission = () => {
     this.setState({
-      onchagebutton: !this.state.onchagebutton
+      onchagebuttonAd: true,
+      onchagebuttonRe: false
     })
   };
   /* 查看成绩 */
   onChangeResults = () => {
     this.setState({
-      onchagebutton: !this.state.onchagebutton
+      onchagebuttonAd: false,
+      onchagebuttonRe: true
     })
   };
   render() {
     return (
       <div className="search">
+      {/* 导航 */}
+      <div className="nva">
+        <span className="goback">&#8249;</span>
+        <span>成绩查询</span>
+        <span></span>
+      </div>
         {/* 头部展示 */}
         <div className="header">
           <img
@@ -38,27 +47,27 @@ class Search extends Component {
         {/* 信息查询 */}
         <div className="info_serch">
           <div className="info_serch_xhengkaozhen inputmsg">
-            <div>请输入准考证号：</div>
+            <div>请输入身份证号：</div>
             <div className="input_msg">
-              <input placeholder="12345678" maxlength={"11"} />
+              <input placeholder="4467853569742134" maxlength={"11"} />
               <span className="but_err">1</span>
-              <div className="but_info">请输入正确的准考证号！</div>
+              <div className="but_info">请输入正确的身份证号！</div>
             </div>
           </div>
 
           <div className="info_serch_name inputmsg">
-            <div>请输入学生姓名：</div>
+            <div>请输入联系电话：</div>
             <div className="input_msg">
               <input placeholder="张小龙" maxlength={"4"} />
               <span className="but_err">2</span>
-              <div className="but_info">请输入正确的学生信息！</div>
+              <div className="but_info">请输入正确的联系电话！</div>
             </div>
           </div>
         </div>
         {/* 获取准考证信息 */}
         <div
           className={
-            this.state.onchagebutton
+            this.state.onchagebuttonAd
               ? "getinfo_box info_change"
               : "getinfo_box info_notfind"
           }
@@ -71,7 +80,7 @@ class Search extends Component {
 
         <div
           className={
-            this.state.onchagebutton
+            this.state.onchagebuttonRe
               ? "getinfo_box info_change"
               : "getinfo_box info_notfind"
           }
