@@ -6,7 +6,7 @@ class Search extends Component {
   render() {
     return (
       <div>
-        查询页面，用于公众号
+        查询页面
         <Button>antd-mobile</Button>
         <Buttonb>antd</Buttonb>
       </div>
