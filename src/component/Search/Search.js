@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'antd-mobile';
-import { Button as Buttonb } from 'antd';
 
 class Search extends Component {
   render() {
