@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon,Select  } from 'antd';
+import { Icon,Select ,Input  } from 'antd';
 import {withRouter} from 'react-router-dom'
 import './style.less'
 const Option = Select.Option;
@@ -38,6 +38,10 @@ handleChange = (value) => {
                                     <Option value="disabled" disabled>Disabled</Option>
                                     <Option value="Yiminghe">yiminghe</Option>
                                 </Select>
+                            </div>
+                            <div>
+                                <h5>面试描述：</h5>
+                                <Input placeholder="Basic usage" />
                             </div>
                         </li>
                     </div>

@@ -9,6 +9,10 @@ import { Route, withRouter, Switch } from "react-router-dom";
 
 /* search 查询 */
 import Search from "./component/Search/Search"
+/* 准考证信息查询 */
+import Admissioninfo from "./component/Search/Admissioninfo"
+/* 考生成绩查询 */
+import Resultsquery from "./component/Search/Resultsquery"
 /* registration 登记 */
 import Registration from "./component/Registration/Registration"
 /* management 管理 */
@@ -22,6 +26,8 @@ class Root extends Component {
       <div className="Root">
         <Switch>
           <Route exact path="/search" component={Search} />
+          <Route exact path="/admissioninfo" component={Admissioninfo} />
+          <Route exact path="/resultsquery" component={Resultsquery} />
           <Route path="/registration" component={Registration} />
           <Route exact  path="/management/updatemsg" component={UpdateMsg} />
           <Route  exact path="/management" component={Management} />
