@@ -1,16 +1,19 @@
 import React, { Component, Fragment } from 'react'
 import './login.less'
 import logo from '../../imgs/enrollment_login.png'
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, } from 'antd';
 const FormItem = Form.Item;
 class Demo  extends Component {
   constructor(props){
     super(props)
     this.state={
-      a:true,
+      a:false,
     }
   }
   handleSubmit = (e) => {
+    this.props.history.push({
+      pathname: '/choose',
+    })
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -24,13 +27,20 @@ class Demo  extends Component {
       labelCol: { span: 6 },
       wrapperCol: { span: 15 }
     }
-    const inputStyle={borderRadius:'0.05rem'}
+    const inputStyle={
+      borderRadius:'0.05rem',
+      fontSize: '.14rem',
+      fontFamily:'PingFangSC-Regular',
+      fontWeight:'400',
+      color:'rgba(179,179,179,1)',
+      lineHeight:'14px'
+    }
     return (
       <Fragment>
       <div className='login'>
         <div className="login_detail">
           <img src={logo} />
-          <Form onSubmit={this.handleSubmit} className="login-form">
+          <Form onSubmit={this.handleSubmit} className="loginForm">
             <FormItem {...formItemLayout} label="准考证号">
               {getFieldDecorator('userName', {
                 rules: [{
@@ -82,7 +92,11 @@ class Demo  extends Component {
           </Form>
         </div>
       </div>
-      <div>11111111</div>
+      <div className='footer'>
+        <p>Copyright@2015 南京市金陵中学河西分校 苏ICP备05067371号-1</p>
+        <p>电话(传真)025-86476007</p>
+        <p>地址:江苏省南京市建邺区梦都路60号</p>
+      </div>
       </Fragment>
     )
   }
