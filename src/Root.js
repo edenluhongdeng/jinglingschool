@@ -4,8 +4,6 @@ import React, { Component } from "react";
 
 //引入路由模块
 import { Route, withRouter, Switch } from "react-router-dom";
-// import Ipad from "./Ipad";
-// import Mapp from "./Mapp";
 
 /* search 查询 */
 import Search from "./component/Search/Search"
