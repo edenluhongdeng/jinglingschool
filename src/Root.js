@@ -13,7 +13,10 @@ import Search from "./component/Search/Search"
 import Registration from "./component/Registration/Registration"
 /* management 管理 */
 import Management from "./component/Management/Management"
+/* 登陆 */
 import Login from './component/Login/Login';
+/*选择 */
+import Choose from './component/Choose/Choose';
 
 class Root extends Component {
   render() {
@@ -24,6 +27,7 @@ class Root extends Component {
           <Route path="/registration" component={Registration} />
           <Route path="/management" component={Management} />
           <Route path="/login" component={Login} />
+          <Route path="/choose" component={Choose} />
         </Switch>
       </div>
     );

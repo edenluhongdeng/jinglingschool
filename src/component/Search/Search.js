@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Button} from 'antd'
 
 class Search extends Component {
   render() {
@@ -6,7 +7,7 @@ class Search extends Component {
       <div>
         查询页面
         <Button>antd-mobile</Button>
-        <Buttonb type='primary'>antd</Buttonb>
+        <Button type='primary'>antd</Button>
       </div>
     );
   }
