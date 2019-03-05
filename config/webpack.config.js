@@ -433,7 +433,7 @@ module.exports = function(webpackEnv) {
               exclude: lessModuleRegex,
               use: getStyleLoaders({ importLoaders: 2 }, 'less-loader',{
                 modifyVars:{
-                  'primary-color':'#F33232',
+                  'primary-color':'#4276D4',
                   'link-color':'#1da57a',
                   'border-radius-base':'2px',
                 },
@@ -453,7 +453,7 @@ module.exports = function(webpackEnv) {
                 'less-loader',
                 {
                   modifyVars:{
-                    'primary-color':'#F33232',
+                    'primary-color':'#4276D4',
                     'link-color':'#1da57a',
                     'border-radius-base':'2px',
                   },
