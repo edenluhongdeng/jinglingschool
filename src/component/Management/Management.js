@@ -9,16 +9,27 @@ class Management extends Component {
     selectedTags: [],
   };
 
-  //面试结构
+  //面试结果
    tagsFromServer = [
     '不限',
     '优秀',
     '合格', 
     '不合格'
     ];
-  //是否建档
-  //缴费情况
+  //是否提档
   IsArchive = [
+    '不限',
+    '是',
+    '否'
+  ]
+  //缴费情况
+  IsPayment = [
+    '不限',
+    '是',
+    '否'
+  ]
+  //是否是南京学籍
+  IsNanJing = [
     '不限',
     '是',
     '否'
@@ -69,7 +80,7 @@ class Management extends Component {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>面试结果:</h6>
                           {this.tagsFromServer.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'a'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
@@ -83,7 +94,7 @@ class Management extends Component {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>是否建档:</h6>
                           {this.IsArchive.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'b'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
@@ -95,9 +106,9 @@ class Management extends Component {
                     <Col span={6} order={3}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>缴费情况:</h6>
-                          {this.IsArchive.map(tag => (
+                          {this.IsPayment.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'c'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
@@ -121,7 +132,7 @@ class Management extends Component {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>填报志愿:</h6>
                           {this.VoluntaryReporting.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'d'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
@@ -133,9 +144,9 @@ class Management extends Component {
                     <Col span={6} order={2}>
                       <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>是否是南京初中学籍:</h6>
-                          {this.IsArchive.map(tag => (
+                          {this.IsNanJing.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'e'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
@@ -166,7 +177,7 @@ class Management extends Component {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>是否退档:</h6>
                           {this.isRetreat.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'f'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
@@ -180,7 +191,7 @@ class Management extends Component {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>项目意向:</h6>
                           {this.ProjectIntention.map(tag => (
                             <CheckableTag
-                              key={tag}
+                              key={tag+'g'}
                               checked={this.state.selectedTags.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >

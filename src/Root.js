@@ -13,6 +13,7 @@ import Search from "./component/Search/Search"
 import Registration from "./component/Registration/Registration"
 /* management 管理 */
 import Management from "./component/Management/Management"
+import UpdateMsg from "./component/Management/updateMsg/UpdateMsg"
 import Login from './component/Login/Login';
 
 class Root extends Component {
@@ -20,9 +21,10 @@ class Root extends Component {
     return (
       <div className="Root">
         <Switch>
-          <Route exect path="/search" component={Search} />
+          <Route exact path="/search" component={Search} />
           <Route path="/registration" component={Registration} />
-          <Route path="/management" component={Management} />
+          <Route exact  path="/management/updatemsg" component={UpdateMsg} />
+          <Route  exact path="/management" component={Management} />
           <Route path="/login" component={Login} />
         </Switch>
       </div>
