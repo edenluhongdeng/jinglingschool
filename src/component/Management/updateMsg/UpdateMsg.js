@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Icon,Select ,Input  } from 'antd';
 import {withRouter} from 'react-router-dom'
+import StudentsMsg from "./StudentsMsg"
 import './style.less'
 const Option = Select.Option;
+
 class UpdateMsg extends Component {
 
 handleChange = (value) => {
@@ -46,6 +48,8 @@ handleChange = (value) => {
                         </li>
                     </div>
                 </div>
+                {/* 学生情况 */}
+                <StudentsMsg />
             </div>
       </div>
     );
