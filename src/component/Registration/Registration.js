@@ -2,11 +2,35 @@ import React, { Component } from 'react'
 import './index.less'
 import src1 from '../../imgs/enrollment_logo.png'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Radio, Upload, DatePicker } from 'antd'
-
+import FailModal from '../FailModal'
+import InfoModal from '../InfoMoadl'
 const { Option } = Select
+const provinceData = ['Zhejiang', 'Jiangsu']
+const cityData = {
+  Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
+  Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
+};
 
 class Registration extends Component {
   state = {
+    cities: cityData[provinceData[0]],
+    secondCity: cityData[provinceData[0]][0],
+    isMyModalShow:false,
+  }
+  componentDidMount(){
+    console.log(document.documentElement.clientHeight,document.documentElement.clientWidth,'////')
+  }
+  handleProvinceChange = (value) => {
+    this.setState({
+      cities: cityData[value],
+      secondCity: cityData[value][0],
+    });
+  }
+
+  onSecondCityChange = (value) => {
+    this.setState({
+      secondCity: value,
+    });
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -21,19 +45,19 @@ class Registration extends Component {
     this.setState({isShow: e.target.value})
   }
   render() {
-    const { isShow } = this.state
+    const { isShow=2,cities,isMyModalShow } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
     const testName = (rule,value,callback) => {
-      const nameValue = getFieldValue('name')
+      const nameValue = getFieldValue('name') || getFieldValue('fatherName') || getFieldValue('motherName')
       if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
       if(!reg.test(nameValue)) callback('请输入汉字!')
       callback()
     }
     //手机号校验
     const testPhone = (rule,value,callback) => {
-      const phoneValue = getFieldValue('phone')
+      const phoneValue = getFieldValue('phone') || getFieldValue('FPhone') || getFieldValue('MPhone')
       if(!/^1[3456789]\d{9}$/.test(phoneValue)) callback('请输入正确的手机号!')
       callback()
     }
@@ -128,20 +152,32 @@ class Registration extends Component {
           {
             isShow == 1 && 
             <Row>
-            <Col span={24}>
-              <p className='regist-title'><span>是</span>/Intended Progr</p>
-              <Form.Item>
-                {getFieldDecorator("checkbox-group", {
-                  // rules: [{required: true, message: '请选择!'}],
+            <Col >
+              <p className='regist-title'><span>初中就读学校</span>/Junior High</p>
+              <Form.Item
+              >
+                {getFieldDecorator('select', {
+                  rules: [
+                    { required: true, message: '请选择你的学校信息!' },
+                  ],
                 })(
-                  <div className='regist-CheckboxGroup'>
-                  <Checkbox.Group>
-                      <Checkbox value="A">A</Checkbox>
-                      <Checkbox value="B">B</Checkbox>
-                      <Checkbox value="C">C</Checkbox>
-                      <Checkbox value="D">D</Checkbox>
-                      <Checkbox value="E">E</Checkbox>
-                  </Checkbox.Group>
+                  <div>
+                  <Select
+                    defaultValue={provinceData[0]}
+                    style={{ width: 240 }}
+                    onChange={this.handleProvinceChange}
+                  >
+                    {provinceData.map(province => <Option key={province}>{province}</Option>)}
+                  </Select>
+                  <span className='regist-span'>区</span>
+                  <Select
+                    style={{ width: 700 }}
+                    value={this.state.secondCity}
+                    onChange={this.onSecondCityChange}
+                  >
+                    {cities.map(city => <Option key={city}>{city}</Option>)}
+                  </Select>
+                  <span className='regist-span'>中学</span>
                   </div>
                 )}
               </Form.Item>
@@ -151,20 +187,48 @@ class Registration extends Component {
           {
             isShow == 2 && 
             <Row>
-            <Col span={24}>
+            <Col>
               <p className='regist-title'><span>不是</span>/Intended Progr</p>
-              <Form.Item>
-                {getFieldDecorator("checkbox-group", {
-                  // initialValue: ["A", "B"],
+              <Form.Item
+              >
+                {getFieldDecorator('select', {
+                  rules: [
+                    { required: true, message: '请选择你的学校信息!' },
+                  ],
                 })(
-                  <div className='regist-CheckboxGroup'>
-                  <Checkbox.Group>
-                      <Checkbox value="A">A</Checkbox>
-                      <Checkbox value="B">B</Checkbox>
-                      <Checkbox value="C">C</Checkbox>
-                      <Checkbox value="D">D</Checkbox>
-                      <Checkbox value="E">E</Checkbox>
-                  </Checkbox.Group>
+                  <div>
+                  <Select
+                    defaultValue={provinceData[0]}
+                    style={{ width: 180 }}
+                    onChange={this.handleProvinceChange}
+                  >
+                    {provinceData.map(province => <Option key={province}>{province}</Option>)}
+                  </Select>
+                  <span className='regist-span'>省</span>
+                  <Select
+                    style={{ width: 180 }}
+                    value={this.state.secondCity}
+                    onChange={this.onSecondCityChange}
+                  >
+                    {cities.map(city => <Option key={city}>{city}</Option>)}
+                  </Select>
+                  <span className='regist-span'>市</span>
+                  <Select
+                    style={{ width: 180 }}
+                    value={this.state.secondCity}
+                    onChange={this.onSecondCityChange}
+                  >
+                    {cities.map(city => <Option key={city}>{city}</Option>)}
+                  </Select>
+                  <span className='regist-span'>区</span>
+                  <Select
+                    style={{ width: 330 }}
+                    value={this.state.secondCity}
+                    onChange={this.onSecondCityChange}
+                  >
+                    {cities.map(city => <Option key={city}>{city}</Option>)}
+                  </Select>
+                  <span className='regist-span'>中学</span>
                   </div>
                 )}
               </Form.Item>
@@ -221,6 +285,7 @@ class Registration extends Component {
                   {getFieldDecorator('dragger', {
                     valuePropName: 'fileList',
                     getValueFromEvent: this.normFile,
+                    rules: [{ required: true, message: '请上传照片!' }],
                   })(
                     <Upload.Dragger name="files" action="/upload.do"></Upload.Dragger>
                   )}
@@ -240,7 +305,7 @@ class Registration extends Component {
               <p className='regist-title'><span>父亲姓名</span>/Father’s Name</p>
               <Form.Item>
                 {getFieldDecorator('fatherName', {
-                  rules: [{required: true, message: '请输入姓名!'}],
+                  rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名...'/>
                 )}
@@ -272,7 +337,7 @@ class Registration extends Component {
               <p className='regist-title'><span>父亲手机</span>/Cellphone No.</p>
               <Form.Item>
                 {getFieldDecorator('FPhone', {
-                  rules: [{required: true, message: '请输入手机号码!'}],
+                  rules: [{validator:testPhone}],
                 })(
                   <Input className='regist-input1' placeholder='请输入手机号码…'/>
                 )}
@@ -284,7 +349,7 @@ class Registration extends Component {
               <p className='regist-title'><span>母亲姓名</span>/Mother’s Name</p>
               <Form.Item>
                 {getFieldDecorator('motherName', {
-                  rules: [{required: true, message: '请输入姓名!'}],
+                  rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名...'/>
                 )}
@@ -316,7 +381,7 @@ class Registration extends Component {
               <p className='regist-title'><span>母亲手机</span>/Cellphone No.</p>
               <Form.Item>
                 {getFieldDecorator('MPone', {
-                  rules: [{required: true, message: '请输入手机号码!'}],
+                  rules: [{validator:testPhone}],
                 })(
                   <Input className='regist-input1' placeholder='请输入手机号码…'/>
                 )}
@@ -363,6 +428,13 @@ class Registration extends Component {
             <Button type="primary" htmlType="submit" style={{width:'1.4rem',height:'0.5rem'}}>提交信息</Button>
           </Form.Item>
         </Form>
+        {
+          false && 
+          <FailModal></FailModal>
+        }
+        {
+          <InfoModal></InfoModal>
+        }
       </div>
     );
   }
