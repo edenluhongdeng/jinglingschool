@@ -21,6 +21,15 @@ class Demo  extends Component {
       }
     });
   }
+  checkAdmission=()=>{
+
+  }
+  checkFhone=(rule,value,callback)=>{
+    let reg= /^1[34578]\d{9}$/;
+    if(!value){
+      callback('请输入手机号')
+    }
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -35,21 +44,22 @@ class Demo  extends Component {
       color:'rgba(179,179,179,1)',
       lineHeight:'14px'
     }
+    
     return (
       <Fragment>
       <div className='login'>
         <div className="login_detail">
           <img src={logo} />
           <Form onSubmit={this.handleSubmit} className="loginForm">
-            <FormItem {...formItemLayout} label="准考证号">
+            <FormItem {...formItemLayout} label="身份证号">
               {getFieldDecorator('userName', {
                 rules: [{
-                  // required: true, message: '请输入正确的准考证号!',
+                  // required: true, message: '请输入正确的身份证号!',
                 }, {
-                  // validator: this.checkConfirm,
+                  validator: this.checkAdmission,
                 }],
               })(
-                  <Input placeholder="请输入准考证号..." style={inputStyle}/>
+                  <Input placeholder="请输入身份证号..." style={inputStyle}/>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
@@ -57,11 +67,11 @@ class Demo  extends Component {
                 rules: [{
                   // required: true, message: '手机号码格式不正确!',
                 }, {
-                  // validator: this.checkConfirm,
+                  validator: this.checkFhone,
                 }],
               })(
                 <div className='phone'>
-                  <Input  type="password" placeholder="请输入手机号码..." style={inputStyle}/>
+                  <Input  placeholder="请输入手机号码..." style={inputStyle}/>
                   {
                     this.state.a&&<p className='phoneNumber'>准考证号与手机号码不一致！</p>
                   }
@@ -93,9 +103,9 @@ class Demo  extends Component {
         </div>
       </div>
       <div className='footer'>
-        <p>Copyright@2015 南京市金陵中学河西分校 苏ICP备05067371号-1</p>
-        <p>电话(传真)025-86476007</p>
-        <p>地址:江苏省南京市建邺区梦都路60号</p>
+        <p>Copyright@2015 南京市金陵中学河西分校   &nbsp;苏ICP备05067371号-1</p>
+        <p>电话(传真)  &nbsp;025-86476007</p>
+        <p>地址: &nbsp;江苏省南京市建邺区梦都路60号</p>
       </div>
       </Fragment>
     )
