@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import './login.less'
 import logo from '../../imgs/enrollment_login.png'
-import { Form, Input, Button, } from 'antd';
+import { Form, Input, Button, } from 'antd'
+import {login} from '../../api/Login'
 const FormItem = Form.Item;
 class Demo  extends Component {
   constructor(props){
@@ -11,19 +12,20 @@ class Demo  extends Component {
     }
   }
   handleSubmit = (e) => {
-    this.props.history.push({
-      pathname: '/choose',
-    })
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      login(values).then(res=>{
+        console.log(res,'数据')
+      })
+      // this.props.history.push({
+      //   pathname: '/choose',
+      // })
       if (!err) {
         console.log('Received values of form: ', values);
       }
     });
   }
-  checkAdmission=()=>{
-
-  }
+  
   checkFhone=(rule,value,callback)=>{
     let reg= /^1[34578]\d{9}$/;
     if(!value){
@@ -31,7 +33,7 @@ class Demo  extends Component {
     }
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldValue} = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 15 }
@@ -44,7 +46,19 @@ class Demo  extends Component {
       color:'rgba(179,179,179,1)',
       lineHeight:'14px'
     }
-    
+    const admissionID=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    const checkAdmission=(rule,value,callback)=>{
+      const admissionValue=getFieldValue('idCard')
+      if(!admissionID.test(admissionValue)) callback('请输入正确的身份证号!')
+      callback()
+      console.log(admissionValue)
+    }
+    const phoneID=/^1[3456789]\d{9}$/
+    const checkFhone=(rule,value,callback)=>{
+      const phoneNumber= getFieldValue('contactPhone')
+      if(!phoneID.test(phoneNumber)) callback('手机号码格式不正确!')
+      callback()
+    }
     return (
       <Fragment>
       <div className='login'>
@@ -52,22 +66,22 @@ class Demo  extends Component {
           <img src={logo} />
           <Form onSubmit={this.handleSubmit} className="loginForm">
             <FormItem {...formItemLayout} label="身份证号">
-              {getFieldDecorator('userName', {
+              {getFieldDecorator('idCard', {
                 rules: [{
-                  // required: true, message: '请输入正确的身份证号!',
+                  // required: false, message: '请输入正确的身份证号!',
                 }, {
-                  validator: this.checkAdmission,
+                  validator: checkAdmission,
                 }],
               })(
                   <Input placeholder="请输入身份证号..." style={inputStyle}/>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
-              {getFieldDecorator('password', {
+              {getFieldDecorator('contactPhone', {
                 rules: [{
-                  // required: true, message: '手机号码格式不正确!',
+                  // required: false, message: '手机号码格式不正确!',
                 }, {
-                  validator: this.checkFhone,
+                  validator: checkFhone,
                 }],
               })(
                 <div className='phone'>
@@ -80,10 +94,7 @@ class Demo  extends Component {
               )}
             </FormItem>
             <FormItem>
-              {getFieldDecorator('remember', {
-                valuePropName: 'checked',
-                initialValue: true,
-              })}
+              
               <Button 
                 type="primary" 
                 htmlType="submit" 

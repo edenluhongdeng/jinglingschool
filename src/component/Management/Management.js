@@ -7,6 +7,18 @@ const Search = Input.Search
 class Management extends Component {
   state = {
     selectedTags: [],
+    checkViewResult:['不限'],//面试结果
+    IsArchive:['不限'], //是否提档
+    IsPayment:['不限'], //缴费境况
+    oneShortNum:0,//一模分数
+    oneShortSert:'',//一模排名
+    VoluntaryReporting:['不限'],//志愿填报
+    IsNanJing:['不限'] ,//是否南京学籍
+    hightSchool:0,//中考分数
+    isRetreat:['不限'],//是否退档
+    ProjectIntention:['待定'],//项目意向
+    writeResult:0,//笔试结果
+    isDown:false,//下载
   };
 
   //面试结果
@@ -57,7 +69,7 @@ class Management extends Component {
     '中加'
   ]
 
-  handleChange(tag, checked) {
+  handleChange = (tag, checked)=> {
     const { selectedTags } = this.state;
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
@@ -65,6 +77,93 @@ class Management extends Component {
     console.log('You are interested in: ', nextSelectedTags);
     this.setState({ selectedTags: nextSelectedTags });
   }
+
+  //获取面试结果
+  checkViewResult = (tag, checked) =>{
+     const { checkViewResult} = this.state;
+    const nextSelectedTags = checked
+      ? [tag]
+      : checkViewResult.filter(t => t !== tag);
+     this.setState({ checkViewResult: nextSelectedTags });
+  }
+
+  //获取建档情况
+  getArchive = (tag, checked) =>{
+    const { IsArchive} = this.state;
+   const nextSelectedTags = checked
+     ? [tag]
+     : IsArchive.filter(t => t !== tag);
+     console.log('You are interested in: ', nextSelectedTags);
+    this.setState({ IsArchive: nextSelectedTags });
+ }
+
+ //获取缴费情况
+ getPayment = (tag, checked) =>{
+  const { IsPayment} = this.state;
+ const nextSelectedTags = checked
+   ? [tag]
+   : IsPayment.filter(t => t !== tag);
+   console.log('You are interested in: ', nextSelectedTags);
+  this.setState({ IsPayment: nextSelectedTags });
+}
+
+//获取填报志愿情况
+getVoluntaryReporting = (tag, checked) =>{
+  const { VoluntaryReporting} = this.state;
+ const nextSelectedTags = checked
+   ? [tag]
+   : VoluntaryReporting.filter(t => t !== tag);
+   console.log('You are interested in: ', nextSelectedTags);
+  this.setState({ VoluntaryReporting: nextSelectedTags });
+}
+
+//获取学籍情况
+getNanJing = (tag, checked) =>{
+  const { IsNanJing} = this.state;
+ const nextSelectedTags = checked
+   ? [tag]
+   : IsNanJing.filter(t => t !== tag);
+   console.log('You are interested in: ', nextSelectedTags);
+  this.setState({ IsNanJing: nextSelectedTags });
+}
+
+//是否退档
+getRetreat = (tag, checked) =>{
+  const { isRetreat} = this.state;
+ const nextSelectedTags = checked
+   ? [tag]
+   : isRetreat.filter(t => t !== tag);
+   console.log('You are interested in: ', nextSelectedTags);
+  this.setState({ isRetreat: nextSelectedTags });
+}
+
+//获取项目意向
+getProjectIntention = (tag, checked) =>{
+  const { ProjectIntention} = this.state;
+  let nextSelectedTags = checked
+   ? [...ProjectIntention,tag]
+   : ProjectIntention.filter(t => t !== tag);
+   console.log('You are interested in: ', nextSelectedTags);
+  this.setState({ ProjectIntention: nextSelectedTags });
+}
+
+//搜索数据
+searchData = () => {
+  console.log('传参')
+}
+
+//判断下载状态
+downStatus = (isDown) => {
+  if(isDown==true){
+    this.setState({
+      isDown:true
+    })
+  }else{
+    this.setState({
+      isDown:false
+    })
+  }
+}
 
   render() {
     return (
@@ -81,8 +180,8 @@ class Management extends Component {
                           {this.tagsFromServer.map(tag => (
                             <CheckableTag
                               key={tag+'a'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              checked={this.state.checkViewResult.indexOf(tag) > -1}
+                              onChange={checked => this.checkViewResult(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -95,8 +194,8 @@ class Management extends Component {
                           {this.IsArchive.map(tag => (
                             <CheckableTag
                               key={tag+'b'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              checked={this.state.IsArchive.indexOf(tag) > -1}
+                              onChange={checked => this.getArchive(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -109,7 +208,7 @@ class Management extends Component {
                           {this.IsPayment.map(tag => (
                             <CheckableTag
                               key={tag+'c'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
+                              checked={this.state.IsPayment.indexOf(tag) > -1}
                               onChange={checked => this.handleChange(tag, checked)}
                             >
                               {tag}
@@ -133,8 +232,8 @@ class Management extends Component {
                           {this.VoluntaryReporting.map(tag => (
                             <CheckableTag
                               key={tag+'d'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              checked={this.state.VoluntaryReporting.indexOf(tag) > -1}
+                              onChange={checked => this.getVoluntaryReporting(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -147,8 +246,8 @@ class Management extends Component {
                           {this.IsNanJing.map(tag => (
                             <CheckableTag
                               key={tag+'e'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              checked={this.state.IsNanJing.indexOf(tag) > -1}
+                              onChange={checked => this.getNanJing(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -178,8 +277,8 @@ class Management extends Component {
                           {this.isRetreat.map(tag => (
                             <CheckableTag
                               key={tag+'f'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              checked={this.state.isRetreat.indexOf(tag) > -1}
+                              onChange={checked => this.getRetreat(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -192,8 +291,8 @@ class Management extends Component {
                           {this.ProjectIntention.map(tag => (
                             <CheckableTag
                               key={tag+'g'}
-                              checked={this.state.selectedTags.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              checked={this.state.ProjectIntention.indexOf(tag) > -1}
+                              onChange={checked => this.getProjectIntention(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -209,15 +308,24 @@ class Management extends Component {
                     </Col>
                     <Col span={6} order={4}>
                       <div>
-                          <Button type="primary" style={{width:240}}>确认搜索</Button>
+                          <Button 
+                          type="primary" 
+                          style={{width:240}}
+                          onClick = {this.searchData}
+                          >确认搜索</Button>
                       </div>
                     </Col>
               </Row>
               </div>
               <div className = "down-search">
-                    <span className = "downLoad">
-                    <i className = "downIcon"></i>下载
+                   {this.state.isDown==false?
+                      <span className = "downLoad downLoad-false">
+                          <i className = "downIcon"></i>下载
+                      </span>:
+                      <span className = "downLoad downLoad-true">
+                        <i className = "downIcon"></i>下载
                     </span>
+                   }
                     <span>
                     <Search
                         className = "searchInput"
@@ -228,7 +336,7 @@ class Management extends Component {
                     </span>
               </div>
               <div className = "content-data">
-                    <InterViewData/>
+                    <InterViewData downStatus = {this.downStatus}/>
               </div>
           </div>
       </div>
