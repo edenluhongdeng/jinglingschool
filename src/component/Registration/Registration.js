@@ -433,6 +433,7 @@ class Registration extends Component {
           <FailModal></FailModal>
         }
         {
+          false && 
           <InfoModal></InfoModal>
         }
       </div>
