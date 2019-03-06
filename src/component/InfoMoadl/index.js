@@ -5,10 +5,15 @@ import { Button } from 'antd'
 class InfoModal extends Component {
   state = {
   }
+  handleClick1 = () => {
+    this.props.onClose()
+  }
+  handleClick2 = () => {
+    this.props.onClose()
+  }
   render() {
-    
     return (
-          <MyModal onClose={this.closeOverlay} w={11}>
+          <MyModal onClose={this.props.onClose} w={11}>
             <div className='infoModal-content'>
                 <h2 className='infoModal-h2'>学生情况<span>/Applicant Info</span></h2>
                 <div className='infoModal-content-div'>
@@ -121,8 +126,8 @@ class InfoModal extends Component {
                     </div>
                 </div>
                 <div className='infoModal-footer'>
-                    <Button className='infoModal-footer-btn'>返回修改</Button>
-                    <Button className='infoModal-footer-btn' type='primary'>确认提交</Button>
+                    <Button className='infoModal-footer-btn' onClick={this.handleClick1}>返回修改</Button>
+                    <Button className='infoModal-footer-btn' type='primary' onClick={this.handleClick2}>确认提交</Button>
                 </div>
             </div>
           </MyModal>
