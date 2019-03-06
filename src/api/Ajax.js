@@ -1,36 +1,37 @@
 import axios from 'axios'
 import _ from 'lodash'
-import qs from 'qs'
 axios.defaults.timeout = 10000;
-// axios.defaults.baseURL = './k12';
-
+axios.defaults.baseURL = './enroll'
 axios.defaults.withCredentials = true
 
-axios.interceptors.request.use(
+let isTransformRequest = false
+const instance = axios.create({
+  headers:{
+    'Content-Type':'application/json;chartset=UTF-8'
+  },
+  transformRequest:[data => (isTransformRequest ? data : JSON.stringify(data))]
+})
+
+instance.interceptors.request.use(
   config => {
-    config.data = qs.stringify(config.data);
-    config.headers = {
-      'token':localStorage.getItem("token") || 'admin',
-      // 'Content-Type':'application/json;charset=UTF-8',
-      'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'
+    if(/^(post|put|patch)$/i.test(config.method)) {
+      const contentType = String(
+        config.headers['Content-Type'] || config.headers.post['Content-Type']
+      ).toLowerCase()
+      isTransformRequest = contentType.includes('multipart/form-data;boundary=--')
     }
-    return config;
+    return config
   },
   err => {
-    return Promise.reject(err);
+    return Promise.reject(err)
   }
 )
-axios.interceptors.response.use(response => {
-     if (response.data.code == 200) {
-        const token = _.get(response,'data.data.token')
-        if (token) {
-          localStorage.setItem("token", token)
-        }
-     }
+
+instance.interceptors.response.use(response => {
      return response.data
 })
 
-export default function Ajax(url = '', data = {}, type = 'post') {
+export default function Ajax(url = '', data = {}, type = 'post', config) {
     if (type === 'GET') {
       let dataStr = ''
       Object.keys(data).forEach(key => {
@@ -42,6 +43,6 @@ export default function Ajax(url = '', data = {}, type = 'post') {
       }
       return axios.get(url)
     } else {
-      return axios.post(url, data)
+      return axios.post(url, data, config)
     }
 }
