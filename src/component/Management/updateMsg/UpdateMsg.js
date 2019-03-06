@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import { Icon,Select ,Input,Row, Col  } from 'antd';
+import { Icon,Select ,Input,Row, Col,DatePicker   } from 'antd';
 import {withRouter} from 'react-router-dom'
+import moment from 'moment';
 import './style.less'
 const Option = Select.Option;
+const dateFormat = 'YYYY/MM/DD';
 class UpdateMsg extends Component {
-
 handleChange = (value) => {
   console.log(`selected ${value}`);
 }
+
+//返回上一页
+goBack = () => {
+    this.props.history.goBack()
+}
+
   render() {
     return (
       <div className = "updateMsg">
             <div className = "updateMsg-content">
-                <div className = "back">
+                <div className = "back" onClick = {this.goBack}>
                 <Icon type="left" className = "leftIcon" />
                 &nbsp;&nbsp;返回
                 </div>
@@ -32,7 +39,7 @@ handleChange = (value) => {
                                 <div >
                                     <span>
                                         <i className = "hodale">考生姓名：</i>
-                                        <i>J20192500</i>
+                                        <i>李3呃呃呃</i>
                                     </span>
                                 </div>
                             </Col>
@@ -41,63 +48,52 @@ handleChange = (value) => {
                             <Col span={6} order={1}>
                                 <div >
                                 <h5>面试结果：</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                <Select defaultValue="excellent" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="excellent">Excellent-优秀</Option>
+                                    <Option value="lucy">合格</Option>
+                                    <Option value="Yiminghe">不合格</Option>
                                 </Select>
                                 </div>
                             </Col>
                             <Col span={6} order={2}>
                                 <div >
                                 <h5>面试描述：</h5>
-                                <Input placeholder="Basic usage" style={{width:900}}/>
-                                </div>
+                                   <div className = "description"> 
+                                       <Input placeholder="请输入面试描述" style={{width:800}}/>
+                                       <span>100/0</span>
+                                    </div>
+                                 </div>
                             </Col>
                         </Row>
                         <Row type="flex">
                                 <Col span={6} order={1}>
                                 <div >
                                 <h5>笔试结果：</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
+                                <Input placeholder=" " style={{width:240}}/>
                                 </div>
                                 </Col>
                                 <Col span={6} order={2}>
                                 <div >
-                                <h5>缴费情况</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                <h5>缴费情况：</h5>
+                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="yes">是</Option>
+                                    <Option value="no">否</Option>
                                 </Select>
                                 </div>
                                 </Col>
                                 <Col span={6} order={3}>
                                 <div >
-                                <h5>中考分数</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
+                                <h5>中考分数：</h5>
+                                <Input placeholder=" " style={{width:240}}/>
                                 </div>
                                 </Col>
                                 <Col span={6} order={4}>
                                 <div >
-                                <h5>志愿填报情况</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                <h5>志愿填报情况：</h5>
+                                <Select defaultValue="1A" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="1A">1A</Option>
+                                    <Option value="1B">1B</Option>
+                                    <Option value="1C">1C</Option>
                                 </Select>
                                 </div>
                                 </Col>
@@ -106,45 +102,32 @@ handleChange = (value) => {
                                 <Col span={6} order={1}>
                                 <div >
                                 <h5>提档：</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="yes">是</Option>
+                                    <Option value="no">否</Option>
                                 </Select>
                                 </div>
                                 </Col>
                                 <Col span={6} order={2}>
                                 <div >
                                 <h5>退费：</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="yes">是</Option>
+                                    <Option value="no">否</Option>
+                                    <Option value="want">考虑</Option>
                                 </Select>
                                 </div>
                                 </Col>
                                 <Col span={6} order={3}>
                                 <div >
                                 <h5>联系时间：</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
+                                <DatePicker defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} style={{ width: 240 }} />
                                 </div>
                                 </Col>
                                 <Col span={6} order={4}>
                                 <div >
                                 <h5>联系人：</h5>
-                                <Select defaultValue="lucy" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>Disabled</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
+                                <Input placeholder=" " style={{width:240}}/>
                                 </div>
                                 </Col>
                         </Row>
@@ -152,11 +135,17 @@ handleChange = (value) => {
                         <Col span={6} order={1}>
                                 <div >
                                 <h5>备注记录：</h5>
-                                <Input placeholder="Basic usage" style={{width:1200}}/>
+                                <div className = "description"> 
+                                       <Input placeholder="请输入备注记录" style={{width:1000}}/>
+                                       <span>100/0</span>
+                                    </div>
                                 </div>
                                 </Col>
                         </Row>
                     </div>
+                </div>
+                <div className="line">
+                    <span></span>
                 </div>
             </div>
       </div>

@@ -208,14 +208,16 @@ class Management extends Component {
                       </div>
                     </Col>
                     <Col span={6} order={4}>
-                    <div>
-                          <Button type="primary">确认搜索</Button>
+                      <div>
+                          <Button type="primary" style={{width:240}}>确认搜索</Button>
                       </div>
                     </Col>
               </Row>
               </div>
               <div className = "down-search">
-                    <span className = "downLoad">下载</span>
+                    <span className = "downLoad">
+                    <i className = "downIcon"></i>下载
+                    </span>
                     <span>
                     <Search
                         className = "searchInput"
