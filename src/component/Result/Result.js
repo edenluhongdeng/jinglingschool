@@ -43,7 +43,7 @@ export default class Result extends Component {
             }
             </div>
         </div>
-        <div className='footer'>感谢您对南京金陵中学国际部的支持！</div>
+        <div className='footer_result'>感谢您对南京金陵中学国际部的支持！</div>
         
       </div>
     )

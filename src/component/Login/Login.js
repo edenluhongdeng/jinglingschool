@@ -44,7 +44,7 @@ class Demo  extends Component {
             <FormItem {...formItemLayout} label="准考证号">
               {getFieldDecorator('userName', {
                 rules: [{
-                  required: false, message: '请输入正确的准考证号!',
+                  // required: true, message: '请输入正确的准考证号!',
                 }, {
                   // validator: this.checkConfirm,
                 }],
@@ -55,7 +55,7 @@ class Demo  extends Component {
             <FormItem {...formItemLayout} label="手机号码">
               {getFieldDecorator('password', {
                 rules: [{
-                  required: false, message: '手机号码格式不正确!',
+                  // required: true, message: '手机号码格式不正确!',
                 }, {
                   // validator: this.checkConfirm,
                 }],
