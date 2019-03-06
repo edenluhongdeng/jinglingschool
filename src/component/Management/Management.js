@@ -40,7 +40,8 @@ class Management extends Component {
       exam1Rank :null,//一模排名 
       exam1Score :null,//一模分数 ,
       intendedProgram :null,//项目意向
-      contactName :null//联系人姓名 ,
+      contactName :null,//联系人姓名 ,
+      inputBox:null
     }
   };
 componentDidMount(){
@@ -260,7 +261,7 @@ getExam1Score = (e)=>{
 //获取一模排名
 getExam1Rank  = (e)=>{
   const {prams} = this.state
-  prams.exam1Rank  =e.target.value
+  prams.exam1Rank = e.target.value
   this.setState({
     prams
   })
@@ -303,6 +304,16 @@ downStatus = (isDown) => {
       isDown:false
     })
   }
+}
+
+//模糊搜索
+inputSearch = (value) => {
+    const {prams} = this.state
+    prams.inputBox = value
+    this.setState({
+      prams
+    })
+    this.getData(prams)
 }
 
   render() {
@@ -397,15 +408,15 @@ downStatus = (isDown) => {
                     <Col span={6} order={3}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>中考分数:</h6>
-                          <Input className = "fraction"/>
+                          <Input className = "fraction" onBlur = {this.getJuniorExamScore}/>
                           <i>分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模排名:</h6>
-                          <Input className = "fraction"/>
-                          <i>分（含）以上</i>
+                          <Input className = "fraction" onBlur={this.getExam1Rank}/>
+                          <i>名（含）以上</i>
                       </div>
                     </Col>
               </Row>
@@ -442,7 +453,7 @@ downStatus = (isDown) => {
                     <Col span={6} order={3}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>笔试结果:</h6>
-                          <Input className = "fraction"/>
+                          <Input className = "fraction" onChange={this.getWrittenResult}/>
                           <i>分（含）以上</i>
                       </div>
                     </Col>
@@ -470,7 +481,7 @@ downStatus = (isDown) => {
                     <Search
                         className = "searchInput"
                         placeholder="输入要搜索的内容"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.inputSearch(value)}
                         style={{ width: 200 }}
                       />
                     </span>
@@ -480,6 +491,7 @@ downStatus = (isDown) => {
                     downStatus = {this.downStatus} 
                     data={this.state.studyData}
                     getData = {this.getData}
+                    prams = {this.state.prams}
                     />
               </div>
           </div>

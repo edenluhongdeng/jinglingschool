@@ -48,10 +48,10 @@ goBack = () => {
                             <Col span={6} order={1}>
                                 <div >
                                 <h5>面试结果：</h5>
-                                <Select defaultValue="excellent" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="excellent">Excellent-优秀</Option>
-                                    <Option value="lucy">合格</Option>
-                                    <Option value="Yiminghe">不合格</Option>
+                                <Select defaultValue="0" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="0">Excellent-优秀</Option>
+                                    <Option value="1">合格</Option>
+                                    <Option value="2">不合格</Option>
                                 </Select>
                                 </div>
                             </Col>
@@ -75,9 +75,9 @@ goBack = () => {
                                 <Col span={6} order={2}>
                                 <div >
                                 <h5>缴费情况：</h5>
-                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="yes">是</Option>
-                                    <Option value="no">否</Option>
+                                <Select defaultValue="1" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="1">是</Option>
+                                    <Option value="0">否</Option>
                                 </Select>
                                 </div>
                                 </Col>
@@ -90,10 +90,10 @@ goBack = () => {
                                 <Col span={6} order={4}>
                                 <div >
                                 <h5>志愿填报情况：</h5>
-                                <Select defaultValue="1A" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="1A">1A</Option>
-                                    <Option value="1B">1B</Option>
-                                    <Option value="1C">1C</Option>
+                                <Select defaultValue="0" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="0">1A</Option>
+                                    <Option value="1">1B</Option>
+                                    <Option value="2">1C</Option>
                                 </Select>
                                 </div>
                                 </Col>
@@ -102,19 +102,19 @@ goBack = () => {
                                 <Col span={6} order={1}>
                                 <div >
                                 <h5>提档：</h5>
-                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="yes">是</Option>
-                                    <Option value="no">否</Option>
+                                <Select defaultValue="1" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="1">是</Option>
+                                    <Option value="0">否</Option>
                                 </Select>
                                 </div>
                                 </Col>
                                 <Col span={6} order={2}>
                                 <div >
                                 <h5>退费：</h5>
-                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="yes">是</Option>
-                                    <Option value="no">否</Option>
-                                    <Option value="want">考虑</Option>
+                                <Select defaultValue="2" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="1">是</Option>
+                                    <Option value="0">否</Option>
+                                    <Option value="2">考虑</Option>
                                 </Select>
                                 </div>
                                 </Col>
