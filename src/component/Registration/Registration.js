@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.less'
 import src1 from '../../imgs/enrollment_logo.png'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Radio, Upload, DatePicker } from 'antd'
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Radio, Upload, DatePicker, message } from 'antd'
 import FailModal from '../FailModal'
 import InfoModal from '../InfoMoadl'
 const { Option } = Select
@@ -10,12 +10,18 @@ const cityData = {
   Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
   Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
 };
-
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
 class Registration extends Component {
   state = {
     cities: cityData[provinceData[0]],
     secondCity: cityData[provinceData[0]][0],
-    isMyModalShow:false,
+    isFailModalShow:false,
+    isInfoModalShow:false,
+    loading: false,
   }
   componentDidMount(){
     console.log(document.documentElement.clientHeight,document.documentElement.clientWidth,'////')
@@ -32,21 +38,46 @@ class Registration extends Component {
       secondCity: value,
     });
   }
+  closeInfoModal = () => {
+    this.setState({isInfoModalShow:false})
+  }
+  closeFailModal = () => {
+    this.setState({isFailModalShow:false})
+  }
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+    this.setState({isFailModalShow:true})
+    // e.preventDefault();
+    // this.props.form.validateFields((err, values) => {
+    //   if (!err) {
+    //     console.log('Received values of form: ', values);
+    //   }
+    // });
 
   }
   radioGroupChange = e => {
     this.setState({isShow: e.target.value})
   }
+  beforeUpload = (file) => {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+      message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+  }
   render() {
-    const { isShow=2,cities,isMyModalShow } = this.state
+    const { isShow=2,cities,isFailModalShow,isInfoModalShow } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    )
+    const imageUrl = this.state.imageUrl;
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
     const testName = (rule,value,callback) => {
@@ -107,7 +138,7 @@ class Registration extends Component {
                 {getFieldDecorator('birthday', {
                   rules: [{ required: true, message: '请选择你的出生日期!' }],
                 })(
-                  <DatePicker className='regist-input' placeholder="请选择你的出生日期..."/>
+                  <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
                 )}
               </Form.Item>
             </Col>
@@ -282,13 +313,22 @@ class Registration extends Component {
               <p className='regist-title'><span>上传照片</span>/Photo</p>
               <Form.Item>
                 <div className="dropbox">
-                  {getFieldDecorator('dragger', {
-                    valuePropName: 'fileList',
-                    getValueFromEvent: this.normFile,
-                    rules: [{ required: true, message: '请上传照片!' }],
-                  })(
-                    <Upload.Dragger name="files" action="/upload.do"></Upload.Dragger>
-                  )}
+                  {/* {getFieldDecorator('dragger', { */}
+                    {/* rules: [{ required: true, message: '请上传照片!' }], */}
+                  {/* // })( */}
+                    <Upload.Dragger name="file" action="/upload.do" beforeUpload={this.beforeUpload} showUploadList={false}></Upload.Dragger>
+                    {/* <Upload
+                      name="avatar"
+                      listType="picture-card"
+                      className="avatar-uploader"
+                      showUploadList={false}
+                      action="//jsonplaceholder.typicode.com/posts/"
+                      beforeUpload={this.beforeUpload}
+                      onChange={this.handleChange}
+                    >
+                      {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+                    </Upload> */}
+                  {/* // )} */}
                 </div>
               </Form.Item>
             </Col>
@@ -419,7 +459,7 @@ class Registration extends Component {
                 {getFieldDecorator('date', {
                   rules: [{ required: true, message: '请选择填表日期!' }],
                 })(
-                  <DatePicker className='regist-input1' placeholder="请选择填表日期..."/>
+                  <DatePicker className='regist-DatePicker2' placeholder="请选择填表日期..."/>
                 )}
               </Form.Item>
             </Col>
@@ -429,11 +469,12 @@ class Registration extends Component {
           </Form.Item>
         </Form>
         {
-          false && 
-          <FailModal></FailModal>
+          isFailModalShow && 
+          <FailModal onClose={this.closeFailModal}></FailModal>
         }
         {
-          <InfoModal></InfoModal>
+          isInfoModalShow && 
+          <InfoModal onClose={this.closeInfoModal}></InfoModal>
         }
       </div>
     );
