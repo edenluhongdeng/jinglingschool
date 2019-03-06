@@ -58,15 +58,29 @@ class Registration extends Component {
     this.setState({isShow: e.target.value})
   }
   beforeUpload = (file) => {
-    const isJPG = file.type === 'image/jpeg';
+    console.log({file})
+    const isJPG = file.type === ('image/jpeg' || 'image/jpg' || 'image/gif' || 'image/png' || 'image/bmp')
     if (!isJPG) {
-      message.error('You can only upload JPG file!');
+      message.error('You can only upload JPG file!')
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
+      message.error('Image must smaller than 2MB!')
     }
     return isJPG && isLt2M;
+  }
+  handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === 'done') {
+      this.setState({imageUrl:info.file.response.data})
+      getBase64(info.file.originFileObj, imageUrl => this.setState({
+        imageUrl,
+        loading: false,
+      }));
+    }
   }
   render() {
     const { isShow=2,cities,isFailModalShow,isInfoModalShow } = this.state
@@ -313,22 +327,8 @@ class Registration extends Component {
               <p className='regist-title'><span>上传照片</span>/Photo</p>
               <Form.Item>
                 <div className="dropbox">
-                  {/* {getFieldDecorator('dragger', { */}
-                    {/* rules: [{ required: true, message: '请上传照片!' }], */}
-                  {/* // })( */}
-                    <Upload.Dragger name="file" action="/upload.do" beforeUpload={this.beforeUpload} showUploadList={false}></Upload.Dragger>
-                    {/* <Upload
-                      name="avatar"
-                      listType="picture-card"
-                      className="avatar-uploader"
-                      showUploadList={false}
-                      action="//jsonplaceholder.typicode.com/posts/"
-                      beforeUpload={this.beforeUpload}
-                      onChange={this.handleChange}
-                    >
-                      {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
-                    </Upload> */}
-                  {/* // )} */}
+                {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
+                    <Upload.Dragger name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}></Upload.Dragger>}
                 </div>
               </Form.Item>
             </Col>
