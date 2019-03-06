@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Tag , Row, Col,Input,Button } from 'antd';
 import './style.less'
 import InterViewData from './interViewData/InterViewData'
+import {getStudyList} from '../../api/manageMent.js'
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
 class Management extends Component {
   state = {
     selectedTags: [],
+    //默认标签选中
     checkViewResult:['不限'],//面试结果
     IsArchive:['不限'], //是否提档
     IsPayment:['不限'], //缴费境况
@@ -19,7 +21,51 @@ class Management extends Component {
     ProjectIntention:['待定'],//项目意向
     writeResult:0,//笔试结果
     isDown:false,//下载
+    studyData:[],//学生数据
+    //接口参数
+    prams:{
+      pageNumber:1,
+      pageSize:10,
+      interviewResult :null,//面试结果
+      juniorExamScore :null,//中考分数
+      orNkStudent :null,//是否南京学籍
+      payInfo :null,//缴费情况
+      returnPay :null,// 退费情况
+      toFile :null,//提档情况
+      volunteerInfo :null,//志愿填报
+      writtenResult :null,//笔试结果
+      admissionTicket :null,//准考证号
+      chinaName :null,//姓名
+      contactTime :null,// 联系时间 
+      exam1Rank :null,//一模排名 
+      exam1Score :null,//一模分数 ,
+      intendedProgram :null,//项目意向
+      contactName :null//联系人姓名 ,
+    }
   };
+componentDidMount(){
+  const {prams} = this.state
+  this.getData(prams)
+}
+//获取数据
+getData = (prams) => {
+  getStudyList(prams).then(res=>{
+    if(res&&res.data.code==='200'){
+      console.log(res.data.data.list,'数据')
+      if(res.data.data.list){
+          this.setState({
+            studyData:res.data.data
+          })
+      }
+    }
+  })
+}
+
+//搜索
+searchData = ()=>{
+ const {prams} = this.state
+ this.getData(prams)
+}
 
   //面试结果
    tagsFromServer = [
@@ -69,87 +115,181 @@ class Management extends Component {
     '中加'
   ]
 
-  handleChange = (tag, checked)=> {
-    const { selectedTags } = this.state;
-    const nextSelectedTags = checked
-      ? [...selectedTags, tag]
-      : selectedTags.filter(t => t !== tag);
-    console.log('You are interested in: ', nextSelectedTags);
-    this.setState({ selectedTags: nextSelectedTags });
-  }
-
   //获取面试结果
   checkViewResult = (tag, checked) =>{
-     const { checkViewResult} = this.state;
+     const { checkViewResult,prams} = this.state;
     const nextSelectedTags = checked
       ? [tag]
       : checkViewResult.filter(t => t !== tag);
-     this.setState({ checkViewResult: nextSelectedTags });
+        let interviewResult =''
+      if(nextSelectedTags[0]==='优秀'){
+        interviewResult='0'
+      }
+      if(nextSelectedTags[0]==='合格'){
+        interviewResult='1'
+      }
+      if(nextSelectedTags[0]==='不合格'){
+        interviewResult='2'
+      }
+      prams.interviewResult=interviewResult
+     this.setState({ 
+       checkViewResult: nextSelectedTags,
+       prams
+      });
+
   }
 
-  //获取建档情况
+  //获取提档情况
   getArchive = (tag, checked) =>{
-    const { IsArchive} = this.state;
+    const { IsArchive,prams} = this.state;
    const nextSelectedTags = checked
      ? [tag]
      : IsArchive.filter(t => t !== tag);
      console.log('You are interested in: ', nextSelectedTags);
-    this.setState({ IsArchive: nextSelectedTags });
+     let toFile =''
+     if(nextSelectedTags[0]==='否'){
+      toFile='0'
+    }
+    if(nextSelectedTags[0]==='是'){
+      toFile='1'
+    }
+    prams.toFile=toFile
+    this.setState({ 
+      IsArchive: nextSelectedTags,
+      prams
+     });
  }
 
  //获取缴费情况
  getPayment = (tag, checked) =>{
-  const { IsPayment} = this.state;
+  const { IsPayment,prams} = this.state;
  const nextSelectedTags = checked
    ? [tag]
    : IsPayment.filter(t => t !== tag);
    console.log('You are interested in: ', nextSelectedTags);
-  this.setState({ IsPayment: nextSelectedTags });
+   let payInfo =''
+   if(nextSelectedTags[0]==='否'){
+    payInfo='0'
+  }
+  if(nextSelectedTags[0]==='是'){
+    payInfo='1'
+  }
+  prams.payInfo=payInfo
+  this.setState({ 
+    IsPayment: nextSelectedTags,
+    prams
+   });
 }
 
 //获取填报志愿情况
 getVoluntaryReporting = (tag, checked) =>{
-  const { VoluntaryReporting} = this.state;
+  const { VoluntaryReporting,prams} = this.state;
  const nextSelectedTags = checked
    ? [tag]
    : VoluntaryReporting.filter(t => t !== tag);
    console.log('You are interested in: ', nextSelectedTags);
-  this.setState({ VoluntaryReporting: nextSelectedTags });
+   let volunteerInfo = ''
+   if(nextSelectedTags[0]==='1A'){
+    volunteerInfo ='0'
+  }
+  if(nextSelectedTags[0]==='1B'){
+    volunteerInfo ='1'
+  }
+  if(nextSelectedTags[0]==='1C'){
+    volunteerInfo ='2'
+  }
+  prams.volunteerInfo=volunteerInfo
+  this.setState({ 
+    VoluntaryReporting: nextSelectedTags,
+    prams 
+   });
 }
 
 //获取学籍情况
 getNanJing = (tag, checked) =>{
-  const { IsNanJing} = this.state;
+  const { IsNanJing,prams} = this.state;
  const nextSelectedTags = checked
    ? [tag]
    : IsNanJing.filter(t => t !== tag);
    console.log('You are interested in: ', nextSelectedTags);
-  this.setState({ IsNanJing: nextSelectedTags });
+   let orNkStudent =''
+   if(nextSelectedTags[0]==='否'){
+    orNkStudent='0'
+  }
+  if(nextSelectedTags[0]==='是'){
+    orNkStudent='1'
+  }
+  prams.orNkStudent=orNkStudent
+  this.setState({ 
+    IsNanJing: nextSelectedTags,
+    prams
+   });
 }
 
-//是否退档
+//是否退费
 getRetreat = (tag, checked) =>{
-  const { isRetreat} = this.state;
+  const { isRetreat,prams} = this.state;
  const nextSelectedTags = checked
    ? [tag]
    : isRetreat.filter(t => t !== tag);
    console.log('You are interested in: ', nextSelectedTags);
-  this.setState({ isRetreat: nextSelectedTags });
+   let returnPay =''
+   if(nextSelectedTags[0]==='否'){
+    returnPay='0'
+  }
+  if(nextSelectedTags[0]==='是'){
+    returnPay='1'
+  }
+  if(nextSelectedTags[0]==='考虑'){
+    returnPay='2'
+  }
+  prams.returnPay=returnPay
+  this.setState({ 
+    isRetreat: nextSelectedTags,
+    prams
+  });
 }
-
-//获取项目意向
+//获取一模分数
+getExam1Score = (e)=>{
+  const {prams} = this.state
+  prams.exam1Score =e.target.value
+  this.setState({
+    prams
+  })
+}
+//获取一模排名
+getExam1Rank  = (e)=>{
+  const {prams} = this.state
+  prams.exam1Rank  =e.target.value
+  this.setState({
+    prams
+  })
+}
+//获取中考分数
+getJuniorExamScore = (e) =>{
+  const {prams} = this.state
+  prams.juniorExamScore =e.target.value
+  this.setState({
+    prams
+  })
+}
+//获取笔试结果
+getWrittenResult  = (e) => {
+  const {prams} = this.state
+  prams.writtenResult  =e.target.value
+  this.setState({
+    prams
+  })
+}
+ 
+//获取项目意向  
 getProjectIntention = (tag, checked) =>{
-  const { ProjectIntention} = this.state;
+  const { ProjectIntention,prams} = this.state;
   let nextSelectedTags = checked
    ? [...ProjectIntention,tag]
    : ProjectIntention.filter(t => t !== tag);
    console.log('You are interested in: ', nextSelectedTags);
   this.setState({ ProjectIntention: nextSelectedTags });
-}
-
-//搜索数据
-searchData = () => {
-  console.log('传参')
 }
 
 //判断下载状态
@@ -190,7 +330,7 @@ downStatus = (isDown) => {
                     </Col>
                     <Col span={6} order={2}>
                     <div>
-                          <h6 style={{ marginRight: 8, display: 'inline' }}>是否建档:</h6>
+                          <h6 style={{ marginRight: 8, display: 'inline' }}>是否提档:</h6>
                           {this.IsArchive.map(tag => (
                             <CheckableTag
                               key={tag+'b'}
@@ -209,7 +349,7 @@ downStatus = (isDown) => {
                             <CheckableTag
                               key={tag+'c'}
                               checked={this.state.IsPayment.indexOf(tag) > -1}
-                              onChange={checked => this.handleChange(tag, checked)}
+                              onChange={checked => this.getPayment(tag, checked)}
                             >
                               {tag}
                             </CheckableTag>
@@ -219,7 +359,7 @@ downStatus = (isDown) => {
                     <Col span={6} order={4}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模分数:</h6>
-                          <Input className = "fraction"/>
+                          <Input className = "fraction" type='number' onChange={this.getExam1Score}/>
                           <i>分（含）以上</i>
                       </div>
                     </Col>
@@ -273,7 +413,7 @@ downStatus = (isDown) => {
               <Row type="flex">
                     <Col span={6} order={1}>
                       <div>
-                          <h6 style={{ marginRight: 8, display: 'inline' }}>是否退档:</h6>
+                          <h6 style={{ marginRight: 8, display: 'inline' }}>是否退费:</h6>
                           {this.isRetreat.map(tag => (
                             <CheckableTag
                               key={tag+'f'}
@@ -336,7 +476,11 @@ downStatus = (isDown) => {
                     </span>
               </div>
               <div className = "content-data">
-                    <InterViewData downStatus = {this.downStatus}/>
+                    <InterViewData 
+                    downStatus = {this.downStatus} 
+                    data={this.state.studyData}
+                    getData = {this.getData}
+                    />
               </div>
           </div>
       </div>

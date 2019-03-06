@@ -26,18 +26,20 @@ class Registration extends Component {
     studentInfo:{}
   }
   componentDidMount(){
-    console.log(document.documentElement.clientHeight,document.documentElement.clientWidth,'////')
+    
   }
   handleProvinceChange = (value) => {
     this.setState({
       cities: cityData[value],
       secondCity: cityData[value][0],
+      schoolSiteIndex:value,
     });
   }
 
   onSecondCityChange = (value) => {
     this.setState({
       secondCity: value,
+      schoolNameIndex:value,
     });
   }
   closeInfoModal = () => {
@@ -46,12 +48,35 @@ class Registration extends Component {
   closeFailModal = () => {
     this.setState({isFailModalShow:false})
   }
+  showInfoModal = () => {
+    this.setState({isInfoModalShow:true})
+  }
+  showFailModal = () => {
+    this.setState({isFailModalShow:true})
+  }
   handleSubmit = (e) => {
-    // this.setState({isFailModalShow:true})
     e.preventDefault()
+    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex } = this.state
+    if(!imageUrl) {
+      message.warning('请先上传照片!')
+      return
+    }
+    if(!schoolSiteIndex || !schoolNameIndex ) {
+      message.warning('请选择初中就读学校信息!')
+      return
+    }
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log({values})
+        const newValue = { 
+          ...values,
+          birthDateStr:values['birthDateStr'].format('YYYY-MM-DD'),
+          schoolSiteIndex,schoolNameIndex
+         }
+        const newStudentInfo = Object.assign({},newValue,studentInfo)
+        console.log({newStudentInfo})
+        this.setState({studentInfo:newStudentInfo},()=>{
+          this.showInfoModal()
+        })
       }
     });
 
@@ -61,20 +86,20 @@ class Registration extends Component {
   }
   checkboxGroupChange = value => {
     const { studentInfo } = this.state
-    studentInfo.intendedPrograms = value.join(',')
+    studentInfo.intendedPrograms = value
     this.setState({
-      studentInfo
+      studentInfo,
     })
   }
   beforeUpload = (file) => {
     console.log({file})
     const isJPG = file.type === ('image/jpeg' || 'image/jpg' || 'image/gif' || 'image/png' || 'image/bmp')
     if (!isJPG) {
-      message.error('图片格式不正确!')
+      message.warning('照片格式不正确!')
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error('图片大小不超过2MB!')
+      message.warning('照片大小不超过2MB!')
     }
     return isJPG && isLt2M;
   }
@@ -84,6 +109,7 @@ class Registration extends Component {
       return;
     }
     if (info.file.status === 'done') {
+      message.success('上传成功!')
       const { studentInfo } = this.state
       const imageUrl = _.get(info,'file.response.data')
       studentInfo.photo = imageUrl
@@ -92,10 +118,12 @@ class Registration extends Component {
         loading: false,
         studentInfo
       }));
+    }else{
+      message.error('照片上传失败!')
     }
   }
   render() {
-    const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl } = this.state
+    const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl, studentInfo } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
@@ -114,7 +142,7 @@ class Registration extends Component {
     //身份证校验
     const IDreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
     const testID = (rule,value,callback) => {
-      const IDValue = getFieldValue('ID')
+      const IDValue = getFieldValue('idCard')
       if(!IDreg.test(IDValue)) callback('请输入正确身份证号码!')
       callback()
     }
@@ -132,7 +160,7 @@ class Registration extends Component {
                 {getFieldDecorator('chinaName', {
                   rules: [{required: true, message: '请输入你的姓名!'},{validator:testName}],
                 })(
-                  <Input className='regist-input' placeholder='请输入中文名...' maxLength={5}/>
+                  <Input className='regist-input' placeholder='请输入中文名...' maxLength={5} autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -169,7 +197,7 @@ class Registration extends Component {
                 {getFieldDecorator('idCard', {
                   rules: [{validator:testID}],
                 })(
-                  <Input className='regist-input' placeholder='请输入身份证号...'/>
+                  <Input className='regist-input' placeholder='请输入身份证号...' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -179,7 +207,7 @@ class Registration extends Component {
                 {getFieldDecorator('contactPhone', {
                   rules: [{validator:testPhone}],
                 })(
-                  <Input className='regist-input' placeholder='请输入你的手机号...'/>
+                  <Input className='regist-input' placeholder='请输入你的手机号...' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -207,9 +235,6 @@ class Registration extends Component {
               <Form.Item
               >
                 {getFieldDecorator('schoolSiteIndex', {
-                  rules: [
-                    { required: true, message: '请选择你的学校信息!' },
-                  ],
                 })(
                   <div>
                     <Select
@@ -229,9 +254,6 @@ class Registration extends Component {
               <Form.Item
               >
                 {getFieldDecorator('schoolNameIndex', {
-                  rules: [
-                    { required: true, message: '请选择你的学校信息!' },
-                  ],
                 })(
                   <div>
                     <Select
@@ -261,7 +283,7 @@ class Registration extends Component {
                   ],
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入省份...'/>
+                    <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off"/>
                     <span className='regist-span'>省</span>
                   </div>
                 )}
@@ -277,7 +299,7 @@ class Registration extends Component {
                   ],
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入市...'/>
+                    <Input className='regist-input3' placeholder='请输入市...' autoComplete="off"/>
                     <span className='regist-span'>市</span>
                   </div>
                 )}
@@ -293,7 +315,7 @@ class Registration extends Component {
                   ],
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入区...'/>
+                    <Input className='regist-input3' placeholder='请输入区...' autoComplete="off"/>
                     <span className='regist-span'>区</span>
                   </div>
                 )}
@@ -309,7 +331,7 @@ class Registration extends Component {
                   ],
                 })(
                   <div>
-                    <Input className='regist-input4' placeholder='请输入学校...'/>
+                    <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off"/>
                     <span className='regist-span'>中学</span>
                   </div>
                 )}
@@ -344,7 +366,7 @@ class Registration extends Component {
                 {getFieldDecorator('exam1Score', {
                   rules: [{required: true, message: '请输入你的总分!'}],
                 })(
-                  <Input className='regist-input' type='number' placeholder='请输入总分...'/>
+                  <Input className='regist-input' type='number' placeholder='请输入总分...' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -354,7 +376,7 @@ class Registration extends Component {
                 {getFieldDecorator('exam1Rank', {
                   rules: [{required: true, message: '请输入你的年级排名!'}],
                 })(
-                  <Input className='regist-input' type='number' placeholder='请输入年级排名...' />
+                  <Input className='regist-input' type='number' placeholder='请输入年级排名...' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -386,7 +408,7 @@ class Registration extends Component {
                 {getFieldDecorator('fatherName', {
                   rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5}/>
+                  <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -396,7 +418,7 @@ class Registration extends Component {
                 {getFieldDecorator('fatherCompany', {
                   rules: [{required: true, message: '请输入工作单位!'}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作单位…'/>
+                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -408,7 +430,7 @@ class Registration extends Component {
                 {getFieldDecorator('fatherPosition', {
                   rules: [{required: true, message: '请输入工作职位!'}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作职位…'/>
+                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -418,7 +440,7 @@ class Registration extends Component {
                 {getFieldDecorator('fatherPhone', {
                   rules: [{validator:testPhone}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入手机号码…'/>
+                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -430,7 +452,7 @@ class Registration extends Component {
                 {getFieldDecorator('matherName', {
                   rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5}/>
+                  <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -440,7 +462,7 @@ class Registration extends Component {
                 {getFieldDecorator('matherCompany', {
                   rules: [{required: true, message: '请输入工作单位!'}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作单位…'/>
+                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -452,7 +474,7 @@ class Registration extends Component {
                 {getFieldDecorator('matherPosition', {
                   rules: [{required: true, message: '请输入工作职位!'}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作职位…'/>
+                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -462,7 +484,7 @@ class Registration extends Component {
                 {getFieldDecorator('matherPhone', {
                   rules: [{validator:testPhone}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入手机号码…'/>
+                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -474,7 +496,7 @@ class Registration extends Component {
                 {getFieldDecorator('familyAddress', {
                   rules: [{required: true, message: '请输入家庭地址!'}],
                 })(
-                  <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里…'/>
+                  <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里…' autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -487,18 +509,7 @@ class Registration extends Component {
                 {getFieldDecorator('preparerName', {
                   rules: [{required: true, message: '请输入姓名!'}],
                 })(
-                  <Input className='regist-input1' placeholder='请输入姓名…' maxLength={5}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <p className='regist-title'><span>填表时间</span>/Date of Regist</p>
-              <Form.Item
-              >
-                {getFieldDecorator('preparerTimeStr', {
-                  rules: [{ required: true, message: '请选择填表日期!' }],
-                })(
-                  <DatePicker className='regist-DatePicker2' placeholder="请选择填表日期..."/>
+                  <Input className='regist-input1' placeholder='请输入姓名…' maxLength={5} autoComplete="off"/>
                 )}
               </Form.Item>
             </Col>
@@ -513,7 +524,7 @@ class Registration extends Component {
         }
         {
           isInfoModalShow && 
-          <InfoModal onClose={this.closeInfoModal}></InfoModal>
+          <InfoModal onClose={this.closeInfoModal} studentInfo={studentInfo} imageUrl={imageUrl}></InfoModal>
         }
       </div>
     );

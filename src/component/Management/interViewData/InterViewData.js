@@ -3,6 +3,64 @@ import { Table,Pagination } from 'antd';
 import {withRouter} from 'react-router-dom'
 
 class InterViewData extends Component {
+    state={
+        data:[],
+    }
+
+    //获取父组件传递过来的数据
+    componentWillReceiveProps(props){
+        this.setState({
+            data:props.data
+        })
+    }
+
+    //面试结果
+    interviewResult=(result)=>{
+        switch(result){
+            case '0':
+            return '优秀'
+            break;
+            case '1':
+            return '合格'
+            break;
+            case '2':
+            return '不合格'
+            break;
+            default:
+        }
+    }
+
+    //志愿填报
+    volunteerInfo = (result) =>{
+        switch(result){
+            case 0:
+            return '1A'
+            break;
+            case 1:
+            return '1B'
+            break;
+            case 2:
+            return '1C'
+            break;
+            default:
+        }
+    }
+
+    //布尔类型的判断
+    isStatus = (is)=>{
+        switch(is){
+            case '0':
+            return '否'
+            break;
+            case '1':
+            return '是'
+            break;
+            case '2':
+            return '考虑'
+            break;
+            default:
+        }
+    }
 
     //列表title
      columns = [{
@@ -86,171 +144,43 @@ class InterViewData extends Component {
     ];
 
     //列表数据
-   data = [{
-    key: '1',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-}, {
-    key: '2',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }, {
-    key: '3',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }, {
-    key: '4',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  },{
-    key: '5',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }, {
-    key: '6',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }, {
-    key: '7',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  },{
-    key: '8',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }, {
-    key: '9',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }, {
-    key: '10',
-    name: 'John Brown',
-    interviewResult:'优秀',
-    projectIntention:'中美、中加、中英',
-    writtenResults:'100',
-    volunteerReport:'1A',
-    highSchoolScore:'598',
-    oneShotScore:'566',
-    oneShotRanking:'900',
-    isNanjing:'是',
-    paymentSituation:'否',
-    file:'否',
-    refund:'否',
-    contactTime:'2019/03/05',
-    contactUser:'李立'
-  }];
-  
+    data = ()=>{
+        const {data} = this.state
+        let studyList = []
+        data.list&&data.list.map((item,index)=>{
+            studyList.push(
+                {
+                    key: 'J'+item.admissionTicket,
+                    name: item.chinaName,
+                    interviewResult:this.interviewResult(item.interviewResult ),
+                    projectIntention:item.intendedProgram,
+                    writtenResults:item.writtenResult ,
+                    volunteerReport:this.volunteerInfo(item.volunteerInfo) ,
+                    highSchoolScore:item.juniorExamScore,
+                    oneShotScore:item.exam1Score ,
+                    oneShotRanking:item.exam1Rank,
+                    isNanjing:this.isStatus(item.orNkStudent),
+                    paymentSituation:this.isStatus(item.payInfo),
+                    file:this.isStatus(item.toFile ),
+                    refund:this.isStatus(item.returnPay),
+                    contactTime:item.contactTime ,
+                    contactUser:item.contactName 
+                }
+            )
+        })
+        return studyList
+    }
+
   //页码改变
-    pageChange(pageNumber) {
-    console.log('Page: ', pageNumber);
+    pageChange(pageNumber){
+        const {pageSize} = this.state
+        this.props.getData({
+            pageNumber,
+            pageSize
+        })
+        this.setState({
+            pageNumber
+        })
     }
 
     //tab 数据改变
@@ -274,20 +204,21 @@ class InterViewData extends Component {
     };
       
   render() {
+      const {data} = this.state
     return (
       <div className = "tab-data">
             <Table 
             rowSelection={this.rowSelection} 
             columns={this.columns} 
-            dataSource={this.data} 
+            dataSource={this.data()} 
             pagination={false}
             onChange = {this.tabChange}
             />
             <Pagination
             className = "pagination" 
             showQuickJumper 
-            defaultCurrent={2} 
-            total={500} 
+            defaultCurrent={1} 
+            total={data.total} 
             onChange={this.pageChange} />
       </div>
     );
