@@ -15,11 +15,22 @@ class Demo  extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       login(values).then(res=>{
-        console.log(res,'数据')
+        console.log(res.data,'数据')
+        if(res.data.code=='200'&&res.data.data == '0'){
+          this.setState({
+            a:true
+          })
+        }else if(res.data.code=='200'&&res.data.data == '1'){
+          this.props.history.push({
+            pathname: '/management',
+          })
+        }else if(res.data.code=='200'&&res.data.data == '2'){
+          this.props.history.push({
+            pathname: '/choose',
+          })
+        }
       })
-      // this.props.history.push({
-      //   pathname: '/choose',
-      // })
+      
       if (!err) {
         console.log('Received values of form: ', values);
       }
