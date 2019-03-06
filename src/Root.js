@@ -19,6 +19,10 @@ import Registration from "./component/Registration/Registration"
 import Management from "./component/Management/Management"
 import UpdateMsg from "./component/Management/updateMsg/UpdateMsg"
 import Login from './component/Login/Login';
+/*选择 */
+import Choose from './component/Choose/Choose';
+/*成绩结果 */
+import Result from './component/Result/Result';
 
 class Root extends Component {
   render() {
@@ -32,6 +36,8 @@ class Root extends Component {
           <Route exact  path="/management/updatemsg" component={UpdateMsg} />
           <Route  exact path="/management" component={Management} />
           <Route path="/login" component={Login} />
+          <Route path="/choose" component={Choose} />
+          <Route path="/result" component={Result} />
         </Switch>
       </div>
     );
