@@ -265,6 +265,11 @@ class InterViewData extends Component {
     rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        if(selectedRows.length){
+            this.props.downStatus(true)
+        }else{
+             this.props.downStatus(false)
+        }
       },
     };
       
