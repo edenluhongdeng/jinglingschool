@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import './login.less'
 import logo from '../../imgs/enrollment_login.png'
-import { Form, Input, Button, } from 'antd';
+import { Form, Input, Button, } from 'antd'
+import {login} from '../../api/Login'
 const FormItem = Form.Item;
 class Demo  extends Component {
   constructor(props){
@@ -11,11 +12,14 @@ class Demo  extends Component {
     }
   }
   handleSubmit = (e) => {
-    this.props.history.push({
-      pathname: '/choose',
-    })
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      login(values).then(res=>{
+        console.log(res,'数据')
+      })
+      // this.props.history.push({
+      //   pathname: '/choose',
+      // })
       if (!err) {
         console.log('Received values of form: ', values);
       }
@@ -42,18 +46,16 @@ class Demo  extends Component {
       color:'rgba(179,179,179,1)',
       lineHeight:'14px'
     }
-    //身份证校验
     const admissionID=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
     const checkAdmission=(rule,value,callback)=>{
-      const admissionValue=getFieldValue('userName')
+      const admissionValue=getFieldValue('idCard')
       if(!admissionID.test(admissionValue)) callback('请输入正确的身份证号!')
       callback()
       console.log(admissionValue)
     }
-    //手机号
     const phoneID=/^1[3456789]\d{9}$/
     const checkFhone=(rule,value,callback)=>{
-      const phoneNumber= getFieldValue('phone')
+      const phoneNumber= getFieldValue('contactPhone')
       if(!phoneID.test(phoneNumber)) callback('手机号码格式不正确!')
       callback()
     }
@@ -64,7 +66,7 @@ class Demo  extends Component {
           <img src={logo} />
           <Form onSubmit={this.handleSubmit} className="loginForm">
             <FormItem {...formItemLayout} label="身份证号">
-              {getFieldDecorator('userName', {
+              {getFieldDecorator('idCard', {
                 rules: [{
                   // required: false, message: '请输入正确的身份证号!',
                 }, {
@@ -75,7 +77,7 @@ class Demo  extends Component {
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
-              {getFieldDecorator('phone', {
+              {getFieldDecorator('contactPhone', {
                 rules: [{
                   // required: false, message: '手机号码格式不正确!',
                 }, {
