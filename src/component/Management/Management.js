@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Tag , Row, Col,Input,Button } from 'antd';
+import _ from 'lodash'
+import { Tag , Row, Col,Input,Button,message } from 'antd';
 import './style.less'
 import InterViewData from './interViewData/InterViewData'
-import {getStudyList,downloadStudentInfo} from '../../api/manageMent.js'
+import {getStudyList,downloadStudentInfo,getStudentinfoExcelPath} from '../../api/manageMent.js'
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
+const baseUrl = 'http://172.20.244.242:8080'
 class Management extends Component {
   state = {
     selectedTags: [],
@@ -328,7 +330,17 @@ downloadStudentInfo = () => {
   studentExcelReq.needTickets = needTickets
   downloadStudentInfo(studentExcelReq)
     .then(res => {
-      console.log({res})
+      const code = _.get(res,'data.code')
+      const exelPath = _.get(res,'data.data')
+      const error = _.get(res,'data.error')
+      if(code == 200){
+        window.location.href = `${baseUrl}/enroll/teacherController/white/downloadStudentInfo?exelPath=${exelPath}`
+      }else{
+        message.error(error)
+      }
+    })
+    .catch(err=>{
+      message.error(err)
     })
 }
   render() {
