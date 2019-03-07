@@ -9,15 +9,25 @@ export default class Choose extends Component {
       pathname: '/result'
     })
   }
+  goDownload=()=>{
+    this.props.history.push({
+      pathname: '/download'
+    })
+  }
+  goUpdate=()=>{
+    this.props.history.push({
+      pathname: '/'
+    })
+  }
   render() {
     return (
         <div className='detail'>
-            <div className='detail_choose'>
+            <div className='detail_choose' onClick={this.goUpdate}>
               <img src={updateImg} ></img>
               <p className='search'>修改学生信息</p>
               <p className='english'>MODIFY STUDENT INFOR</p>
             </div>
-            <div className='detail_choose'>
+            <div className='detail_choose' onClick={this.goDownload}>
               <img src={downloadImg} ></img>
               <p className='search'>下载准考证</p>
               <p className='english'>Download the admissi</p>
