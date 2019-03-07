@@ -1,36 +1,39 @@
 import React, { Component } from 'react'
 import './download.less'
-import {downloadPhoto, downloadInformation, downloadFile} from '../../api/GetPhoto'
+import { downloadInformation, downloadFile} from '../../api/GetPhoto'
 import { Button } from 'antd';
-// import  from '/studentController/white/getPhone'
+import _ from 'lodash'
 const imgUrl = 'http://172.20.244.242:8080/enroll/studentController/getPhone'
 export default class Download extends Component {
     constructor(props){
         super(props)
         this.state={
-            data:''
+            data: {
+                "admissionTicket": "",
+                "chinaName": "",
+                "gender": ""
+            }
         }
     }
     componentDidMount(){
-        // downloadPhoto().then(res=>{
-        //     console.log(res,'数据')
-        
-        //     // return 'data:image/png;base64,' + btoa(
-        //     //     new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
-        //     //   );
-        // })
         downloadInformation().then(res=>{
-            console.log(res.data.data,'1111')
-            this.setState({
-                data:res.data.data
-            })
+            console.log(res.data, '数据')
+            const code = _.get(res,'data.code')
+            if(code == 200){
+                this.setState({
+                    data:res.data.data
+                })
+            }
+            
         })
     }
     downloadFile=()=>{
         // downloadFile()
+        window.location.href('http://172.20.244.242:8080/enroll/studentController/certificate/getCertificate')
     }
   render() {
-      const {admissionTicket, chinaName, gender} = this.state.data
+    console.log(this.state.data,'11')
+    const {admissionTicket, chinaName, gender} = this.state.data
     return (
       <div>
         <p className='downSchool'>2019年金陵中学河西分校国际部</p>
@@ -47,8 +50,8 @@ export default class Download extends Component {
                     {
                         gender=='0'&&<span className='detailSex'>女</span>
                     }
-                    <span className='detailWord'>考试科目: 笔试、口试;</span>
-                    <span className='detailWord'>考点:金陵中学河西分校行政楼;</span>
+                    <span className='detailWord'>考试科目: &nbsp;笔试、口试;</span>
+                    <span className='detailWord'>考点:&nbsp;金陵中学河西分校行政楼;</span>
                 </p>
                 <div><span className='detailWord2'>考场号：</span><span>座位号:</span></div>
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
@@ -56,14 +59,16 @@ export default class Download extends Component {
             <img alt='' src={imgUrl}/>
         </div>
         <table className="customers">
-            <tr>
-                <th>日期</th>
-                <th>笔记+口试(时间)</th>
-            </tr>
-            <tr class="alt">
-                <td>待定</td>
-                <td>具体时间请等待学校通知</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <th>日期</th>
+                    <th>笔记+口试(时间)</th>
+                </tr>
+                <tr className="alt">
+                    <td>待定</td>
+                    <td>具体时间请等待学校通知</td>
+                </tr>
+            </tbody>
         </table>
         <div className='downFooter'>
             <p>注意事项：</p>
