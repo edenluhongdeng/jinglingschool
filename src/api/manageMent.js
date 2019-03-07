@@ -6,3 +6,9 @@ export function getStudyList(data){
 }
 
 //查询单个学生信息
+
+
+//下载信息 /teacherController/white/downloadStudentInfo
+export function downloadStudentInfo(data){
+    return Ajax(`/teacherController/white/downloadStudentInfo`,data)
+}

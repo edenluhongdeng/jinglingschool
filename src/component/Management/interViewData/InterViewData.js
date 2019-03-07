@@ -5,12 +5,12 @@ import {withRouter} from 'react-router-dom'
 class InterViewData extends Component {
     state={
         data:[],
-        prams:{}
+        prams:{},
     }
 
     //获取父组件传递过来的数据
     componentWillReceiveProps(props){
-        console.log(props,'-----------------')
+        // console.log(props,'-----------------')
         this.setState({
             data:props.data,
             prams:props.prams
@@ -77,37 +77,37 @@ class InterViewData extends Component {
     }, {
         title: '面试结果',
         dataIndex: 'interviewResult',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.writtenResults - b.writtenResults,
+        // defaultSortOrder: 'interviewResult',
+        sorter: true,
         align:'center'
     },{
         title: '笔试结果',
         dataIndex: 'writtenResults',
-        defaultSortOrder: 'descend',
+        defaultSortOrder: 'writtenResults',
         sorter: (a, b) => a.age - b.age,
         align:'center'
     },{
         title: '志愿填报',
         dataIndex: 'volunteerReport',
-        defaultSortOrder: 'descend',
+        defaultSortOrder: 'volunteerReport',
         sorter: (a, b) => a.age - b.age,
         align:'center'
     },{
         title: '中考分数',
         dataIndex: 'highSchoolScore',
-        defaultSortOrder: 'descend',
+        defaultSortOrder: 'highSchoolScore',
         sorter: (a, b) => a.age - b.age,
         align:'center'
     },{
         title: '一模分数',
         dataIndex: 'oneShotScore',
-        defaultSortOrder: 'descend',
+        defaultSortOrder: 'deoneShotScorescend',
         sorter: (a, b) => a.age - b.age,
         align:'center'
     },{
         title: '一模排名',
         dataIndex: 'oneShotRanking',
-        defaultSortOrder: 'descend',
+        defaultSortOrder: 'oneShotRanking',
         sorter: (a, b) => a.age - b.age,
         align:'center'
     }, {
@@ -175,7 +175,7 @@ class InterViewData extends Component {
     }
 
   //页码改变
-    pageChange(pageNumber){
+    pageChange = (pageNumber) => {
         const {prams} = this.state
         prams.pageNumber = pageNumber
         this.setState({
@@ -186,7 +186,7 @@ class InterViewData extends Component {
 
     //tab 数据改变
     tabChange =  (pagination, filters, sorter)=> {
-        console.log('params', pagination, filters, sorter);
+        console.log({pagination, filters, sorter});
       }
     //修改信息
     updataMsg = (text,record) => {
@@ -195,12 +195,14 @@ class InterViewData extends Component {
     //批量操作
     rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        // console.log(`selectedRowKeys: ${selectedRowKeys}`);
         if(selectedRows.length){
             this.props.downStatus(true)
         }else{
              this.props.downStatus(false)
         }
+        const needTickets = selectedRowKeys.length > 0 && selectedRowKeys.toString().replace(new RegExp("J","gm"),"").split(',')
+        this.props.getDownloadPramas(needTickets)
       },
     };
       
