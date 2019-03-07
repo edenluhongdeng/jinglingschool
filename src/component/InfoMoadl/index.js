@@ -15,11 +15,17 @@ class InfoModal extends Component {
     addStudentInfo(studentInfo)
         .then(res=>{
             const code = _.get(res,'data.code')
+            const error = _.get(res,'data.error')
             if(code == 200){
                 message.success('添加成功!',1,()=>{
                     this.props.onClose()
                 })
+            }else{
+                message.error(error)
             }
+        })
+        .catch(err=>{
+            message.error(err)
         })
   }
   render() {
@@ -176,10 +182,10 @@ class InfoModal extends Component {
                             <p className='infoModal-title'>填表人姓名<span>/Applicant</span></p>
                             <p>{preparerName}</p>
                         </div>
-                        <div>
+                        {/* <div>
                             <p className='infoModal-title'>填表时间<span>/Date of Regist</span></p>
                             <p>{preparerTimeStr}</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className='infoModal-footer'>
