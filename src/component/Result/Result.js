@@ -48,13 +48,13 @@ export default class Result extends Component {
             <div className='result_button'>
             {
                 
-                this.state.a===0&&<p style={{background:'#4276D4'}}>Excellent-优秀</p>
+                this.state.a==0&&<p style={{background:'#4276D4'}}>Excellent-优秀</p>
             }
             {
-                this.state.a===1&&<p >Pass-合格</p>
+                this.state.a==1&&<p >Pass-合格</p>
             }
             {
-                this.state.a===2&&<p style={{background:'#B3B3B3'}}>Fail-不合格</p>
+                this.state.a==2&&<p style={{background:'#B3B3B3'}}>Fail-不合格</p>
             }
             </div>
         </div>
