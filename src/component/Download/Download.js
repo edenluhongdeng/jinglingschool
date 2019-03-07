@@ -3,6 +3,7 @@ import './download.less'
 import {downloadPhoto, downloadInformation, downloadFile} from '../../api/GetPhoto'
 import { Button } from 'antd';
 // import  from '/studentController/white/getPhone'
+const imgUrl = 'http://172.20.244.242:8080/enroll/studentController/getPhone'
 export default class Download extends Component {
     constructor(props){
         super(props)
@@ -52,7 +53,7 @@ export default class Download extends Component {
                 <div><span className='detailWord2'>考场号：</span><span>座位号:</span></div>
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
-            <img alt=''/>
+            <img alt='' src={imgUrl}/>
         </div>
         <table className="customers">
             <tr>
