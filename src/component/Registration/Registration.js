@@ -26,7 +26,7 @@ class Registration extends Component {
     studentInfo:{}
   }
   componentDidMount(){
-    
+    document.title = "2019招生信息登记"
   }
   handleProvinceChange = (value) => {
     this.setState({
@@ -242,7 +242,7 @@ class Registration extends Component {
                   <div>
                     <Select
                       defaultValue={provinceData[0]}
-                      style={{ width: 240 }}
+                      style={{ width: '85%' }}
                       onChange={this.handleProvinceChange}
                     >
                       {provinceData.map(province => <Option key={province}>{province}</Option>)}
@@ -260,7 +260,7 @@ class Registration extends Component {
                 })(
                   <div>
                     <Select
-                      style={{ width: 700 }}
+                      style={{ width: '90%' }}
                       value={this.state.secondCity}
                       onChange={this.onSecondCityChange}
                     >
