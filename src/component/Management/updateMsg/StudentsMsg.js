@@ -185,7 +185,6 @@ class StudentsMsg extends Component {
         <div className="sub">
             <Button >保存</Button>
         </div>
-        
       </div>
     );
   }
