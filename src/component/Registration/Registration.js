@@ -159,6 +159,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('chinaName', {
                   rules: [{required: true, message: '请输入你的姓名!'},{validator:testName}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input' placeholder='请输入中文名...' maxLength={5} autoComplete="off"/>
                 )}
@@ -196,6 +197,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('idCard', {
                   rules: [{validator:testID}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input' placeholder='请输入身份证号...' autoComplete="off"/>
                 )}
@@ -216,6 +218,7 @@ class Registration extends Component {
               <Form.Item>
                   {getFieldDecorator('orNkStudent',{
                     rules: [{required: true, message: '请选择你的学籍!'}],
+                    validateTrigger: 'onBlur'
                   })(
                    <div className='regist-radioGroup'>
                     <Radio.Group onChange={this.radioGroupChange}>
@@ -281,6 +284,7 @@ class Registration extends Component {
                   rules: [
                     { required: true, message: '请选择你的学校信息!' },
                   ],
+                  validateTrigger: 'onBlur'
                 })(
                   <div>
                     <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off"/>
@@ -297,6 +301,7 @@ class Registration extends Component {
                   rules: [
                     { required: true, message: '请选择你的学校信息!' },
                   ],
+                  validateTrigger: 'onBlur'
                 })(
                   <div>
                     <Input className='regist-input3' placeholder='请输入市...' autoComplete="off"/>
@@ -313,6 +318,7 @@ class Registration extends Component {
                   rules: [
                     { required: true, message: '请选择你的学校信息!' },
                   ],
+                  validateTrigger: 'onBlur'
                 })(
                   <div>
                     <Input className='regist-input3' placeholder='请输入区...' autoComplete="off"/>
@@ -329,6 +335,7 @@ class Registration extends Component {
                   rules: [
                     { required: true, message: '请选择你的学校信息!' },
                   ],
+                  validateTrigger: 'onBlur'
                 })(
                   <div>
                     <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off"/>
@@ -345,6 +352,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator("intendedProgram", {
                   rules: [{required: true, message: '请选择你的项目意向!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <div className='regist-CheckboxGroup'>
                   <Checkbox.Group onChange={this.checkboxGroupChange}>
@@ -365,6 +373,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('exam1Score', {
                   rules: [{required: true, message: '请输入你的总分!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input' type='number' placeholder='请输入总分...' autoComplete="off"/>
                 )}
@@ -375,6 +384,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('exam1Rank', {
                   rules: [{required: true, message: '请输入你的年级排名!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input' type='number' placeholder='请输入年级排名...' autoComplete="off"/>
                 )}
@@ -407,6 +417,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('fatherName', {
                   rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
                 )}
@@ -417,6 +428,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('fatherCompany', {
                   rules: [{required: true, message: '请输入工作单位!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off"/>
                 )}
@@ -429,6 +441,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('fatherPosition', {
                   rules: [{required: true, message: '请输入工作职位!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off"/>
                 )}
@@ -439,6 +452,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('fatherPhone', {
                   rules: [{validator:testPhone}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off"/>
                 )}
@@ -451,6 +465,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('matherName', {
                   rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
                 )}
@@ -461,6 +476,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('matherCompany', {
                   rules: [{required: true, message: '请输入工作单位!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off"/>
                 )}
@@ -473,6 +489,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('matherPosition', {
                   rules: [{required: true, message: '请输入工作职位!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off"/>
                 )}
@@ -483,6 +500,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('matherPhone', {
                   rules: [{validator:testPhone}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off"/>
                 )}
@@ -495,6 +513,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('familyAddress', {
                   rules: [{required: true, message: '请输入家庭地址!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里…' autoComplete="off"/>
                 )}
@@ -508,6 +527,7 @@ class Registration extends Component {
               <Form.Item>
                 {getFieldDecorator('preparerName', {
                   rules: [{required: true, message: '请输入姓名!'}],
+                  validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名…' maxLength={5} autoComplete="off"/>
                 )}

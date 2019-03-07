@@ -1,3 +1,7 @@
+/*
+*教师填写面试信息页面
+*/
+
 import React, { Component } from 'react';
 import { Icon,Select ,Input,Row, Col,DatePicker   } from 'antd';
 import {withRouter} from 'react-router-dom'
@@ -7,6 +11,7 @@ import './style.less'
 const Option = Select.Option;
 const dateFormat = 'YYYY/MM/DD';
 class UpdateMsg extends Component {
+
 handleChange = (value) => {
   console.log(`selected ${value}`);
 }
@@ -36,6 +41,7 @@ goBack = () => {
                                     </span>
                                 </div>
                             </Col>
+
                             <Col span={6} order={2}>
                                 <div >
                                     <span>
@@ -45,17 +51,19 @@ goBack = () => {
                                 </div>
                             </Col>
                         </Row>
+
                         <Row type="flex">
                             <Col span={6} order={1}>
                                 <div >
                                 <h5>面试结果：</h5>
-                                <Select defaultValue="excellent" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="excellent">Excellent-优秀</Option>
-                                    <Option value="lucy">合格</Option>
-                                    <Option value="Yiminghe">不合格</Option>
+                                <Select defaultValue="0" style={{ width: 240 }} onChange={this.handleChange}>
+                                    <Option value="0">Excellent-优秀</Option>
+                                    <Option value="1">合格</Option>
+                                    <Option value="2">不合格</Option>
                                 </Select>
                                 </div>
                             </Col>
+
                             <Col span={6} order={2}>
                                 <div >
                                 <h5>面试描述：</h5>
@@ -66,82 +74,91 @@ goBack = () => {
                                  </div>
                             </Col>
                         </Row>
+
                         <Row type="flex">
                                 <Col span={6} order={1}>
-                                <div >
-                                <h5>笔试结果：</h5>
-                                <Input placeholder=" " style={{width:240}}/>
-                                </div>
+                                    <div >
+                                        <h5>笔试结果：</h5>
+                                        <Input placeholder=" " style={{width:240}}/>
+                                    </div>
                                 </Col>
+
                                 <Col span={6} order={2}>
-                                <div >
-                                <h5>缴费情况：</h5>
-                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="yes">是</Option>
-                                    <Option value="no">否</Option>
-                                </Select>
-                                </div>
+                                    <div >
+                                        <h5>缴费情况：</h5>
+                                        <Select defaultValue="1" style={{ width: 240 }} onChange={this.handleChange}>
+                                            <Option value="1">是</Option>
+                                            <Option value="0">否</Option>
+                                        </Select>
+                                    </div>
                                 </Col>
+
                                 <Col span={6} order={3}>
-                                <div >
-                                <h5>中考分数：</h5>
-                                <Input placeholder=" " style={{width:240}}/>
-                                </div>
+                                    <div >
+                                        <h5>中考分数：</h5>
+                                        <Input placeholder=" " style={{width:240}}/>
+                                    </div>
                                 </Col>
+
                                 <Col span={6} order={4}>
-                                <div >
-                                <h5>志愿填报情况：</h5>
-                                <Select defaultValue="1A" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="1A">1A</Option>
-                                    <Option value="1B">1B</Option>
-                                    <Option value="1C">1C</Option>
-                                </Select>
-                                </div>
+                                    <div >
+                                        <h5>志愿填报情况：</h5>
+                                        <Select defaultValue="0" style={{ width: 240 }} onChange={this.handleChange}>
+                                            <Option value="0">1A</Option>
+                                            <Option value="1">1B</Option>
+                                            <Option value="2">1C</Option>
+                                        </Select>
+                                    </div>
                                 </Col>
                         </Row>
+
                         <Row type="flex">
                                 <Col span={6} order={1}>
-                                <div >
-                                <h5>提档：</h5>
-                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="yes">是</Option>
-                                    <Option value="no">否</Option>
-                                </Select>
-                                </div>
+                                    <div >
+                                        <h5>提档：</h5>
+                                        <Select defaultValue="1" style={{ width: 240 }} onChange={this.handleChange}>
+                                            <Option value="1">是</Option>
+                                            <Option value="0">否</Option>
+                                        </Select>
+                                    </div>
                                 </Col>
+
                                 <Col span={6} order={2}>
-                                <div >
-                                <h5>退费：</h5>
-                                <Select defaultValue="yes" style={{ width: 240 }} onChange={this.handleChange}>
-                                    <Option value="yes">是</Option>
-                                    <Option value="no">否</Option>
-                                    <Option value="want">考虑</Option>
-                                </Select>
-                                </div>
+                                    <div >
+                                        <h5>退费：</h5>
+                                        <Select defaultValue="2" style={{ width: 240 }} onChange={this.handleChange}>
+                                            <Option value="1">是</Option>
+                                            <Option value="0">否</Option>
+                                            <Option value="2">考虑</Option>
+                                        </Select>
+                                    </div>
                                 </Col>
+
                                 <Col span={6} order={3}>
-                                <div >
-                                <h5>联系时间：</h5>
-                                <DatePicker defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} style={{ width: 240 }} />
-                                </div>
+                                    <div >
+                                        <h5>联系时间：</h5>
+                                        <DatePicker defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} style={{ width: 240 }} />
+                                    </div>
                                 </Col>
+
                                 <Col span={6} order={4}>
-                                <div >
-                                <h5>联系人：</h5>
-                                <Input placeholder=" " style={{width:240}}/>
-                                </div>
+                                    <div >
+                                        <h5>联系人：</h5>
+                                        <Input placeholder=" " style={{width:240}}/>
+                                    </div>
                                 </Col>
                         </Row>
+
                         <Row type="flex">
-                        <Col span={6} order={1}>
+                            <Col span={6} order={1}>
                                 <div >
-                                <h5>备注记录：</h5>
-                                <div className = "description"> 
-                                       <Input placeholder="请输入备注记录" style={{width:1000}}/>
-                                       <span>100/0</span>
+                                    <h5>备注记录：</h5>
+                                    <div className = "description"> 
+                                        <Input placeholder="请输入备注记录" style={{width:1000}}/>
+                                        <span>100/0</span>
                                     </div>
                                 </div>
-                                </Col>
+                            </Col>
                         </Row>
                     </div>
                 </div>

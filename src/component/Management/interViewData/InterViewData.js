@@ -5,12 +5,15 @@ import {withRouter} from 'react-router-dom'
 class InterViewData extends Component {
     state={
         data:[],
+        prams:{}
     }
 
     //获取父组件传递过来的数据
     componentWillReceiveProps(props){
+        console.log(props,'-----------------')
         this.setState({
-            data:props.data
+            data:props.data,
+            prams:props.prams
         })
     }
 
@@ -33,13 +36,13 @@ class InterViewData extends Component {
     //志愿填报
     volunteerInfo = (result) =>{
         switch(result){
-            case 0:
+            case "0":
             return '1A'
             break;
-            case 1:
+            case "1":
             return '1B'
             break;
-            case 2:
+            case "2":
             return '1C'
             break;
             default:
@@ -75,7 +78,7 @@ class InterViewData extends Component {
         title: '面试结果',
         dataIndex: 'interviewResult',
         defaultSortOrder: 'descend',
-        sorter: (a, b) => a.age - b.age,
+        sorter: (a, b) => a.writtenResults - b.writtenResults,
         align:'center'
     },{
         title: '笔试结果',
@@ -163,7 +166,7 @@ class InterViewData extends Component {
                     paymentSituation:this.isStatus(item.payInfo),
                     file:this.isStatus(item.toFile ),
                     refund:this.isStatus(item.returnPay),
-                    contactTime:item.contactTime ,
+                    contactTime:item.contactTime&&item.contactTime.split('T')[0] ,
                     contactUser:item.contactName 
                 }
             )
@@ -173,14 +176,12 @@ class InterViewData extends Component {
 
   //页码改变
     pageChange(pageNumber){
-        const {pageSize} = this.state
-        this.props.getData({
-            pageNumber,
-            pageSize
-        })
+        const {prams} = this.state
+        prams.pageNumber = pageNumber
         this.setState({
-            pageNumber
+            prams
         })
+        this.props.getData(prams)
     }
 
     //tab 数据改变
