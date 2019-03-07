@@ -8,7 +8,11 @@ export function getStudyList(data){
 //查询单个学生信息
 
 
-//下载信息 /teacherController/white/downloadStudentInfo
+//下载信息   /teacherController/getStudentinfoExcelPath
 export function downloadStudentInfo(data){
-    return Ajax(`/teacherController/downloadStudentInfo`,data)
+    return Ajax(`/teacherController/getStudentinfoExcelPath`,data)
+}
+//下载信息第二部 /teacherController/white/downloadStudentInfo
+export function getStudentinfoExcelPath(exelPath){
+    return Ajax(`/teacherController/downloadStudentInfo`,{exelPath},"GET")
 }
