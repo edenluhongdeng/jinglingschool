@@ -26,7 +26,7 @@ class Registration extends Component {
     studentInfo:{}
   }
   componentDidMount(){
-    
+    document.title = "2019招生信息登记"
   }
   handleProvinceChange = (value) => {
     this.setState({
