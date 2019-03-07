@@ -92,7 +92,6 @@ class Registration extends Component {
     })
   }
   beforeUpload = (file) => {
-    console.log({file})
     const isJPG = file.type === ('image/jpeg' || 'image/jpg' || 'image/gif' || 'image/png' || 'image/bmp')
     if (!isJPG) {
       message.warning('照片格式不正确!')
@@ -112,6 +111,7 @@ class Registration extends Component {
       message.success('上传成功!')
       const { studentInfo } = this.state
       const imageUrl = _.get(info,'file.response.data')
+      console.log({info})
       studentInfo.photo = imageUrl
       getBase64(info.file.originFileObj, imageUrl => this.setState({
         imageUrl,
@@ -124,6 +124,7 @@ class Registration extends Component {
   }
   render() {
     const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl, studentInfo } = this.state
+    console.log({imageUrl})
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
