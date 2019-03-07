@@ -1,15 +1,14 @@
 .search {
-
   .header {
     width: 100%;
-    height: 2.3rem;
-    background: #e0e5df;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 10px 5px #c8c8c8;
+    // height: 2.3rem;
+    // background: #e0e5df;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // box-shadow: 0 10px 5px #c8c8c8;
     > img {
-      width: 2rem;
+      width: 100%;
     }
   }
   .info_serch {
@@ -33,8 +32,12 @@
       }
       .but_err {
         position: relative;
-        background: gold;
-        right: 0.3rem;
+        display: inline-block;
+        width: 0.34rem;
+        right: 0.4rem;
+        > img {
+          width: 0.34rem;
+        }
       }
     }
     .input_msg {
@@ -62,16 +65,23 @@
   }
   .info_change {
     color: #ffffff;
-    background: #32b16c !important;
+    background: #32b16c;
     box-shadow: 0 7px 10px 0px #a4eac4;
+    > span {
+      color: #ffffff;
+    }
   }
   .info_notfind {
     color: #666666;
+    > span {
+    }
   }
 }
 /* 准考证信息 */
 .Admissioninfo {
-  padding: 0.5rem 0.3rem;
+  .box {
+    padding: 0.5rem 0.3rem;
+  }
   .header {
     // height: 2.5rem;
     padding: 0 0 0.4rem 0;
@@ -118,6 +128,7 @@
     .note_title {
       width: 1rem;
       height: 0.5rem;
+      font-size: 0.24rem;
       background: #e1e1e1;
       text-align: center;
       line-height: 0.5rem;
@@ -133,8 +144,8 @@
       font-size: 0.22rem;
       font-weight: 600;
       border-radius: 5px;
-      .note_num{
-          margin-top: 0.05rem;
+      .note_num {
+        margin-top: 0.05rem;
       }
       .note_text {
         line-height: 0.4rem;
@@ -144,91 +155,97 @@
 }
 
 /* 成绩查询 */
-.Resultsquery{
-    // padding: 0.5rem 0.3rem;
-    .header {
-      // height: 2.5rem;
-      padding: 0.5rem 0 0.4rem 0;
-      width: 100%;
-      text-align: center;
-      font-size: 0.35rem;
-      color: #333333;
-      font-weight: bold;
-      > span {
-        display: inline-block;
-        width: 5.2rem;
-        line-height: 0.6rem;
-      }
-    }
-    .show{
-        padding: 0 0.3rem;
-    }
-    .info_show{
-        width: 100%;
-        height: 1.6rem;
-        border-radius: 5px;
-        margin-top: 0.7rem;
-        display: flex;
-        align-items: center;
-        background: #FBFAC6;
-        padding: 0 0.4rem;
-        color: #333333;
-        font-size: 0.25rem;
-        font-weight: 600;
-        .info_show_left{
-            text-align: left;
-            width: 50%;
-            
-        }
-        .info_show_left_buttom{
-            width: 100%;
-            .info_show_left_cj{
-                margin-left: 0.8rem;
-                display: inline-block;
-                width: 2.4rem;
-                height: 0.8rem;
-                border: 2px solid #97D6B6;
-                text-align: center;
-                line-height: 0.8rem;
-                border-radius: 5px;
-                color: #8E0407;
-                font-size: 0.28rem;
-            }
-        }
-        .info_show_right{
-            width: 50%;
-        }
-    }
-    .footer{
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        .thunk_info{
-            padding-bottom: 1rem;
-            font-size: 0.28;
-            color: #333333;
-            font-weight: 600;
-        }
-        .class_logo{
-            width: 100%;
-            height: 2.3rem;
-            background: #E0E5DF;
-        }
-    }
-}
-.nva{
-    height: 1rem;
+.Resultsquery {
+  // padding: 0.5rem 0.3rem;
+  .header {
+    // height: 2.5rem;
+    padding: 0.5rem 0 0.4rem 0;
     width: 100%;
-    background: #32B16C;
+    text-align: center;
+    font-size: 0.35rem;
+    color: #333333;
+    font-weight: bold;
+    > span {
+      display: inline-block;
+      width: 5.2rem;
+      line-height: 0.6rem;
+    }
+  }
+  .show {
+    padding: 0 0.3rem;
+  }
+  .info_show {
+    width: 100%;
+    height: 1.6rem;
+    border-radius: 5px;
+    margin-top: 0.7rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 0.3rem;
-    color: #FFFFFF;
-    font-size: 0.36rem;
-    .goback{
-        font-size: 0.8rem;
-        line-height: 1rem;
+    background: #fbfac6;
+    padding: 0 0.4rem;
+    color: #333333;
+    font-size: 0.25rem;
+    font-weight: 600;
+    .info_show_left {
+      text-align: left;
+      width: 50%;
     }
+    .info_show_left_buttom {
+      width: 100%;
+      .info_show_left_cj {
+        margin-left: 0.8rem;
+        display: inline-block;
+        width: 2.4rem;
+        height: 0.8rem;
+        border: 2px solid #97d6b6;
+        text-align: center;
+        line-height: 0.8rem;
+        border-radius: 5px;
+        color: #8e0407;
+        font-size: 0.28rem;
+      }
+    }
+    .info_show_right {
+      width: 50%;
+    }
+  }
+  .footer_bottom {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    .thunk_info {
+      padding-bottom: 0.85rem;
+      font-size: 0.28rem;
+      color: #333333;
+      font-weight: 600;
+    }
+    .class_logo {
+      width: 100%;
+      height: 2.3rem;
+      background: #e0e5df;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+.nva {
+  height: 1rem;
+  width: 100%;
+  background: #32b16c;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.3rem;
+  color: #ffffff;
+  font-size: 0.36rem;
+  .goback {
+    line-height: 1rem;
+    color: #ffffff;
+    width: 0.25rem;
+    > img {
+      width: 0.25rem;
+    }
+  }
 }

@@ -23,6 +23,8 @@ import Login from './component/Login/Login';
 import Choose from './component/Choose/Choose';
 /*成绩结果 */
 import Result from './component/Result/Result';
+/* 下载*/
+import Download from './component/Download/Download';
 
 class Root extends Component {
   render() {
@@ -38,6 +40,7 @@ class Root extends Component {
           <Route path="/login" component={Login} />
           <Route path="/choose" component={Choose} />
           <Route path="/result" component={Result} />
+          <Route path="/download" component={Download} />
         </Switch>
       </div>
     );

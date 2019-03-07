@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { Icon,Select ,Input,Row, Col,DatePicker   } from 'antd';
 import {withRouter} from 'react-router-dom'
 import moment from 'moment';
+import StudentsMsg from "./StudentsMsg"
 import './style.less'
 const Option = Select.Option;
 const dateFormat = 'YYYY/MM/DD';
@@ -161,9 +162,8 @@ goBack = () => {
                         </Row>
                     </div>
                 </div>
-                <div className="line">
-                    <span></span>
-                </div>
+                {/* 学生情况 */}
+                <StudentsMsg />
             </div>
       </div>
     );
