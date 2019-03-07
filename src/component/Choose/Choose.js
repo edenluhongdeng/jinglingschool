@@ -16,7 +16,7 @@ export default class Choose extends Component {
   }
   goUpdate=()=>{
     this.props.history.push({
-      pathname: '/'
+      pathname: '/registration'
     })
   }
   render() {

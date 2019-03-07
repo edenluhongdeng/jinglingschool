@@ -29,7 +29,7 @@ export default class Download extends Component {
     }
     downloadFile=()=>{
         // downloadFile()
-        window.location.href('http://172.20.244.242:8080/enroll/studentController/certificate/getCertificate')
+        window.location.href='http://172.20.244.242:8080/enroll/studentController/certificate/getCertificate'
     }
   render() {
     console.log(this.state.data,'11')
