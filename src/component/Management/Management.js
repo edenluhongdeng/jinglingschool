@@ -266,7 +266,7 @@ getExam1Score = (value)=>{
   })
 }
 //获取一模排名
-getExam1Rank  = (e)=>{
+getExam1Rank = (e)=>{
   const {prams} = this.state
   prams.exam1Rank = e
   this.setState({
@@ -534,7 +534,8 @@ getDownloadPramas = (data) => {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模排名:</h6>
                           <InputNumber className = "fraction"
                            onChange={this.getExam1Rank}
-                           min={0} 
+                           precision='0'
+                           min={1} 
                            type='number'
                            />
                           <i>名（含）以上</i>
