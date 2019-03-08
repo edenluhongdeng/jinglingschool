@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <Router /* history={hashHistory} */>
-        <div>
+        <div className = "app">
           <Root />
         </div>
       </Router>

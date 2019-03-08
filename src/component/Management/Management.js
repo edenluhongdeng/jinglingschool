@@ -15,7 +15,7 @@ class Management extends Component {
     checkViewResult:['不限'],//面试结果
     IsArchive:['不限'], //是否提档
     IsPayment:['不限'], //缴费境况
-    oneShortNum:0,//一模分数
+
     oneShortSert:'',//一模排名
     VoluntaryReporting:['不限'],//志愿填报
     IsNanJing:['不限'] ,//是否南京学籍
@@ -479,7 +479,7 @@ getDownloadPramas = (data) => {
                           maxLength = '3'
                           defaultValue={0}
                           onChange={this.getExam1Score}/>
-                          <i>分（含）以上</i>
+                          <i className="size">分（含）以上</i>
                       </div>
                     </Col>
               </Row>
@@ -517,19 +517,20 @@ getDownloadPramas = (data) => {
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>中考分数:</h6>
                           <InputNumber className = "fraction" 
-                          onBlur = {this.getJuniorExamScore} 
+                          onChange = {this.getJuniorExamScore} 
                           maxLength={3}                         
                           max={999} 
-                          min={0} />
+                          min={0}
+                          defaultValue={0}
+                          />
                           <i>分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模排名:</h6>
-                          <Input className = "fraction"
-                           onBlur={this.getExam1Rank}
-                           max={999} 
+                          <InputNumber className = "fraction"
+                           onChange={this.getExam1Rank}
                            min={0} 
                            type='number'
                            />
@@ -572,9 +573,10 @@ getDownloadPramas = (data) => {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>笔试结果:</h6>
                           <InputNumber className = "fraction" 
                           onChange={this.getWrittenResult}
-                          max={999} 
+                          max={100} 
                           min={0} 
                           maxLength={3}
+                          defaultValue={0}
                           />
                           <i>分（含）以上</i>
                       </div>

@@ -245,6 +245,7 @@ class UpdateMsg extends Component {
                           style={{ width: 800 }}
                           onChange={this.descriptionInput}
                           value={this.state.interviewDescribe}
+                          maxLength={100}
                         />
                         <span>{`${
                           this.state.interviewDescribe
@@ -376,6 +377,7 @@ class UpdateMsg extends Component {
                           onChange={this.handleChangeRemark}
                           value={this.state.remark}
                           rows={4}
+                          maxLength={100}
                         />
                         <span>{`${
                           this.state.remark ? this.state.remark.length : 100
