@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import './index.less'
 import MyModal from '../Common/MyModal'
 import { Button,message } from 'antd'
+import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
-import { addStudentInfo } from '../../api'
+import { addStudentInfo,updateStudentInfo } from '../../api'
 class InfoModal extends Component {
   state = {
   }
@@ -11,14 +12,15 @@ class InfoModal extends Component {
     this.props.onClose()
   }
   handleClick2 = () => {
-    const { studentInfo } = this.props
-    addStudentInfo(studentInfo)
+    const { studentInfo,flag } = this.props
+    if(flag){
+        updateStudentInfo(studentInfo)
         .then(res=>{
             const code = _.get(res,'data.code')
             const error = _.get(res,'data.error')
             if(code == 200){
-                message.success('添加成功!',1,()=>{
-                    this.props.onClose()
+                message.success('修改成功!',1,()=>{
+                    this.props.history.push('/download')
                 })
             }else{
                 message.error(error)
@@ -27,6 +29,23 @@ class InfoModal extends Component {
         .catch(err=>{
             message.error(err)
         })
+    }else{
+        addStudentInfo(studentInfo)
+        .then(res=>{
+            const code = _.get(res,'data.code')
+            const error = _.get(res,'data.error')
+            if(code == 200){
+                message.success('添加成功!',1,()=>{
+                    this.props.history.push('/download')
+                })
+            }else{
+                message.error(error)
+            }
+        })
+        .catch(err=>{
+            message.error(err)
+        })
+    }
   }
   render() {
     const { studentInfo,imageUrl } = this.props
@@ -51,7 +70,6 @@ class InfoModal extends Component {
         matherPosition,
         orNkStudent,
         preparerName,
-        preparerTimeStr,
         schoolNameIndex,
         schoolSiteArea,
         schoolSiteCity,
@@ -182,10 +200,6 @@ class InfoModal extends Component {
                             <p className='infoModal-title'>填表人姓名<span>/Applicant</span></p>
                             <p>{preparerName}</p>
                         </div>
-                        {/* <div>
-                            <p className='infoModal-title'>填表时间<span>/Date of Regist</span></p>
-                            <p>{preparerTimeStr}</p>
-                        </div> */}
                     </div>
                 </div>
                 <div className='infoModal-footer'>
@@ -197,4 +211,4 @@ class InfoModal extends Component {
     )
   }
 }
-export default InfoModal
+export default withRouter(InfoModal)
