@@ -7,7 +7,7 @@ import {getStudyList,downloadStudentInfo,getStudentinfoExcelPath} from '../../ap
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
 const confirm = Modal.confirm;
-const baseUrl = 'http://172.20.244.236:8080'
+const baseUrl = 'http://localhost:80'
 class Management extends Component {
   state = {
     selectedTags: [],

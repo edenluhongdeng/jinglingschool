@@ -8,7 +8,7 @@ import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePic
 import FailModal from '../FailModal'
 import InfoModal from '../InfoMoadl'
 const { Option } = Select
-const baseUrl = 'http://172.20.244.236:8080'
+const baseUrl = 'http://localhost:80'
 const dateFormat = 'YYYY-MM-DD'
 const provinceData = ['鼓楼区', '秦淮区','建邺区','雨花台区','栖霞区','江宁区','浦口区','溧水区','高淳区','六合区','江北新区']
 const cityData = {
@@ -178,7 +178,6 @@ class Registration extends Component {
   }
   componentDidMount(){
     document.title = "2019招生信息登记"
-    console.log(this.props,"??????")
     let flag = false
     const { state } = this.props.location
     if (state && state.role) flag = true
@@ -415,7 +414,7 @@ class Registration extends Component {
                 <p className='regist-title'><span>出生年月</span>/Date of Birth</p>
                 <Form.Item>
                 {getFieldDecorator('birthDateStr', {
-                  initialValue: initData.birthDateStr ? moment(initData.birthDateStr, dateFormat) : moment('2019/03/08', dateFormat),
+                  initialValue: initData.birthDateStr ? moment(initData.birthDateStr, dateFormat) : moment(Date.now(),dateFormat),
                   rules: [{ required: true, message: '请选择你的出生日期!' }],
                 })(
                   <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
