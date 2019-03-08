@@ -178,8 +178,10 @@ class Registration extends Component {
   }
   componentDidMount(){
     document.title = "2019招生信息登记"
-    const { flag } = this.props
-
+    console.log(this.props,"??????")
+    let flag = false
+    const { state } = this.props.location
+    if (state && state.role) flag = true
     if(flag){
       selectForUpdate()
       .then(res => {

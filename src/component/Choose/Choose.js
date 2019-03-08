@@ -15,8 +15,12 @@ export default class Choose extends Component {
     })
   }
   goUpdate=()=>{
+    const role = 2
     this.props.history.push({
-      pathname: '/registration'
+      pathname:`/registration`,
+      state:{
+        role
+      }
     })
   }
   render() {

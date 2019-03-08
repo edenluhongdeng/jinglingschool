@@ -4,6 +4,8 @@ import logo from '../../imgs/enrollment_login.png'
 import { Form, Input, Button, } from 'antd'
 import {login} from '../../api/Login'
 const FormItem = Form.Item;
+
+
 class Demo  extends Component {
   constructor(props){
     super(props)
@@ -26,8 +28,7 @@ class Demo  extends Component {
           })
         }else if(res.data.code=='200'&&res.data.data == '2'){
           this.props.history.push({
-            /* lhd */
-            pathname: '/management',
+            pathname: '/choose',
           })
         }
       })
@@ -80,7 +81,7 @@ class Demo  extends Component {
             <FormItem {...formItemLayout} label="身份证号">
               {getFieldDecorator('idCard', {
                 rules: [{
-                  // required: false, message: '请输入正确的身份证号!',
+                  required: false, message: '请输入正确的身份证号!',
                 }, {
                   validator: checkAdmission,
                 }],
@@ -91,7 +92,7 @@ class Demo  extends Component {
             <FormItem {...formItemLayout} label="手机号码">
               {getFieldDecorator('contactPhone', {
                 rules: [{
-                  // required: false, message: '手机号码格式不正确!',
+                  required: false, message: '手机号码格式不正确!',
                 }, {
                   validator: checkFhone,
                 }],
@@ -99,7 +100,7 @@ class Demo  extends Component {
                 <div className='phone'>
                   <Input  placeholder="请输入手机号码..." style={inputStyle}/>
                   {
-                    this.state.a&&<p className='phoneNumber'>准考证号与手机号码不一致！</p>
+                    this.state.a&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
                   }
                 </div>
 
@@ -118,6 +119,7 @@ class Demo  extends Component {
                   height: '0.4rem',
                   marginLeft: '0.3rem'
                 }}
+                
               >
                 登录
               </Button>

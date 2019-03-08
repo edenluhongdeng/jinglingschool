@@ -214,6 +214,7 @@ class InterViewData extends Component {
     // juniorExamScoreDesc:false,//中考分数降序标志
     // volunteerInfoDesc:false,//志愿填报降序标志
     // writtenResultDesc:false,//笔试结果降序标志
+    
     //tab 数据改变
     getDataList = (str) =>{
         const { prams } = this.state
