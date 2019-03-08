@@ -1,17 +1,47 @@
 import React, { Component } from "react";
-import { Col, Row, Button } from "antd";
-import { getStudyInfoTch } from "./../../../api/manageMent.js"
+import { Col, Row, Button, Modal } from "antd";
+import { getStudyInfoTch } from "./../../../api/manageMent.js";
 import "./studentsmsg.less";
 
 class StudentsMsg extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      confirmLoading: false
+    };
   }
-  subFatherFun =()=>{
-    console.log(this.props.subButton())
-  }
+  subFatherFun = () => {
+    this.setState({
+      visible: true
+    });
+  };
+  handleOk = e => {
+    this.setState({
+      visible: false
+    });
+  };
+  /*  */
+  handleOk = () => {
+    this.setState({
+      confirmLoading: true
+    });
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        confirmLoading: false
+      });
+    }, 1000);
+    this.props.subButton();
+  };
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false
+    });
+  };
   render() {
-    const list = this.props.list
+    const list = this.props.list;
     function renderTime(date) {
       var dateee = new Date(date).toJSON();
       return new Date(+new Date(dateee) + 8 * 3600 * 1000)
@@ -126,7 +156,7 @@ class StudentsMsg extends Component {
                     {list.intendedProgram == "3" && (
                       <span className="chin_contry">待定</span>
                     )}
-                    { ! (list.intendedProgram) && (
+                    {!list.intendedProgram && (
                       <span className="chin_contry">未选择</span>
                     )}
                   </div>
@@ -180,7 +210,8 @@ class StudentsMsg extends Component {
                     <span>/Cellphone No.</span>
                   </div>
                   <div className="infomsgcont">
-                    {renderTime(list.fatherPhone).split(" ")[0] || "2019年3月21日"}
+                    {renderTime(list.fatherPhone).split(" ")[0] ||
+                      "2019年3月21日"}
                   </div>
                 </div>
               </div>
@@ -228,9 +259,7 @@ class StudentsMsg extends Component {
                     <span>家庭住址 </span>
                     <span> /Family Address</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.familyAddress}
-                  </div>
+                  <div className="infomsgcont">{list.familyAddress}</div>
                 </div>
               </div>
             </Col>
@@ -260,7 +289,8 @@ class StudentsMsg extends Component {
                     <span> /Date of Regist</span>
                   </div>
                   <div className="infomsgcont">
-                    {renderTime(list.preparerTime).split(" ")[0] || "2019年3月21日"}
+                    {renderTime(list.preparerTime).split(" ")[0] ||
+                      "2019年3月21日"}
                   </div>
                 </div>
               </div>
@@ -270,6 +300,23 @@ class StudentsMsg extends Component {
         <div className="sub">
           <Button onClick={this.subFatherFun}>保存</Button>
         </div>
+        <Modal
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          confirmLoading={this.confirmLoading}
+          onCancel={this.handleCancel}
+          style={{ textAlign: "center" }}
+          footer={[
+            <Button key="back" onClick={this.handleCancel}>
+              取消
+            </Button>,
+            <Button key="submit" type="primary" onClick={this.handleOk}>
+              保存
+            </Button>
+          ]}
+        >
+          <p>{`是否保存修改内容`}</p>
+        </Modal>
       </div>
     );
   }

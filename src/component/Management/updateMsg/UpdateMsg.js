@@ -18,7 +18,6 @@ import moment from "moment";
 import { getStudyInfoTch, getUpdataInfo } from "./../../../api/manageMent.js";
 import StudentsMsg from "./StudentsMsg";
 import "./style.less";
-import { Button } from "antd-mobile";
 const Option = Select.Option;
 const { TextArea } = Input;
 const dateFormat = "YYYY-MM-DD";
@@ -32,52 +31,52 @@ class UpdateMsg extends Component {
     contactTime: null
   };
   componentDidMount() {
-    getStudyInfoTch({ admissionTicket: "20192500" })
-      .then(item => {
-        if (item.data.code === "10000") {
-          message.info("请登陆");
-          return;
-        }
-        if (item.data.code === "200") {
-          this.setState({
-            list: item.data.data
-          });
-          console.log(item.data.data, 11111111111111111111111);
-          /* 判断是第一次填写信息还是第二次修改信息 */
-          this.setState({
-            addInfoShow: false,
-            /* 录取情况 */
-            interviewResult: item.data.data.interviewResult,
-            writtenResult: item.data.data.writtenResult,
-            payInfo: item.data.data.payInfo,
-            returnPay: item.data.data.returnPay,
-            toFile: item.data.data.toFile,
-            remark: item.data.data.remark,
-            contactName: item.data.data.contactName,
-            interviewDescribe: item.data.data.interviewDescribe,
-            juniorExamScore: item.data.data.juniorExamScore,
-            volunteerInfo: item.data.data.volunteerInfo,
-            contactTime: item.data.data.contactTime
-          });
-          if (item.data.data.interviewResult !== null) {
-            alert("修改");
-            /* 条件成立为第二次修改 */
-          } else {
-            /* 第一次添加 */
+    this.getInfo();
+  }
+  /* 获取信息 */
+  getInfo = () => {
+    if (window.location.hash.split("=") != undefined) {
+      const urlId = window.location.hash.split("=")[1];
+      this.setState({
+        admissionTicket: urlId
+      });
+      getStudyInfoTch({ admissionTicket: `${urlId}` })
+        .then(item => {
+          if (item.data.code === "10000") {
+            message.info("请登陆");
+            return;
+          }
+          if (item.data.code === "200") {
             this.setState({
-              addInfoShow: true,
               list: item.data.data
             });
+            this.setState({
+              addInfoShow: false,
+              interviewResult: item.data.data.interviewResult,
+              writtenResult: item.data.data.writtenResult,
+              payInfo: item.data.data.payInfo,
+              returnPay: item.data.data.returnPay,
+              toFile: item.data.data.toFile,
+              remark: item.data.data.remark,
+              contactName: item.data.data.contactName,
+              interviewDescribe: item.data.data.interviewDescribe,
+              juniorExamScore: item.data.data.juniorExamScore,
+              volunteerInfo: item.data.data.volunteerInfo,
+              contactTime: item.data.data.contactTime
+            });
+          } else {
+            message.error("接口错误")
+            return;
           }
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+        })
+        .catch(err => {
+            message.error("数据错误")
+          console.log(err);
+        });
+    }
+  };
   /* 面试结果 */
   handleChangeQuerty = e => {
-    console.log(e);
     this.setState({
       interviewResult: e
     });
@@ -90,7 +89,6 @@ class UpdateMsg extends Component {
   };
   /* 笔试结果 */
   handleChangeResult = e => {
-    console.log(e);
     this.setState({
       writtenResult: e
     });
@@ -103,7 +101,6 @@ class UpdateMsg extends Component {
   };
   /* 中考分数 */
   handleChangeMinderRe = e => {
-    console.log(e);
     this.setState({
       juniorExamScore: e
     });
@@ -146,72 +143,32 @@ class UpdateMsg extends Component {
   };
   /* 提交总按钮 */
   subButton = () => {
-    console.log(this.state.interviewResult);
-    // const req = {
-    //   admissionTicket: /*  this.state.list.admissionTicket */ 20192500,
-    //   contactName:
-    //     this.state.contactName !== undefined
-    //       ? this.state.contactName
-    //       : this.state.list.contactName,
-    //   contactTime:
-    //     this.state.contactTime !== undefined
-    //       ? this.state.contactTime
-    //       : this.state.list.contactTime,
-    //   interviewDescribe:
-    //     this.state.interviewDescribe !== undefined
-    //       ? this.state.interviewDescribe
-    //       : this.state.list.interviewDescribe,
-    //   interviewResult:
-    //     this.state.interviewResult !== undefined
-    //       ? this.state.interviewResult
-    //       : this.state.list.interviewResult,
-    //   juniorExamScore:
-    //     this.state.juniorExamScore !== undefined
-    //       ? this.state.juniorExamScore
-    //       : this.state.list.juniorExamScore,
-    //   payInfo:
-    //     this.state.payInfo !== undefined
-    //       ? this.state.payInfo
-    //       : this.state.list.payInfo,
-    //   remark:
-    //     this.state.remark !== undefined
-    //       ? this.state.remark
-    //       : this.state.list.remark,
-    //   returnPay:
-    //     this.state.returnPay !== undefined
-    //       ? this.state.returnPay
-    //       : this.state.list.returnPay,
-    //   toFile:
-    //     this.state.toFile !== undefined
-    //       ? this.state.toFile
-    //       : this.state.list.toFile,
-    //   volunteerInfo:
-    //     this.state.volunteerInfo !== undefined
-    //       ? this.state.volunteerInfo
-    //       : this.state.list.volunteerInfo,
-    //   writtenResult:
-    //     this.state.writtenResult !== undefined
-    //       ? this.state.writtenResult
-    //       : this.state.list.writtenResult
-    // };
     const req = {
-        admissionTicket: /*  this.state.list.admissionTicket */ 20192500,
-        contactName:this.state.list.contactName,
-        contactTime:this.state.list.contactTime,
-        interviewDescribe:this.state.list.interviewDescribe,
-        interviewResult:this.state.list.interviewResult,
-        juniorExamScore:this.state.list.juniorExamScore,
-        payInfo:this.state.list.payInfo,
-        remark:this.state.list.remark,
-        returnPay:this.state.list.returnPay,
-        toFile:this.state.list.toFile,
-        volunteerInfo:this.state.list.volunteerInfo,
-        writtenResult:this.state.list.writtenResult
-      };
-    getUpdataInfo(req).then(item => {
-      console.log(item);
-      message.info();
-    });
+      admissionTicket: this.state.admissionTicket,
+      contactName: this.state.contactName,
+      contactTime: this.state.contactTime,
+      interviewDescribe: this.state.interviewDescribe,
+      interviewResult: this.state.interviewResult,
+      juniorExamScore: this.state.juniorExamScore,
+      payInfo: this.state.payInfo,
+      remark: this.state.remark,
+      returnPay: this.state.returnPay,
+      toFile: this.state.toFile,
+      volunteerInfo: this.state.volunteerInfo,
+      writtenResult: this.state.writtenResult
+    };
+    getUpdataInfo(req)
+      .then(item => {
+        if (item.data.code == "200") {
+          this.getInfo();
+          message.info(item.data.msg);
+        } else {
+          message.info("保存失败");
+        }
+      })
+      .catch(() => {
+        message.info("保存失败");
+      });
   };
 
   //返回上一页
@@ -226,9 +183,7 @@ class UpdateMsg extends Component {
         .replace(/T/g, " ")
         .replace(/\.[\d]{3}Z/, "");
     }
-    console.log(renderTime("2019-03-06T19:19:12.000+0000").split(" ")[0]);
     var Time = renderTime(this.state.contactTime).split(" ")[0];
-    console.log(Time)
     return (
       <div className="updateMsg">
         <div className="updateMsg-content">
@@ -282,7 +237,7 @@ class UpdateMsg extends Component {
                     <div>
                       <h5>面试描述：</h5>
                       <div className="description">
-                        <TextArea
+                        <Input
                           style={{ width: 800 }}
                           onChange={this.descriptionInput}
                           value={this.state.interviewDescribe}
