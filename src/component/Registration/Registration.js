@@ -247,15 +247,18 @@ class Registration extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault()
-    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex } = this.state
+    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal } = this.state
     if(!imageUrl) {
       message.warning('请先上传照片!')
       return
     }
-    if(!schoolSiteIndex || !schoolNameIndex ) {
-      message.warning('请选择初中就读学校信息!')
-      return
+    if(orNkStudentVal == 1){
+      if(!schoolSiteIndex || !schoolNameIndex) {
+        message.warning('请选择初中就读学校信息!')
+        return
+      }
     }
+    
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const newValue = { 
@@ -550,7 +553,7 @@ class Registration extends Component {
               >
                 {getFieldDecorator('schoolSiteProvince', {
                   initialValue: initData.schoolSiteProvince || '',
-                  rules: [{ required: true, message: '请选择你的学校信息!' },],
+                  rules: [{ required: true, message: '请输入你的学校信息!' },],
                   validateTrigger: 'onBlur'
                 })(
                   <div>
@@ -566,7 +569,7 @@ class Registration extends Component {
               >
                 {getFieldDecorator('schoolSiteCity', {
                   initialValue: initData.schoolSiteCity || '',
-                  rules: [{ required: true, message: '请选择你的学校信息!' },],
+                  rules: [{ required: true, message: '请输入你的学校信息!' },],
                   validateTrigger: 'onBlur'
                 })(
                   <div>
@@ -582,7 +585,7 @@ class Registration extends Component {
               >
                 {getFieldDecorator('schoolSiteArea', {
                   initialValue: initData.schoolSiteArea || '',
-                  rules: [{ required: true, message: '请选择你的学校信息!' },],
+                  rules: [{ required: true, message: '请输入你的学校信息!' },],
                   validateTrigger: 'onBlur'
                 })(
                   <div>
@@ -598,7 +601,7 @@ class Registration extends Component {
               >
                 {getFieldDecorator('juniorSchoolName', {
                   initialValue: initData.juniorSchoolName || '',
-                  rules: [{ required: true, message: '请选择你的学校信息!' },],
+                  rules: [{ required: true, message: '请输入你的学校信息!' },],
                   validateTrigger: 'onBlur'
                 })(
                   <div>
