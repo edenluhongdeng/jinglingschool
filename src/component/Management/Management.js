@@ -475,7 +475,7 @@ getDownloadPramas = (data) => {
                           maxLength = '3'
                           defaultValue={0}
                           onChange={this.getExam1Score}/>
-                          <i className="size">分（含）以上</i>
+                          <i className="sorcSize">分（含）以上</i>
                       </div>
                     </Col>
               </Row>
@@ -519,7 +519,7 @@ getDownloadPramas = (data) => {
                           min={0}
                           defaultValue={0}
                           />
-                          <i>分（含）以上</i>
+                          <i className="sorcSize">分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>
@@ -531,7 +531,7 @@ getDownloadPramas = (data) => {
                            min={1} 
                            type='number'
                            />
-                          <i>名（含）以上</i>
+                          <i className="sorcSize">名（含）以上</i>
                       </div>
                     </Col>
               </Row>
@@ -575,7 +575,7 @@ getDownloadPramas = (data) => {
                           maxLength={3}
                           defaultValue={0}
                           />
-                          <i>分（含）以上</i>
+                          <i className="sorcSize">分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>
