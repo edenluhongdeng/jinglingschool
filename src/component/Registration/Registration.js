@@ -7,8 +7,8 @@ import src1 from '../../imgs/enrollment_logo.png'
 import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePicker, message, Icon } from 'antd'
 import FailModal from '../FailModal'
 import InfoModal from '../InfoMoadl'
+import baseUrl from '../../utils'
 const { Option } = Select
-const baseUrl = 'http://localhost:80'
 const dateFormat = 'YYYY-MM-DD'
 const provinceData = ['鼓楼区', '秦淮区','建邺区','雨花台区','栖霞区','江宁区','浦口区','溧水区','高淳区','六合区','江北新区']
 const cityData = {
