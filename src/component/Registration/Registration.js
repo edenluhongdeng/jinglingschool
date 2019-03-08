@@ -188,9 +188,12 @@ class Registration extends Component {
         const error = _.get(res,'data.error')
         const data = _.get(res,'data.data')
         if(code == 200){
+          let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
-          const imageUrl = baseUrl + data.photo
+          if(data.photo){
+            imageUrl = `${baseUrl}/enroll//studentController/getPhone`
+          }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
           this.setState({
