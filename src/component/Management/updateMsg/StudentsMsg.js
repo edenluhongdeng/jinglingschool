@@ -192,10 +192,7 @@ class StudentsMsg extends Component {
             </Col>
             <Col span={3}>
               <div className="photo">
-                <img
-                  src={`${baseUrl}/enroll/studentController/getPhone`}
-                  alt=""
-                />
+                <img src={`${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${list.photo}`} alt="" />
               </div>
             </Col>
           </Row>
