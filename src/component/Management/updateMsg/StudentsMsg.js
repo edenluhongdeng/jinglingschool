@@ -7,7 +7,7 @@ import {
   getStudyPhoto
 } from "./../../../api/manageMent.js";
 import "./studentsmsg.less";
-import baseUrl from './../../../utils/index';
+import baseUrl from "./../../../utils/index";
 class StudentsMsg extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +38,6 @@ class StudentsMsg extends Component {
     this.props.subButton();
   };
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false
     });
@@ -52,6 +51,7 @@ class StudentsMsg extends Component {
         .replace(/T/g, " ")
         .replace(/\.[\d]{3}Z/, "");
     }
+    console.log(list.intendedProgram && list.intendedProgram.split(","));
     return (
       <div className="studentsmsg">
         <div className="ApplicantInfo">
@@ -84,7 +84,8 @@ class StudentsMsg extends Component {
                     <span> /Date of Birth</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.birthDate&&list.birthDate.split('T')[0] || "2019.8"}
+                    {(list.birthDate && list.birthDate.split("T")[0]) ||
+                      "2019.8"}
                   </div>
                 </div>
                 <div className="4">
@@ -147,28 +148,54 @@ class StudentsMsg extends Component {
                     <span>/Intended Progr</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.intendedProgram == "0" && (
-                      <span className="chin_contry">中美 /American</span>
-                    )}
-                    {list.intendedProgram == "1" && (
-                      <span className="chin_contry">中英 /British</span>
-                    )}
-                    {list.intendedProgram == "2" && (
-                      <span className="chin_contry">中加 /Canadian</span>
-                    )}
-                    {list.intendedProgram == "3" && (
-                      <span className="chin_contry">待定</span>
-                    )}
-                    {!list.intendedProgram && (
-                      <span className="chin_contry">未选择</span>
-                    )}
+                    {list.intendedProgram &&
+                      list.intendedProgram.split(",").map(itom => {
+                        console.log(itom);
+                        // itom == "0" && <span className="chin_contry">中美 /American</span>
+                        if (itom == "0") {
+                          return (
+                            <span className="chin_contry">中美 /American</span>
+                          );
+                        }
+                        if (itom == "1") {
+                          return (
+                            <span className="chin_contry">中英 /British</span>
+                          );
+                        }
+                        if (itom == "2") {
+                          return (
+                            <span className="chin_contry">中加 /Canadian</span>
+                          );
+                        }
+                        if (itom == "3") {
+                          return <span className="chin_contry">待定</span>;
+                        }
+                        // {
+                        //   itom == "1" && (
+                        //     <span className="chin_contry">中英 /British</span>
+                        //   );
+                        // }
+                        // {
+                        //   itom == "2" && (
+                        //     <span className="chin_contry">中加 /Canadian</span>
+                        //   );
+                        // }
+                        // {
+                        //   itom == "3" && (
+                        //     <span className="chin_contry">待定</span>
+                        //   );
+                        // }
+                      })}
                   </div>
                 </div>
               </div>
             </Col>
             <Col span={3}>
               <div className="photo">
-                <img src={`${baseUrl}/enroll/studentController/getPhone`} alt="" />
+                <img
+                  src={`${baseUrl}/enroll/studentController/getPhone`}
+                  alt=""
+                />
               </div>
             </Col>
           </Row>
