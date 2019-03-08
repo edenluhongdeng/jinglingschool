@@ -27,7 +27,7 @@ class Demo  extends Component {
             })
           }else if(res.data.code=='200'&&res.data.data == '1'){
             this.props.history.push({
-              pathname: '/management/updatemsg',
+              pathname: '/management',
             })
           }else if(res.data.code=='200'&&res.data.data == '2'){
             this.props.history.push({

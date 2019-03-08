@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Col, Row, Button, Modal } from "antd";
-import { getStudyInfoTch } from "./../../../api/manageMent.js";
+// import { getStudyInfoTch } from "./../../../api/manageMent.js";
+import {
+  getStudyInfoTch,
+  getUpdataInfo,
+  getStudyPhoto
+} from "./../../../api/manageMent.js";
 import "./studentsmsg.less";
-
+import baseUrl from './../../../utils/index';
 class StudentsMsg extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +31,10 @@ class StudentsMsg extends Component {
     this.setState({
       confirmLoading: true
     });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false
-      });
-    }, 1000);
+    this.setState({
+      visible: false,
+      confirmLoading: false
+    });
     this.props.subButton();
   };
   handleCancel = e => {
@@ -165,7 +168,7 @@ class StudentsMsg extends Component {
             </Col>
             <Col span={3}>
               <div className="photo">
-                <img src={list.photo} alt="" />
+                <img src={`${baseUrl}/enroll/studentController/getPhone`} alt="" />
               </div>
             </Col>
           </Row>
