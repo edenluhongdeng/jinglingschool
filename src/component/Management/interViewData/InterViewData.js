@@ -166,7 +166,7 @@ class InterViewData extends Component {
     },{
         title: '操作',
         dataIndex: 'operating',
-        render: (text,record) => <a href="javascript:;" className = "updateAction" onClick={this.updataMsg.bind(text)}>修改</a>,
+        render: (text,record) => <a href="javascript:;" className = "updateAction" onClick={this.updataMsg.bind(text,record)}>修改</a>,
         align:'center'
     },
     ];
@@ -214,6 +214,7 @@ class InterViewData extends Component {
     // juniorExamScoreDesc:false,//中考分数降序标志
     // volunteerInfoDesc:false,//志愿填报降序标志
     // writtenResultDesc:false,//笔试结果降序标志
+    
     //tab 数据改变
     getDataList = (str) =>{
         const { prams } = this.state
@@ -243,9 +244,9 @@ class InterViewData extends Component {
         this.getDataList(sort)
       }
     //修改信息
-    updataMsg = (text) => {
-        const key = text.key.substr(1,text.key.length)
-        this.props.history.push(`/management/updatemsg?id=${key}`)
+    updataMsg = (text,tt) => {
+       const key = text.key.substr(1,text.key.length)
+        this.props.history.push(`/management/updatemsg?id=${key }`)
      }
     //批量操作
     rowSelection = {

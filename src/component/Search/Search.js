@@ -4,7 +4,8 @@ import { withRouter } from "react-router-dom";
 import { Button, Toast } from "antd-mobile";
 import Ajax from "./../../api/Ajax";
 import "./style.less";
-import Leftimg from "./../../imgs/H5-nav-return.png";
+import Leftimg from "./../../imgs/H5-nav-return.png"; 
+import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 import errimg from "./../../imgs/H5-icon-error.png";
 import banner from "./../../imgs/H5-picture.png";
 class Search extends Component {
@@ -153,7 +154,14 @@ class Search extends Component {
   offlineErr = () => {
     Toast.offline("查询信息失败!!!", 1);
   };
-
+  goBack = () => {
+    // this.props.history.go(-1);
+    this.props.history.goBack();
+  };
+  goBackRight = () => {
+    // this.props.history.go(1);
+    this.props.history.goBack();
+  };
   render() {
     const { reNumber, pacNumber } = this.state;
     let reNumberonChange = reNumber;
@@ -162,12 +170,6 @@ class Search extends Component {
     }
     return (
       <div className="search">
-        {/* 导航 */}
-        <div className="nva">
-          <img src={Leftimg} alt="" className="goback" />
-          <span>成绩查询</span>
-          <span />
-        </div>
         {/* 头部展示 */}
         <div className="header">
           <img src={banner} alt="logo" />
@@ -242,6 +244,11 @@ class Search extends Component {
             查询成绩&nbsp;【查询2019年国际部招生结果】
           </span>
         </Button>
+        {/* 导航 */}
+        <div className="nva">
+          <img src={Leftimg} alt="" onClick = {this.goBack} className="goback" />
+          <img src={Rightimg} alt="" onClick = {this.goBack} className="goback" />
+        </div>
       </div>
     );
   }

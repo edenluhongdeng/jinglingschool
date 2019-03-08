@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
-import { Tag , Row, Col,Input,Button,message } from 'antd';
+import { Tag , Row, Col,Input,Button,message ,InputNumber,Modal} from 'antd';
 import './style.less'
 import InterViewData from './interViewData/InterViewData'
 import {getStudyList,downloadStudentInfo,getStudentinfoExcelPath} from '../../api/manageMent.js'
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
-const baseUrl = 'http://172.20.244.242:8080'
+const confirm = Modal.confirm;
+const baseUrl = 'http://localhost:80'
 class Management extends Component {
   state = {
     selectedTags: [],
@@ -20,7 +21,7 @@ class Management extends Component {
     IsNanJing:['不限'] ,//是否南京学籍
     hightSchool:0,//中考分数
     isRetreat:['不限'],//是否退档
-    ProjectIntention:['待定'],//项目意向
+    ProjectIntention:[],//项目意向
     writeResult:0,//笔试结果
     isDown:false,//下载
     studyData:[],//学生数据
@@ -47,6 +48,7 @@ class Management extends Component {
     }
   };
 componentDidMount(){
+  document.title = "2019招生信息查询"
   const {prams} = this.state
   this.getData(prams)
 }
@@ -253,9 +255,9 @@ getRetreat = (tag, checked) =>{
   });
 }
 //获取一模分数
-getExam1Score = (e)=>{
+getExam1Score = (value)=>{
   const {prams} = this.state
-  prams.exam1Score =e.target.value
+  prams.exam1Score =value
   this.setState({
     prams
   })
@@ -263,7 +265,7 @@ getExam1Score = (e)=>{
 //获取一模排名
 getExam1Rank  = (e)=>{
   const {prams} = this.state
-  prams.exam1Rank = e.target.value
+  prams.exam1Rank = e
   this.setState({
     prams
   })
@@ -271,7 +273,7 @@ getExam1Rank  = (e)=>{
 //获取中考分数
 getJuniorExamScore = (e) =>{
   const {prams} = this.state
-  prams.juniorExamScore =e.target.value
+  prams.juniorExamScore =e
   this.setState({
     prams
   })
@@ -279,7 +281,7 @@ getJuniorExamScore = (e) =>{
 //获取笔试结果
 getWrittenResult  = (e) => {
   const {prams} = this.state
-  prams.writtenResult  =e.target.value
+  prams.writtenResult  =e
   this.setState({
     prams
   })
@@ -385,26 +387,38 @@ getDownloadPramas = (data) => {
     needTickets:data
   })
 }
-//下载信息
-downloadStudentInfo = () => {
-  const { needTickets } = this.state
-  const studentExcelReq = {}
-  studentExcelReq.needTickets = needTickets
-  downloadStudentInfo(studentExcelReq)
-    .then(res => {
-      const code = _.get(res,'data.code')
-      const exelPath = _.get(res,'data.data')
-      const error = _.get(res,'data.error')
-      if(code == 200){
-        window.location.href = `${baseUrl}/enroll/teacherController/white/downloadStudentInfo?exelPath=${exelPath}`
-      }else{
-        message.error(error)
-      }
-    })
-    .catch(err=>{
-      message.error(err)
-    })
+
+//确认下载
+ showConfirm=()=>{
+   const _state = this.state
+  confirm({
+    title: '是否下载所选内容',
+    okText:'确定',
+    cancelText:'取消',
+    onOk(){
+        const { needTickets } = _state
+        const studentExcelReq = {}
+        studentExcelReq.needTickets = needTickets
+        //下载
+        downloadStudentInfo(studentExcelReq)
+        .then(res => {
+          const code = _.get(res,'data.code')
+          const exelPath = _.get(res,'data.data')
+          const error = _.get(res,'data.error')
+          if(code == 200){
+            window.location.href = `${baseUrl}/enroll/teacherController/white/downloadStudentInfo?exelPath=${exelPath}`
+          }else{
+            message.error(error)
+          }
+        })
+        .catch(err=>{
+          message.error(err)
+        })
+    },
+    onCancel() {},
+  });
 }
+
   render() {
     return (
       <div className = "interviewManage">
@@ -459,7 +473,12 @@ downloadStudentInfo = () => {
                     <Col span={6} order={4}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模分数:</h6>
-                          <Input className = "fraction" type='number' onChange={this.getExam1Score}/>
+                          <InputNumber className = "fraction" 
+                          max={999} 
+                          min={0} 
+                          maxLength = '3'
+                          defaultValue={0}
+                          onChange={this.getExam1Score}/>
                           <i>分（含）以上</i>
                       </div>
                     </Col>
@@ -497,14 +516,23 @@ downloadStudentInfo = () => {
                     <Col span={6} order={3}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>中考分数:</h6>
-                          <Input className = "fraction" onBlur = {this.getJuniorExamScore}/>
+                          <InputNumber className = "fraction" 
+                          onBlur = {this.getJuniorExamScore} 
+                          maxLength={3}                         
+                          max={999} 
+                          min={0} />
                           <i>分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模排名:</h6>
-                          <Input className = "fraction" onBlur={this.getExam1Rank}/>
+                          <Input className = "fraction"
+                           onBlur={this.getExam1Rank}
+                           max={999} 
+                           min={0} 
+                           type='number'
+                           />
                           <i>名（含）以上</i>
                       </div>
                     </Col>
@@ -542,7 +570,12 @@ downloadStudentInfo = () => {
                     <Col span={6} order={3}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>笔试结果:</h6>
-                          <Input className = "fraction" onChange={this.getWrittenResult}/>
+                          <InputNumber className = "fraction" 
+                          onChange={this.getWrittenResult}
+                          max={999} 
+                          min={0} 
+                          maxLength={3}
+                          />
                           <i>分（含）以上</i>
                       </div>
                     </Col>
@@ -562,9 +595,9 @@ downloadStudentInfo = () => {
                       <span className = "downLoad downLoad-false">
                           <i className = "downIcon"></i>下载
                       </span>:
-                      <span className = "downLoad downLoad-true" onClick={this.downloadStudentInfo}>
+                      <Button className = "downLoad downLoad-true" onClick={this.showConfirm}>
                         <i className = "downIcon"></i>下载
-                    </span>
+                    </Button>
                    }
                     <span>
                     <Search
