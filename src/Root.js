@@ -34,7 +34,7 @@ class Root extends Component {
           <Route exact path="/search" component={Search} />
           <Route exact path="/admissioninfo" component={Admissioninfo} />
           <Route exact path="/resultsquery" component={Resultsquery} />
-          <Route path="/registration" component={Registration} />
+          <Route path="/registration/:id" component={Registration} />
           <Route exact  path="/management/updatemsg" component={UpdateMsg} />
           <Route  exact path="/management" component={Management} />
           <Route path="/login" component={Login} />

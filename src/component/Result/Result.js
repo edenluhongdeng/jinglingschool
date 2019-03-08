@@ -27,7 +27,7 @@ export default class Result extends Component {
         <ul className='result_ditail'>
             <li>
                 <span>准考证号:</span>
-                <span>{admissionTicket}</span>
+                <span>{`J`+admissionTicket}</span>
             </li>
             <li>
                 <span>考生姓名:</span>
