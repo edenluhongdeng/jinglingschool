@@ -44,7 +44,7 @@ class Management extends Component {
       exam1Score :null,//一模分数 ,
       intendedProgram :[],//项目意向
       contactName :null,//联系人姓名 ,
-      inputBox:null
+      inputBox:null,
     }
   };
 componentDidMount(){
@@ -53,14 +53,17 @@ componentDidMount(){
   this.getData(prams)
 }
 //获取数据
-getData = (prams) => {
-  getStudyList(prams).then(res=>{
+getData = (_prams) => {
+  const { prams } = this.state
+  getStudyList(_prams).then(res=>{
     if(res&&res.data.code==='200'){
       console.log(res.data.data.list,'数据')
       if(res.data.data.list){
-          this.setState({
-            studyData:res.data.data
-          })
+        const newParams = Object.assign(prams,_prams)
+        this.setState({
+          studyData:res.data.data,
+          prams:newParams
+        })
       }
     }
   })

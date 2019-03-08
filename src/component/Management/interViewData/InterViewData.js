@@ -17,11 +17,11 @@ class InterViewData extends Component {
         juniorExamScoreDesc:false,//中考分数降序标志
         volunteerInfoDesc:false,//志愿填报降序标志
         writtenResultDesc:false,//笔试结果降序标志
+        intendedProgramDesc:false,//项目意向的降序标志
     }
 
     //获取父组件传递过来的数据
     componentWillReceiveProps(props){
-        // console.log(props,'-----------------')
         this.setState({
             data:props.data,
             prams:props.prams
@@ -133,6 +133,7 @@ class InterViewData extends Component {
         title: '项目意向',
         dataIndex:'projectIntention',
         align:'center',
+        sorter: true,
         render:(text,record) =>{
             const str = this.intendedProgram(record.projectIntention)
             return (
@@ -208,13 +209,7 @@ class InterViewData extends Component {
         })
         this.props.getData(prams)
     }
-    // exam1RankDesc:false,//一模排名降序标志
-    // exam1ScoreDesc:false,//一模分数降序标志
-    // interviewResultDesc:false,//面试结果降序标志
-    // juniorExamScoreDesc:false,//中考分数降序标志
-    // volunteerInfoDesc:false,//志愿填报降序标志
-    // writtenResultDesc:false,//笔试结果降序标志
-    
+
     //tab 数据改变
     getDataList = (str) =>{
         const { prams } = this.state
@@ -224,7 +219,8 @@ class InterViewData extends Component {
             volunteerInfoDesc:null,
             juniorExamScoreDesc:null,
             exam1ScoreDesc:null,
-            exam1RankDesc:null
+            exam1RankDesc:null,
+            intendedProgramDesc:null
         })
         let type = ''
         str === 'interviewResult' && (type = 'interviewResultDesc')
@@ -233,6 +229,7 @@ class InterViewData extends Component {
         str === 'highSchoolScore' && (type = 'juniorExamScoreDesc')
         str === 'oneShotScore' && (type = 'exam1ScoreDesc')
         str === 'oneShotRanking' && (type = 'exam1RankDesc')
+        str ==='projectIntention'&&(type='intendedProgramDesc')
         const id  = this.state[type] ? 1 : 2
         _prams[type] = id
         this.props.getData(_prams)
