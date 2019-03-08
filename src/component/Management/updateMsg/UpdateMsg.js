@@ -3,7 +3,16 @@
  */
 
 import React, { Component } from "react";
-import { Icon, Select, Input, Row, Col, DatePicker, message } from "antd";
+import {
+  Icon,
+  Select,
+  Input,
+  Row,
+  Col,
+  DatePicker,
+  message,
+  InputNumber
+} from "antd";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import { getStudyInfoTch, getUpdataInfo } from "./../../../api/manageMent.js";
@@ -16,7 +25,7 @@ const dateFormat = "YYYY-MM-DD";
 class UpdateMsg extends Component {
   state = {
     // handleChangeRemark: [],
-    // interviewDescribe: []
+    interviewDescribe: []
   };
   componentDidMount() {
     getStudyInfoTch({ admissionTicket: "20192500" })
@@ -48,8 +57,9 @@ class UpdateMsg extends Component {
   };
   /* 笔试结果 */
   handleChangeResult = e => {
+    console.log(e);
     this.setState({
-      writtenResult: e.target.value
+      writtenResult: e
     });
   };
   /* 缴费情况 */
@@ -151,7 +161,7 @@ class UpdateMsg extends Component {
     };
     getUpdataInfo(req).then(item => {
       console.log(item);
-      message.info()
+      message.info();
     });
   };
 
@@ -249,11 +259,11 @@ class UpdateMsg extends Component {
                   <div>
                     <h5>面试结果：</h5>
                     <Select
-                      defaultValue={
-                        this.state.interviewResult ||
-                        list.interviewResult ||
-                        "1"
-                      }
+                      //   defaultValue={
+                      //     this.state.interviewResult ||
+                      //     list.interviewResult ||
+                      //     "1"
+                      //   }
                       style={{ width: 240 }}
                       onChange={this.handleChangeQuerty}
                     >
@@ -269,13 +279,14 @@ class UpdateMsg extends Component {
                     <h5>面试描述：</h5>
                     <div className="description">
                       <Input
-                        placeholder={list.interviewDescribe}
+                        // placeholder={list.interviewDescribe}
                         style={{ width: 800 }}
                         onChange={this.descriptionInput}
                         value={this.state.interviewDescribe}
                       />
-                      <span>{`100/${100 - list.interviewDescribe.length ||
-                        this.state.interviewDescribe.length}`}</span>
+                      <span>{`${
+                        this.state.interviewDescribe.length
+                      }/100`}</span>
                     </div>
                   </div>
                 </Col>
@@ -285,11 +296,13 @@ class UpdateMsg extends Component {
                 <Col span={6} order={1}>
                   <div>
                     <h5>笔试结果：</h5>
-                    <Input
-                      placeholder={list.writtenResult}
+                    <InputNumber
+                      //   placeholder={list.writtenResult}
                       value={this.state.writtenResult}
                       onChange={this.handleChangeResult}
                       style={{ width: 240 }}
+                      min={0}
+                      max={999}
                     />
                   </div>
                 </Col>
@@ -298,7 +311,6 @@ class UpdateMsg extends Component {
                   <div>
                     <h5>缴费情况：</h5>
                     <Select
-                      defaultValue={list.payInfo}
                       style={{ width: 240 }}
                       onChange={this.handleChangeFree}
                     >
@@ -311,11 +323,12 @@ class UpdateMsg extends Component {
                 <Col span={6} order={3}>
                   <div>
                     <h5>中考分数：</h5>
-                    <Input
-                      placeholder={list.juniorExamScore}
+                    <InputNumber
                       style={{ width: 240 }}
                       onChange={this.handleChangeMinderRe}
                       value={this.state.juniorExamScore}
+                      min={0}
+                      max={999}
                     />
                   </div>
                 </Col>
@@ -324,7 +337,6 @@ class UpdateMsg extends Component {
                   <div>
                     <h5>志愿填报情况：</h5>
                     <Select
-                      defaultValue={list.volunteerInfo}
                       style={{ width: 240 }}
                       onChange={this.handleChangeFurter}
                     >
@@ -413,9 +425,8 @@ class UpdateMsg extends Component {
             </div>
           </div>
           {/* 学生情况 */}
-          <StudentsMsg list={list} subButton = {this.subButton} />
+          <StudentsMsg list={list} subButton={this.subButton} />
         </div>
-        
       </div>
     );
   }
