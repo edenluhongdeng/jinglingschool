@@ -14,6 +14,7 @@ class Demo  extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      console.log(err,'err')
       login(values).then(res=>{
         console.log(res.data,'数据')
         if(res.data.code=='200'&&res.data.data == '0'){
@@ -21,12 +22,16 @@ class Demo  extends Component {
             a:true
           })
         }else if(res.data.code=='200'&&res.data.data == '1'){
+          const role=res.data.data
           this.props.history.push({
             pathname: '/management',
+            state:{role}
           })
         }else if(res.data.code=='200'&&res.data.data == '2'){
+          const role=res.data.data
           this.props.history.push({
             pathname: '/choose',
+            state:{role}
           })
         }
       })
@@ -79,7 +84,7 @@ class Demo  extends Component {
             <FormItem {...formItemLayout} label="身份证号">
               {getFieldDecorator('idCard', {
                 rules: [{
-                  // required: false, message: '请输入正确的身份证号!',
+                  required: false, message: '请输入正确的身份证号!',
                 }, {
                   validator: checkAdmission,
                 }],
@@ -90,7 +95,7 @@ class Demo  extends Component {
             <FormItem {...formItemLayout} label="手机号码">
               {getFieldDecorator('contactPhone', {
                 rules: [{
-                  // required: false, message: '手机号码格式不正确!',
+                  required: false, message: '手机号码格式不正确!',
                 }, {
                   validator: checkFhone,
                 }],
@@ -98,7 +103,7 @@ class Demo  extends Component {
                 <div className='phone'>
                   <Input  placeholder="请输入手机号码..." style={inputStyle}/>
                   {
-                    this.state.a&&<p className='phoneNumber'>准考证号与手机号码不一致！</p>
+                    this.state.a&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
                   }
                 </div>
 

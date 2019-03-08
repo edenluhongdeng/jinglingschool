@@ -3,7 +3,7 @@ import './download.less'
 import { downloadInformation, downloadFile} from '../../api/GetPhoto'
 import { Button } from 'antd';
 import _ from 'lodash'
-const imgUrl = 'http://172.20.244.242:8080/enroll/studentController/getPhone'
+const imgUrl = 'http://172.20.244.236:8080/enroll/studentController/getPhone'
 export default class Download extends Component {
     constructor(props){
         super(props)
@@ -29,7 +29,8 @@ export default class Download extends Component {
     }
     downloadFile=()=>{
         // downloadFile()
-        window.location.href='http://172.20.244.242:8080/enroll/studentController/certificate/getCertificate'
+        window.location.href='http://172.20.244.236:8080/enroll/studentController/certificate/getCertificate'
+        return false
     }
   render() {
     console.log(this.state.data,'11')
@@ -40,7 +41,7 @@ export default class Download extends Component {
         <p className='downTitle'>面试准考证</p>
         <div className='downDetail'>
             <div className='detailLeft'>
-                <p>准考证号:  &nbsp;&nbsp;<span>{admissionTicket}</span></p>
+                <p>准考证号:  &nbsp;&nbsp;<span>{`J`+admissionTicket}</span></p>
                 <p className='leftP2'>
                     <span className='detailName'>姓名: &nbsp;&nbsp;<span >{chinaName}</span></span>
                     性别: &nbsp;&nbsp;
@@ -56,7 +57,8 @@ export default class Download extends Component {
                 <div><span className='detailWord2'>考场号：</span><span>座位号:</span></div>
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
-            <img alt='' src={imgUrl}/>
+            <img alt='' src={imgUrl} />
+            <a href={imgUrl}>111</a>
         </div>
         <table className="customers">
             <tbody>
