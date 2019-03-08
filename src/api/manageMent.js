@@ -18,3 +18,13 @@ export function getStudyInfoTch(data){
 export function getUpdataInfo(data){
     return Ajax(`/teacherController/updateStudentTeacher`,data)
 }
+
+
+//下载信息   /teacherController/getStudentinfoExcelPath
+export function downloadStudentInfo(data){
+    return Ajax(`/teacherController/getStudentinfoExcelPath`,data)
+}
+//下载信息第二部 /teacherController/white/downloadStudentInfo
+export function getStudentinfoExcelPath(exelPath){
+    return Ajax(`/teacherController/downloadStudentInfo`,{exelPath},"GET")
+}
