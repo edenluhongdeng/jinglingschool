@@ -192,7 +192,7 @@ class Registration extends Component {
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
           if(data.photo){
-            imageUrl = `${baseUrl}/enroll//studentController/getPhone`
+            imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
