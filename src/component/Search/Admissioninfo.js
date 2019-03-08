@@ -4,16 +4,17 @@ import { withRouter, NavLink } from "react-router-dom";
 import { Button } from "antd-mobile";
 import "./style.less";
 import Leftimg from "./../../imgs/H5-nav-return.png";
+import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 class Admissioninfo extends Component {
   goBack = () => {
     this.props.history.goBack();
   };
   render() {
     if (this.props.location.state === undefined) {
-      this.goBack()
-      return
+      this.goBack();
+      return;
     }
-    const arrList = this.props.location.state
+    const arrList = this.props.location.state;
     /* 
     //     admissionTicket: 20192500
     //     chinaName: "李艳强"
@@ -22,19 +23,6 @@ class Admissioninfo extends Component {
     */
     return (
       <div className="Admissioninfo">
-        {/* 导航 */}
-        <div className="nva">
-          <span
-            onClick={() => {
-              this.goBack();
-            }}
-            className="goback"
-          >
-            <img src={Leftimg} alt="" />
-          </span>
-          <span>准考证信息</span>
-          <span />
-        </div>
         <div className="box">
           <div className="header">
             <span>2019年金陵中学河西分校国际部准考证</span>
@@ -111,6 +99,15 @@ class Admissioninfo extends Component {
               </span>
             </div>
           </div>
+        </div>
+        <div className="nva">
+          <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
+          <img
+            src={Rightimg}
+            alt=""
+            onClick={this.goBackRight}
+            className="goback"
+          />
         </div>
       </div>
     );
