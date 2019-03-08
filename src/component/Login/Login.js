@@ -4,6 +4,8 @@ import logo from '../../imgs/enrollment_login.png'
 import { Form, Input, Button, } from 'antd'
 import {login} from '../../api/Login'
 const FormItem = Form.Item;
+
+
 class Demo  extends Component {
   constructor(props){
     super(props)
@@ -14,7 +16,6 @@ class Demo  extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log(err,'err')
       login(values).then(res=>{
         console.log(res.data,'数据')
         if(res.data.code=='200'&&res.data.data == '0'){
@@ -118,6 +119,7 @@ class Demo  extends Component {
                   height: '0.4rem',
                   marginLeft: '0.3rem'
                 }}
+                
               >
                 登录
               </Button>
