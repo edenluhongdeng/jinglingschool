@@ -1,7 +1,7 @@
 /*  */
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Button,Toast } from "antd-mobile";
+import { Button, Toast } from "antd-mobile";
 import Ajax from "./../../api/Ajax";
 import "./style.less";
 import Leftimg from "./../../imgs/H5-nav-return.png";
@@ -25,39 +25,35 @@ class Search extends Component {
   componentDidMount() {
     document.title = "2019招生信息查询";
     // this.getLoginInfo("130126199110143918", "18210609262");
+    this.getPublickKey();
     this.getStudentSquery();
-    this.getPublickKey()
   }
-  /* 登陆前获取共匙  */ 
-  getPublickKey = ()=>{
-    Ajax(
-      `/studentController/white/getPublicKey`,
-      {},
-      "GET"
-    ).then(item => {
-      console.log(item.data.data)
+  /* 登陆前获取共匙  */
+
+  getPublickKey = () => {
+    Ajax(`/studentController/white/getPublicKey`, {}, "GET").then(item => {
       if (item.data.code === "200") {
-          this.setState({
-            publicKey: item.data.data
-          });
+        this.setState({
+          publicKey: item.data.data
+        });
       }
-      // jsencrypt.setPublicKey(item.data.data); 
+      // jsencrypt.setPublicKey(item.data.data);
       // let str = jsencrypt.encrypt("123123123");
       // console.log(str)
-    })
-  }
+    });
+  };
   /* 选择准考证 */
   onChangeAdmission = () => {
     this.props.history.push({
       pathname: "./admissioninfo",
-      state: { vcode: 1234567890 }
+      state: this.state.pacNumber
     });
   };
   /* 查看成绩 */
   onChangeResults = () => {
     this.props.history.push({
       pathname: "./resultsquery",
-      state: { vcode: 1234567890 }
+      state: this.state.pacNumber
     });
   };
   /* 登陆验证 */
@@ -67,22 +63,24 @@ class Search extends Component {
         `/studentController/white/login?idCard=${sfzNum}&contactPhone=${shjNum}`,
         {},
         "GET"
-      ).then(item => {
-        console.log(item)
-        if (item.data.code === "200") {
-          if(item.data.data == 2){
-            this.setState({
-              reNumber: item.data.data
-            });
+      )
+        .then(item => {
+          if (item.data.code === "200") {
+            if (item.data.data == 2) {
+              this.setState({
+                reNumber: item.data.data
+              });
+              this.getStudentSquery();
+            } else {
+              this.offline();
+            }
           } else {
-            this.offline()
+            this.offlineErr();
           }
-        } else {
-          this.offlineErr()
-        }
-      }).catch(()=>{
-        this.offlineErr()
-      });
+        })
+        .catch(() => {
+          this.offlineErr();
+        });
     }
   };
   /* input 身份证信息 */
@@ -97,7 +95,6 @@ class Search extends Component {
         sfzshow: false,
         sfzNum: e.target.value
       });
-      console.log(cardNo, this.state.shjNum)
       this.getLoginInfo(cardNo, this.state.shjNum);
     } else {
       this.setState({
@@ -117,7 +114,6 @@ class Search extends Component {
         shjhshow: false,
         shjNum: e.target.value
       });
-      console.log(this.state.sfzNum, e.target.value)
       this.getLoginInfo(this.state.sfzNum, e.target.value);
     } else {
       this.setState({
@@ -130,20 +126,19 @@ class Search extends Component {
   cleraInputShJ = () => {
     this.setState({
       shjNum: "",
-      reNumber:'0'
+      reNumber: "0"
     });
   };
   /* 清空 身份证 */
   cleraInputSFZ = () => {
     this.setState({
       sfzNum: "",
-      reNumber:'0'
+      reNumber: "0"
     });
   };
   /* 获取成绩信息 /studentController/white/selectResult*/
   getStudentSquery = () => {
-    Ajax(`/studentController/white/selectResult`, {}, "GET").then(item => {
-      console.log(item.data);
+    Ajax(`/studentController/selectResult`, {}, "GET").then(item => {
       if (item.data.code === "200") {
         this.setState({
           pacNumber: item.data.data
@@ -152,14 +147,19 @@ class Search extends Component {
     });
   };
   /* 轻提示 */
-   offline =()=> {
-    Toast.offline('身份证或手机号错误!!!', 1);
-  }
-  offlineErr =()=> {
-    Toast.offline('查询信息失败!!!', 1);
-  }
+  offline = () => {
+    Toast.offline("身份证或手机号错误!!!", 1);
+  };
+  offlineErr = () => {
+    Toast.offline("查询信息失败!!!", 1);
+  };
 
   render() {
+    const { reNumber, pacNumber } = this.state;
+    let reNumberonChange = reNumber;
+    if (pacNumber) {
+      reNumberonChange = "2";
+    }
     return (
       <div className="search">
         {/* 导航 */}
@@ -217,12 +217,12 @@ class Search extends Component {
         {/* 获取准考证信息 */}
         <Button
           className={
-            this.state.reNumber === "2"
+            reNumberonChange === "2"
               ? "getinfo_box info_change"
               : "getinfo_box info_notfind"
           }
           onClick={this.onChangeAdmission}
-          disabled={!(this.state.reNumber === "2" ? true : false)}
+          disabled={!(reNumberonChange === "2" ? true : false)}
         >
           <span className="info_text">
             准考证&nbsp;【获取2019年考试准考证信息】
@@ -231,12 +231,12 @@ class Search extends Component {
 
         <Button
           className={
-            this.state.reNumber === "2"
+            reNumberonChange === "2"
               ? "getinfo_box info_change"
               : "getinfo_box info_notfind"
           }
           onClick={this.onChangeResults}
-          disabled={!(this.state.reNumber === "2" ? true : false)}
+          disabled={!(reNumberonChange === "2" ? true : false)}
         >
           <span className="info_text info_notfind">
             查询成绩&nbsp;【查询2019年国际部招生结果】

@@ -190,7 +190,13 @@ class InterViewData extends Component {
       }
     //修改信息
     updataMsg = (text,record) => {
-    this.props.history.push('/management/updatemsg')
+        console.log(text,record)
+    // this.props.history.push('/management/updatemsg')
+    console.log(text)
+    this.props.history.push({
+        pathname: "/management/updatemsg",
+        state: { vcode: text }
+      });
     }
     //批量操作
     rowSelection = {
