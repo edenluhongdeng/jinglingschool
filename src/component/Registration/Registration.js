@@ -194,7 +194,6 @@ class Registration extends Component {
           if(data.photo){
             imageUrl = `${baseUrl}/enroll//studentController/getPhone`
           }
-          // const imageUrl = baseUrl + data.photo
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
           this.setState({
