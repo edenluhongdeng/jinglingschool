@@ -57,7 +57,6 @@ getData = (_prams) => {
   const { prams } = this.state
   getStudyList(_prams).then(res=>{
     if(res&&res.data.code==='200'){
-      console.log(res.data.data.list,'数据')
       if(res.data.data.list){
         const newParams = Object.assign(prams,_prams)
         this.setState({
@@ -153,7 +152,6 @@ searchData = ()=>{
    const nextSelectedTags = checked
      ? [tag]
      : IsArchive.filter(t => t !== tag);
-     console.log('You are interested in: ', nextSelectedTags);
      let toFile =''
      if(nextSelectedTags[0]==='否'){
       toFile='0'
@@ -174,7 +172,6 @@ searchData = ()=>{
  const nextSelectedTags = checked
    ? [tag]
    : IsPayment.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let payInfo =''
    if(nextSelectedTags[0]==='否'){
     payInfo='0'
@@ -195,7 +192,6 @@ getVoluntaryReporting = (tag, checked) =>{
  const nextSelectedTags = checked
    ? [tag]
    : VoluntaryReporting.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let volunteerInfo = ''
    if(nextSelectedTags[0]==='1A'){
     volunteerInfo ='0'
@@ -219,7 +215,6 @@ getNanJing = (tag, checked) =>{
  const nextSelectedTags = checked
    ? [tag]
    : IsNanJing.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let orNkStudent =''
    if(nextSelectedTags[0]==='否'){
     orNkStudent='0'
@@ -240,7 +235,6 @@ getRetreat = (tag, checked) =>{
  const nextSelectedTags = checked
    ? [tag]
    : isRetreat.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let returnPay =''
    if(nextSelectedTags[0]==='否'){
     returnPay='0'
@@ -296,7 +290,6 @@ getProjectIntention = (tag, checked) =>{
   let nextSelectedTags = checked
    ? [...ProjectIntention,tag]
    : ProjectIntention.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let Index = nextSelectedTags.indexOf('待定')
    let arr = []
    if(nextSelectedTags.length>1){
@@ -409,7 +402,7 @@ getDownloadPramas = (data) => {
           const exelPath = _.get(res,'data.data')
           const error = _.get(res,'data.error')
           if(code == 200){
-            window.location.href = `${baseUrl}/enroll/teacherController/white/downloadStudentInfo?exelPath=${exelPath}`
+            window.location.href = `${baseUrl}/enroll/teacherController/downloadStudentInfo?exelPath=${exelPath}`
           }else{
             message.error(error)
           }
@@ -534,7 +527,7 @@ getDownloadPramas = (data) => {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模排名:</h6>
                           <InputNumber className = "fraction"
                            onChange={this.getExam1Rank}
-                           precision='0'
+                           precision={0}
                            min={1} 
                            type='number'
                            />
