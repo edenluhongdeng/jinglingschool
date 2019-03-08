@@ -278,9 +278,17 @@ class Registration extends Component {
     })
   }
   checkboxGroupChange = value => {
+    let intendedProgramVal = value
+    if(value[value.length-1] && value[value.length-1] == 3){
+      intendedProgramVal = ['3']
+    }else if(value[value.length-1] && value[value.length-1] != 3){
+      intendedProgramVal = value.filter(item=>{
+        return item < 3
+      })
+    }
     const { studentInfo } = this.state
-    const intendedProgramVal = value
-    studentInfo.intendedPrograms = value
+    
+    studentInfo.intendedPrograms = intendedProgramVal.sort()
     this.setState({
       studentInfo,intendedProgramVal
     })
