@@ -20,23 +20,55 @@ import StudentsMsg from "./StudentsMsg";
 import "./style.less";
 import { Button } from "antd-mobile";
 const Option = Select.Option;
+const { TextArea } = Input;
 const dateFormat = "YYYY-MM-DD";
 
 class UpdateMsg extends Component {
   state = {
-    // handleChangeRemark: [],
-    interviewDescribe: []
+    list: {},
+    remark: [],
+    interviewDescribe: [],
+    addInfoShow: false,
+    contactTime: null
   };
   componentDidMount() {
     getStudyInfoTch({ admissionTicket: "20192500" })
       .then(item => {
         if (item.data.code === "10000") {
           message.info("请登陆");
+          return;
         }
         if (item.data.code === "200") {
           this.setState({
             list: item.data.data
           });
+          console.log(item.data.data, 11111111111111111111111);
+          /* 判断是第一次填写信息还是第二次修改信息 */
+          this.setState({
+            addInfoShow: false,
+            /* 录取情况 */
+            interviewResult: item.data.data.interviewResult,
+            writtenResult: item.data.data.writtenResult,
+            payInfo: item.data.data.payInfo,
+            returnPay: item.data.data.returnPay,
+            toFile: item.data.data.toFile,
+            remark: item.data.data.remark,
+            contactName: item.data.data.contactName,
+            interviewDescribe: item.data.data.interviewDescribe,
+            juniorExamScore: item.data.data.juniorExamScore,
+            volunteerInfo: item.data.data.volunteerInfo,
+            contactTime: item.data.data.contactTime
+          });
+          if (item.data.data.interviewResult !== null) {
+            alert("修改");
+            /* 条件成立为第二次修改 */
+          } else {
+            /* 第一次添加 */
+            this.setState({
+              addInfoShow: true,
+              list: item.data.data
+            });
+          }
         }
       })
       .catch(err => {
@@ -45,6 +77,7 @@ class UpdateMsg extends Component {
   }
   /* 面试结果 */
   handleChangeQuerty = e => {
+    console.log(e);
     this.setState({
       interviewResult: e
     });
@@ -70,8 +103,9 @@ class UpdateMsg extends Component {
   };
   /* 中考分数 */
   handleChangeMinderRe = e => {
+    console.log(e);
     this.setState({
-      juniorExamScore: e.target.value
+      juniorExamScore: e
     });
   };
   /* 志愿签报情况 */
@@ -112,53 +146,68 @@ class UpdateMsg extends Component {
   };
   /* 提交总按钮 */
   subButton = () => {
+    console.log(this.state.interviewResult);
+    // const req = {
+    //   admissionTicket: /*  this.state.list.admissionTicket */ 20192500,
+    //   contactName:
+    //     this.state.contactName !== undefined
+    //       ? this.state.contactName
+    //       : this.state.list.contactName,
+    //   contactTime:
+    //     this.state.contactTime !== undefined
+    //       ? this.state.contactTime
+    //       : this.state.list.contactTime,
+    //   interviewDescribe:
+    //     this.state.interviewDescribe !== undefined
+    //       ? this.state.interviewDescribe
+    //       : this.state.list.interviewDescribe,
+    //   interviewResult:
+    //     this.state.interviewResult !== undefined
+    //       ? this.state.interviewResult
+    //       : this.state.list.interviewResult,
+    //   juniorExamScore:
+    //     this.state.juniorExamScore !== undefined
+    //       ? this.state.juniorExamScore
+    //       : this.state.list.juniorExamScore,
+    //   payInfo:
+    //     this.state.payInfo !== undefined
+    //       ? this.state.payInfo
+    //       : this.state.list.payInfo,
+    //   remark:
+    //     this.state.remark !== undefined
+    //       ? this.state.remark
+    //       : this.state.list.remark,
+    //   returnPay:
+    //     this.state.returnPay !== undefined
+    //       ? this.state.returnPay
+    //       : this.state.list.returnPay,
+    //   toFile:
+    //     this.state.toFile !== undefined
+    //       ? this.state.toFile
+    //       : this.state.list.toFile,
+    //   volunteerInfo:
+    //     this.state.volunteerInfo !== undefined
+    //       ? this.state.volunteerInfo
+    //       : this.state.list.volunteerInfo,
+    //   writtenResult:
+    //     this.state.writtenResult !== undefined
+    //       ? this.state.writtenResult
+    //       : this.state.list.writtenResult
+    // };
     const req = {
-      admissionTicket: this.state.list.admissionTicket,
-      contactName:
-        this.state.contactName !== undefined
-          ? this.state.contactName
-          : this.state.list.contactName,
-      contactTime:
-        this.state.contactTime !== undefined
-          ? this.state.contactTime
-          : this.state.list.contactTime,
-      interviewDescribe:
-        this.state.interviewDescribe !== undefined
-          ? this.state.interviewDescribe
-          : this.state.list.interviewDescribe,
-      interviewResult:
-        this.state.interviewResult !== undefined
-          ? this.state.interviewResult
-          : this.state.list.interviewResult,
-      juniorExamScore:
-        this.state.juniorExamScore !== undefined
-          ? this.state.juniorExamScore
-          : this.state.list.juniorExamScore,
-      payInfo:
-        this.state.payInfo !== undefined
-          ? this.state.payInfo
-          : this.state.list.payInfo,
-      remark:
-        this.state.remark !== undefined
-          ? this.state.remark
-          : this.state.list.remark,
-      returnPay:
-        this.state.returnPay !== undefined
-          ? this.state.returnPay
-          : this.state.list.returnPay,
-      toFile:
-        this.state.toFile !== undefined
-          ? this.state.toFile
-          : this.state.list.toFile,
-      volunteerInfo:
-        this.state.volunteerInfo !== undefined
-          ? this.state.volunteerInfo
-          : this.state.list.volunteerInfo,
-      writtenResult:
-        this.state.writtenResult !== undefined
-          ? this.state.writtenResult
-          : this.state.list.writtenResult
-    };
+        admissionTicket: /*  this.state.list.admissionTicket */ 20192500,
+        contactName:this.state.list.contactName,
+        contactTime:this.state.list.contactTime,
+        interviewDescribe:this.state.list.interviewDescribe,
+        interviewResult:this.state.list.interviewResult,
+        juniorExamScore:this.state.list.juniorExamScore,
+        payInfo:this.state.list.payInfo,
+        remark:this.state.list.remark,
+        returnPay:this.state.list.returnPay,
+        toFile:this.state.list.toFile,
+        volunteerInfo:this.state.list.volunteerInfo,
+        writtenResult:this.state.list.writtenResult
+      };
     getUpdataInfo(req).then(item => {
       console.log(item);
       message.info();
@@ -170,50 +219,6 @@ class UpdateMsg extends Component {
     this.props.history.goBack();
   };
   render() {
-    if (this.state.list === undefined) {
-      var list = {
-        admissionTicket: 20192500,
-        chinaName: "李艳强",
-        contactName: "李teacher",
-        contactPhone: "18210609262",
-        contactTime: "2019-03-06T19:26:36.000+0000",
-        exam1Rank: 1,
-        exam1Score: 80,
-        familyAddress: "北京还定",
-        fatherCompany: "平安",
-        fatherName: "李李",
-        fatherPhone: 11111111111,
-        fatherPosition: "两路",
-        gender: "1",
-        idCard: "130126199110143918",
-        intendedProgram: "1",
-        interviewDescribe: "秀儿超级优秀",
-        interviewResult: "0",
-        juniorExamScore: 500,
-        juniorSchoolName: "寨头中学",
-        matherCompany: "平安",
-        matherName: "王王",
-        matherPhone: 13012661991,
-        matherPosition: "八成",
-        orNkStudent: "1",
-        payInfo: "0",
-        photo: "C:MyProject\nkschool_parent1/student/1551870187726timg.jpeg",
-        preparerName: "李丽",
-        preparerTime: "2019-03-06T19:19:12.000+0000",
-        remark: "哈哈",
-        returnPay: "0",
-        schoolNameIndex: "13",
-        schoolSiteArea: "灵寿",
-        schoolSiteCity: "石家庄",
-        schoolSiteIndex: "12",
-        schoolSiteProvince: "河北",
-        toFile: "1",
-        volunteerInfo: "0",
-        writtenResult: 100
-      };
-    } else {
-      var list = this.state.list;
-    }
     function renderTime(date) {
       var dateee = new Date(date).toJSON();
       return new Date(+new Date(dateee) + 8 * 3600 * 1000)
@@ -222,6 +227,8 @@ class UpdateMsg extends Component {
         .replace(/\.[\d]{3}Z/, "");
     }
     console.log(renderTime("2019-03-06T19:19:12.000+0000").split(" ")[0]);
+    var Time = renderTime(this.state.contactTime).split(" ")[0];
+    console.log(Time)
     return (
       <div className="updateMsg">
         <div className="updateMsg-content">
@@ -239,7 +246,7 @@ class UpdateMsg extends Component {
                   <div>
                     <span>
                       <i className="hodale">准考证号：</i>
-                      <i>{`J${list.admissionTicket}`}</i>
+                      <i>{`J${this.state.list.admissionTicket}`}</i>
                     </span>
                   </div>
                 </Col>
@@ -248,184 +255,181 @@ class UpdateMsg extends Component {
                   <div>
                     <span>
                       <i className="hodale">考生姓名：</i>
-                      <i>{list.chinaName || "王千岁"}</i>
+                      <i>{this.state.list.chinaName}</i>
                     </span>
                   </div>
                 </Col>
               </Row>
-
-              <Row type="flex">
-                <Col span={6} order={1}>
-                  <div>
-                    <h5>面试结果：</h5>
-                    <Select
-                      //   defaultValue={
-                      //     this.state.interviewResult ||
-                      //     list.interviewResult ||
-                      //     "1"
-                      //   }
-                      style={{ width: 240 }}
-                      onChange={this.handleChangeQuerty}
-                    >
-                      <Option value="0">Excellent-优秀</Option>
-                      <Option value="1">合格</Option>
-                      <Option value="2">不合格</Option>
-                    </Select>
-                  </div>
-                </Col>
-
-                <Col span={6} order={2}>
-                  <div>
-                    <h5>面试描述：</h5>
-                    <div className="description">
-                      <Input
-                        // placeholder={list.interviewDescribe}
-                        style={{ width: 800 }}
-                        onChange={this.descriptionInput}
-                        value={this.state.interviewDescribe}
-                      />
-                      <span>{`${
-                        this.state.interviewDescribe.length
-                      }/100`}</span>
+              {/* 填写学生信息 */}
+              <div>
+                <Row type="flex">
+                  <Col span={6} order={1}>
+                    <div>
+                      <h5>面试结果：</h5>
+                      <Select
+                        style={{ width: 240 }}
+                        onChange={this.handleChangeQuerty}
+                        value={this.state.interviewResult}
+                      >
+                        <Option value="0">Excellent-优秀</Option>
+                        <Option value="1">合格</Option>
+                        <Option value="2">不合格</Option>
+                      </Select>
                     </div>
-                  </div>
-                </Col>
-              </Row>
+                  </Col>
 
-              <Row type="flex">
-                <Col span={6} order={1}>
-                  <div>
-                    <h5>笔试结果：</h5>
-                    <InputNumber
-                      //   placeholder={list.writtenResult}
-                      value={this.state.writtenResult}
-                      onChange={this.handleChangeResult}
-                      style={{ width: 240 }}
-                      min={0}
-                      max={999}
-                    />
-                  </div>
-                </Col>
-
-                <Col span={6} order={2}>
-                  <div>
-                    <h5>缴费情况：</h5>
-                    <Select
-                      style={{ width: 240 }}
-                      onChange={this.handleChangeFree}
-                    >
-                      <Option value="1">是</Option>
-                      <Option value="0">否</Option>
-                    </Select>
-                  </div>
-                </Col>
-
-                <Col span={6} order={3}>
-                  <div>
-                    <h5>中考分数：</h5>
-                    <InputNumber
-                      style={{ width: 240 }}
-                      onChange={this.handleChangeMinderRe}
-                      value={this.state.juniorExamScore}
-                      min={0}
-                      max={999}
-                    />
-                  </div>
-                </Col>
-
-                <Col span={6} order={4}>
-                  <div>
-                    <h5>志愿填报情况：</h5>
-                    <Select
-                      style={{ width: 240 }}
-                      onChange={this.handleChangeFurter}
-                    >
-                      <Option value="0">1A</Option>
-                      <Option value="1">1B</Option>
-                      <Option value="2">1C</Option>
-                    </Select>
-                  </div>
-                </Col>
-              </Row>
-
-              <Row type="flex">
-                <Col span={6} order={1}>
-                  <div>
-                    <h5>提档：</h5>
-                    <Select
-                      defaultValue={list.toFile}
-                      style={{ width: 240 }}
-                      onChange={this.handleChangetoFile}
-                    >
-                      <Option value="1">是</Option>
-                      <Option value="0">否</Option>
-                    </Select>
-                  </div>
-                </Col>
-
-                <Col span={6} order={2}>
-                  <div>
-                    <h5>退费：</h5>
-                    <Select
-                      defaultValue={list.returnPay}
-                      style={{ width: 240 }}
-                      onChange={this.handleChangeReturnPay}
-                    >
-                      <Option value="1">是</Option>
-                      <Option value="0">否</Option>
-                      <Option value="2">考虑</Option>
-                    </Select>
-                  </div>
-                </Col>
-
-                <Col span={6} order={3}>
-                  <div>
-                    <h5>联系时间：</h5>
-                    <DatePicker
-                      defaultValue={moment(
-                        `${renderTime(list.contactTime).split(" ")[0]}`,
-                        dateFormat
-                      )}
-                      format={dateFormat}
-                      style={{ width: 240 }}
-                      onChange={this.onChangeTime}
-                    />
-                  </div>
-                </Col>
-                <Col span={6} order={4}>
-                  <div>
-                    <h5>联系人：</h5>
-                    <Input
-                      placeholder={list.contactName}
-                      style={{ width: 240 }}
-                      onChange={this.handleChangeContactName}
-                      value={this.state.contactName}
-                    />
-                  </div>
-                </Col>
-              </Row>
-
-              <Row type="flex">
-                <Col span={6} order={1}>
-                  <div>
-                    <h5>备注记录：</h5>
-                    <div className="description">
-                      <Input
-                        placeholder={list.remark}
-                        style={{ width: 1000 }}
-                        onChange={this.handleChangeRemark}
-                        value={this.state.remark}
-                      />
-                      <span>{`100/${100 - list.remark.length ||
-                        this.state.remark.length}`}</span>
+                  <Col span={6} order={2}>
+                    <div>
+                      <h5>面试描述：</h5>
+                      <div className="description">
+                        <TextArea
+                          style={{ width: 800 }}
+                          onChange={this.descriptionInput}
+                          value={this.state.interviewDescribe}
+                        />
+                        <span>{`${
+                          this.state.interviewDescribe
+                            ? this.state.interviewDescribe.length
+                            : 100
+                        }/100`}</span>
+                      </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+
+                <Row type="flex">
+                  <Col span={6} order={1}>
+                    <div>
+                      <h5>笔试结果：</h5>
+                      <InputNumber
+                        value={this.state.writtenResult}
+                        onChange={this.handleChangeResult}
+                        style={{ width: 240 }}
+                        min={0}
+                        max={999}
+                      />
+                    </div>
+                  </Col>
+
+                  <Col span={6} order={2}>
+                    <div>
+                      <h5>缴费情况：</h5>
+                      <Select
+                        style={{ width: 240 }}
+                        onChange={this.handleChangeFree}
+                        value={this.state.payInfo}
+                      >
+                        <Option value="1">是</Option>
+                        <Option value="0">否</Option>
+                      </Select>
+                    </div>
+                  </Col>
+
+                  <Col span={6} order={3}>
+                    <div>
+                      <h5>中考分数：</h5>
+                      <InputNumber
+                        style={{ width: 240 }}
+                        onChange={this.handleChangeMinderRe}
+                        value={this.state.juniorExamScore}
+                        min={0}
+                        max={999}
+                      />
+                    </div>
+                  </Col>
+
+                  <Col span={6} order={4}>
+                    <div>
+                      <h5>志愿填报情况：</h5>
+                      <Select
+                        style={{ width: 240 }}
+                        onChange={this.handleChangeFurter}
+                        value={this.state.volunteerInfo}
+                      >
+                        <Option value="0">1A</Option>
+                        <Option value="1">1B</Option>
+                        <Option value="2">1C</Option>
+                      </Select>
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row type="flex">
+                  <Col span={6} order={1}>
+                    <div>
+                      <h5>提档：</h5>
+                      <Select
+                        style={{ width: 240 }}
+                        onChange={this.handleChangetoFile}
+                        value={this.state.toFile}
+                      >
+                        <Option value="1">是</Option>
+                        <Option value="0">否</Option>
+                      </Select>
+                    </div>
+                  </Col>
+
+                  <Col span={6} order={2}>
+                    <div>
+                      <h5>退费：</h5>
+                      <Select
+                        style={{ width: 240 }}
+                        onChange={this.handleChangeReturnPay}
+                        value={this.state.returnPay}
+                      >
+                        <Option value="1">是</Option>
+                        <Option value="0">否</Option>
+                        <Option value="2">考虑</Option>
+                      </Select>
+                    </div>
+                  </Col>
+                  <Col span={6} order={3}>
+                    <div>
+                      <h5>联系时间：</h5>
+                      <DatePicker
+                        defaultValue={moment(`${Time}`)}
+                        placeholder="选择日期"
+                        format={dateFormat}
+                        style={{ width: 240 }}
+                        onChange={this.onChangeTime}
+                      />
+                    </div>
+                  </Col>
+                  <Col span={6} order={4}>
+                    <div>
+                      <h5>联系人：</h5>
+                      <Input
+                        style={{ width: 240 }}
+                        onChange={this.handleChangeContactName}
+                        value={this.state.contactName}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row type="flex">
+                  <Col span={6} order={1}>
+                    <div>
+                      <h5>备注记录：</h5>
+                      <div className="description">
+                        <TextArea
+                          style={{ width: 1000 }}
+                          onChange={this.handleChangeRemark}
+                          value={this.state.remark}
+                          rows={4}
+                        />
+                        <span>{`${
+                          this.state.remark ? this.state.remark.length : 100
+                        }/100`}</span>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </div>
           </div>
           {/* 学生情况 */}
-          <StudentsMsg list={list} subButton={this.subButton} />
+          <StudentsMsg list={this.state.list} subButton={this.subButton} />
         </div>
       </div>
     );

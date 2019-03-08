@@ -337,7 +337,7 @@ class Registration extends Component {
                 )}
               </Form.Item>
             </Col>
-            <Col span={8}>  
+            <Col span={8}>
               <p className='regist-title'><span>性别</span>/Gender</p>
                 <Form.Item>
                   {getFieldDecorator('gender',{
