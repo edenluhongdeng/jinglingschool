@@ -58,7 +58,7 @@ export default class Download extends Component {
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
             <img alt='' src={imgUrl} />
-            <a href={imgUrl}>111</a>
+            {/* <a href={imgUrl}>111</a> */}
         </div>
         <table className="customers">
             <tbody>
