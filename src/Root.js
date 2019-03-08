@@ -3,7 +3,7 @@ import React, { Component } from "react";
 //引入状态库
 
 //引入路由模块
-import { Route, withRouter, Switch } from "react-router-dom";
+import { Route, withRouter, Switch ,Redirect} from "react-router-dom";
 // import Ipad from "./Ipad";
 // import Mapp from "./Mapp";
 
@@ -31,16 +31,17 @@ class Root extends Component {
     return (
       <div className="Root">
         <Switch>
+          <Route exact path="/" render={()=><Redirect to='/registration' />} />
           <Route exact path="/search" component={Search} />
           <Route exact path="/admissioninfo" component={Admissioninfo} />
           <Route exact path="/resultsquery" component={Resultsquery} />
-          <Route path="/registration" component={Registration} />
-          <Route exact  path="/management/updatemsg" component={UpdateMsg} />
-          <Route  exact path="/management" component={Management} />
-          <Route path="/login" component={Login} />
-          <Route path="/choose" component={Choose} />
-          <Route path="/result" component={Result} />
-          <Route path="/download" component={Download} />
+          <Route exact path="/registration" component={Registration} />
+          <Route exact path="/management/updatemsg" component={UpdateMsg} />
+          <Route exact path="/management" component={Management} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/choose" component={Choose} />
+          <Route exact path="/result" component={Result} />
+          <Route exact path="/download" component={Download} />
         </Switch>
       </div>
     );

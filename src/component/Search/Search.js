@@ -159,7 +159,6 @@ class Search extends Component {
     this.props.history.goBack();
   };
   goBackRight = () => {
-    // this.props.history.go(1);
     this.props.history.goBack();
   };
   render() {

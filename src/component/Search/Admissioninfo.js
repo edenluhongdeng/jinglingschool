@@ -46,7 +46,7 @@ class Admissioninfo extends Component {
             <div className="info_box_col info_box_col_rq">
               <div>
                 <span>考试日期：</span>
-                <span>6月1号</span>
+                <span>________</span>
               </div>
               <div>
                 <span>考试时间：</span>

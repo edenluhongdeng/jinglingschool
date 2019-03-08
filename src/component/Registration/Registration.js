@@ -192,7 +192,7 @@ class Registration extends Component {
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
           if(data.photo){
-            imageUrl = `${baseUrl}/enroll//studentController/getPhone`
+            imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
@@ -408,7 +408,7 @@ class Registration extends Component {
     //一模排名 
     const testExam1Rank = (rule,value,callback) => {
       const exam1RankValue = getFieldValue('exam1Rank')
-      if(!/^[1-9]\d*$/.test(exam1RankValue)) callback('排名不能为负!')
+      if(!/^[1-9]\d*$/.test(exam1RankValue)) callback('排名应为正整数!')
       callback()
     }
     return (
