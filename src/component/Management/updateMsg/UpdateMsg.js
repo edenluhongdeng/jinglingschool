@@ -1,5 +1,5 @@
 /*
- *教师填写面试信息页面
+ *教师修改面试信息页面
  */
 
 import React, { Component } from "react";
@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-import { getStudyInfoTch, getUpdataInfo } from "./../../../api/manageMent.js";
+import { getStudyInfoTch, getUpdataInfo,getStudyPhoto } from "./../../../api/manageMent.js";
 import StudentsMsg from "./StudentsMsg";
 import "./style.less";
 const Option = Select.Option;
@@ -31,7 +31,11 @@ class UpdateMsg extends Component {
     contactTime: null
   };
   componentDidMount() {
+    document.title = "2019招生信息修改"
     this.getInfo();
+    getStudyPhoto().then(res=>{
+        console.log(res,'---------------------------------------------')
+    })
   }
   /* 获取信息 */
   getInfo = () => {
@@ -227,8 +231,8 @@ class UpdateMsg extends Component {
                         value={this.state.interviewResult}
                       >
                         <Option value="0">Excellent-优秀</Option>
-                        <Option value="1">合格</Option>
-                        <Option value="2">不合格</Option>
+                        <Option value="1">Pass-合格</Option>
+                        <Option value="2">Fail-不合格</Option>
                       </Select>
                     </div>
                   </Col>
@@ -342,7 +346,7 @@ class UpdateMsg extends Component {
                     <div>
                       <h5>联系时间：</h5>
                       <DatePicker
-                        defaultValue={moment(`${Time}`)}
+                        value={moment(`${Time}`)}
                         placeholder="选择日期"
                         format={dateFormat}
                         style={{ width: 240 }}

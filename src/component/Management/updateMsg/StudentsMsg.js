@@ -81,7 +81,7 @@ class StudentsMsg extends Component {
                     <span> /Date of Birth</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.birthDate || "2019.8"}
+                    {list.birthDate&&list.birthDate.split('T')[0] || "2019.8"}
                   </div>
                 </div>
                 <div className="4">
