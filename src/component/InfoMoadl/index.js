@@ -49,6 +49,7 @@ class InfoModal extends Component {
   }
   render() {
     const { studentInfo,imageUrl } = this.props
+    console.log({studentInfo})
     const { 
         birthDateStr,
         chinaName,

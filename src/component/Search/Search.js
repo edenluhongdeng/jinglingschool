@@ -155,10 +155,12 @@ class Search extends Component {
     Toast.offline("查询信息失败!!!", 1);
   };
   goBack = () => {
-    this.props.history.go(-1);
+    // this.props.history.go(-1);
+    this.props.history.goBack();
   };
   goBackRight = () => {
-    this.props.history.go(1);
+    // this.props.history.go(1);
+    this.props.history.goBack();
   };
   render() {
     const { reNumber, pacNumber } = this.state;
@@ -245,7 +247,7 @@ class Search extends Component {
         {/* 导航 */}
         <div className="nva">
           <img src={Leftimg} alt="" onClick = {this.goBack} className="goback" />
-          <img src={Rightimg} alt="" onClick = {this.goBackRight} className="goback" />
+          <img src={Rightimg} alt="" onClick = {this.goBack} className="goback" />
         </div>
       </div>
     );

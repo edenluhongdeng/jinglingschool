@@ -4,10 +4,10 @@ import { Tag , Row, Col,Input,Button,message ,InputNumber,Modal} from 'antd';
 import './style.less'
 import InterViewData from './interViewData/InterViewData'
 import {getStudyList,downloadStudentInfo,getStudentinfoExcelPath} from '../../api/manageMent.js'
+import baseUrl from '../../utils'
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
 const confirm = Modal.confirm;
-const baseUrl = 'http://172.20.244.236:8080'
 class Management extends Component {
   state = {
     selectedTags: [],

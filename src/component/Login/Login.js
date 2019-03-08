@@ -10,41 +10,40 @@ class Demo  extends Component {
   constructor(props){
     super(props)
     this.state={
-      a:false,
+      isShow:false,
     }
   }
+  
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      login(values).then(res=>{
-        console.log(res.data,'数据')
-        if(res.data.code=='200'&&res.data.data == '0'){
-          this.setState({
-            a:true
-          })
-        }else if(res.data.code=='200'&&res.data.data == '1'){
-          this.props.history.push({
-            pathname: '/management',
-          })
-        }else if(res.data.code=='200'&&res.data.data == '2'){
-          this.props.history.push({
-            pathname: '/choose',
-          })
-        }
-      })
-      
       if (!err) {
         console.log('Received values of form: ', values);
+        login(values).then(res=>{
+          console.log(res.data,'数据')
+          if(res.data.code=='200'&&res.data.data == '0'){
+            this.setState({
+              isShow:true
+            })
+          }else if(res.data.code=='200'&&res.data.data == '1'){
+            this.props.history.push({
+              pathname: '/management/updatemsg',
+            })
+          }else if(res.data.code=='200'&&res.data.data == '2'){
+            this.props.history.push({
+              pathname: '/choose',
+            })
+          }
+        })
       }
     });
   }
-  
-  checkFhone=(rule,value,callback)=>{
-    let reg= /^1[34578]\d{9}$/;
-    if(!value){
-      callback('请输入手机号')
-    }
+  changePhone=()=>{
+    this.setState({
+      isShow:false
+    })
   }
+  
   render() {
     const { getFieldDecorator, getFieldValue} = this.props.form;
     const formItemLayout = {
@@ -62,16 +61,24 @@ class Demo  extends Component {
     const admissionID=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
     const checkAdmission=(rule,value,callback)=>{
       const admissionValue=getFieldValue('idCard')
-      if(!admissionID.test(admissionValue)) callback('请输入正确的身份证号!')
+      if(!admissionID.test(admissionValue)) {
+        callback('请输入正确的身份证号!')
+        
+      }
       callback()
-      console.log(admissionValue)
+      
     }
     const phoneID=/^1[3456789]\d{9}$/
     const checkFhone=(rule,value,callback)=>{
       const phoneNumber= getFieldValue('contactPhone')
-      if(!phoneID.test(phoneNumber)) callback('手机号码格式不正确!')
+      if(!phoneID.test(phoneNumber)){
+        callback('手机号码格式不正确!')
+        
+      } 
       callback()
+      
     }
+    
     return (
       <Fragment>
       <div className='login'>
@@ -98,9 +105,9 @@ class Demo  extends Component {
                 }],
               })(
                 <div className='phone'>
-                  <Input  placeholder="请输入手机号码..." style={inputStyle}/>
+                  <Input  placeholder="请输入手机号码..." style={inputStyle} onChange={this.changePhone}/>
                   {
-                    this.state.a&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
+                    this.state.isShow&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
                   }
                 </div>
 
