@@ -3,7 +3,9 @@ import './download.less'
 import { downloadInformation, downloadFile} from '../../api/GetPhoto'
 import { Button } from 'antd';
 import _ from 'lodash'
-const imgUrl = 'http://localhost:80/enroll/studentController/getPhone'
+const imgUrl = 'http://172.20.244.199/enroll/studentController/getPhone'
+
+
 export default class Download extends Component {
     constructor(props){
         super(props)
@@ -16,6 +18,7 @@ export default class Download extends Component {
         }
     }
     componentDidMount(){
+        
         downloadInformation().then(res=>{
             console.log(res.data, '数据')
             const code = _.get(res,'data.code')
@@ -28,12 +31,10 @@ export default class Download extends Component {
         })
     }
     downloadFile=()=>{
-        // downloadFile()
-        window.location.href='http://localhost:80/enroll/studentController/certificate/getCertificate'
+        window.location.href='http://172.20.244.199/enroll/studentController/certificate/getCertificate'
         return false
     }
   render() {
-    console.log(this.state.data,'11')
     const {admissionTicket, chinaName, gender} = this.state.data
     return (
       <div>
@@ -58,7 +59,6 @@ export default class Download extends Component {
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
             <img alt='' src={imgUrl} />
-            {/* <a href={imgUrl}>111</a> */}
         </div>
         <table className="customers">
             <tbody>
@@ -76,7 +76,7 @@ export default class Download extends Component {
             <p>注意事项：</p>
             <p>
                 1、考生须凭借准考证、身份证（户口簿、市民卡或其他有效身份证件）方可参加国际部招生考试。考场号和座位号考试当天到学校获取;<br />
-                2、请考生于5月19日8:00准时进入考场，迟到15分钟以上按缺考处理 ;<br />
+                2、请考生于当日准时进入考场，迟到15分钟以上按缺考处理 ;<br />
                 3、请考生携带2B铅笔、黑色签字笔、直尺进入考场，请勿携带任何电子通讯设备;<br />
                 4、进入考场区域后，请考生保持安静，严格遵守考场纪律;<br />
                 5、请所有家长在千人报告厅参加家长学堂，考试期间，家长禁止进入考试区域;<br />
