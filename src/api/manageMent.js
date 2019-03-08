@@ -28,3 +28,8 @@ export function downloadStudentInfo(data){
 export function getStudentinfoExcelPath(exelPath){
     return Ajax(`/teacherController/downloadStudentInfo`,{exelPath},"GET")
 }
+
+//获取学生照片
+export function getStudyPhoto(){
+    return Ajax('/studentController/getPhone',{},'GET')
+}

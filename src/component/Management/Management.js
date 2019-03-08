@@ -21,7 +21,7 @@ class Management extends Component {
     IsNanJing:['不限'] ,//是否南京学籍
     hightSchool:0,//中考分数
     isRetreat:['不限'],//是否退档
-    ProjectIntention:['待定'],//项目意向
+    ProjectIntention:[],//项目意向
     writeResult:0,//笔试结果
     isDown:false,//下载
     studyData:[],//学生数据
@@ -48,6 +48,7 @@ class Management extends Component {
     }
   };
 componentDidMount(){
+  document.title = "2019招生信息查询"
   const {prams} = this.state
   this.getData(prams)
 }
