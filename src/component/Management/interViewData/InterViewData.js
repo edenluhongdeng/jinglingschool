@@ -244,9 +244,13 @@ class InterViewData extends Component {
       }
     //修改信息
     updataMsg = (text,record) => {
-        console.log(text,'456')
-        const key = text.key.substr(1,text.key.length)
-    this.props.history.push('/management/updatemsg')
+        console.log(text,record)
+    // this.props.history.push('/management/updatemsg')
+    console.log(text)
+    this.props.history.push({
+        pathname: "/management/updatemsg",
+        state: { vcode: text }
+      });
     }
     //批量操作
     rowSelection = {

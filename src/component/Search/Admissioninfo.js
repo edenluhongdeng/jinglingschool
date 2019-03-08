@@ -1,6 +1,6 @@
 /*  */
 import React, { Component } from "react";
-import {withRouter,NavLink} from 'react-router-dom';
+import { withRouter, NavLink } from "react-router-dom";
 import { Button } from "antd-mobile";
 import "./style.less";
 import Leftimg from "./../../imgs/H5-nav-return.png";
@@ -9,14 +9,27 @@ class Admissioninfo extends Component {
     this.props.history.goBack();
   };
   render() {
-    if(this.props.location.state === undefined){
-      // this.goBack()
+    if (this.props.location.state === undefined) {
+      this.goBack()
+      return
     }
+    const arrList = this.props.location.state
+    /* 
+    //     admissionTicket: 20192500
+    //     chinaName: "李艳强"
+    //     gender: "1"
+    //     interviewResult: "0"
+    */
     return (
       <div className="Admissioninfo">
         {/* 导航 */}
         <div className="nva">
-        <span onClick={()=>{this.goBack()}} className="goback">
+          <span
+            onClick={() => {
+              this.goBack();
+            }}
+            className="goback"
+          >
             <img src={Leftimg} alt="" />
           </span>
           <span>准考证信息</span>
@@ -32,11 +45,11 @@ class Admissioninfo extends Component {
             <div className="info_box_col info_box_col_rq">
               <div>
                 <span>考生姓名：</span>
-                <span>组巴</span>
+                <span>{arrList.chinaName || "科比"}</span>
               </div>
               <div>
                 <span>准考证号：</span>
-                <span>J20192500</span>
+                <span>{`J${arrList.admissionTicket}`}</span>
               </div>
             </div>
             <div className="info_box_col info_box_col_rq">

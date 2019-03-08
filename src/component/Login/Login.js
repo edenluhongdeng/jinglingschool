@@ -22,11 +22,12 @@ class Demo  extends Component {
           })
         }else if(res.data.code=='200'&&res.data.data == '1'){
           this.props.history.push({
-            pathname: '/management',
+            pathname: '/management/updatemsg',
           })
         }else if(res.data.code=='200'&&res.data.data == '2'){
           this.props.history.push({
-            pathname: '/choose',
+            /* lhd */
+            pathname: '/management/updatemsg',
           })
         }
       })
