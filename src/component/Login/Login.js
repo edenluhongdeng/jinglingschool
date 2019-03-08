@@ -24,7 +24,7 @@ class Demo  extends Component {
         }else if(res.data.code=='200'&&res.data.data == '1'){
           const role=res.data.data
           this.props.history.push({
-            pathname: '/management',
+            pathname: '/management/updatemsg',
             state:{role}
           })
         }else if(res.data.code=='200'&&res.data.data == '2'){

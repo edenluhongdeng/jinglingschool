@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Table,Pagination } from 'antd';
 import {withRouter} from 'react-router-dom'
-
+const _obj = {
+    '0':'中美',
+    '1':'中英',
+    '2':'中加',
+    '3':'待定'
+}
 class InterViewData extends Component {
     state={
         data:[],
@@ -71,6 +76,20 @@ class InterViewData extends Component {
         }
     }
 
+    //项目意向数据处理
+    intendedProgram = (Program) => {
+        let str = ''
+        let project = []
+        if(Program){
+            Program=Program.split(',')
+            Program&&Program.map((item,index)=>{
+                str += _obj[item]+"、"
+            }
+            )
+        }
+        return str.substr(0,str.length-1)
+    }
+
     //列表title
      columns = [{
         title: '准考证',
@@ -112,8 +131,14 @@ class InterViewData extends Component {
         align:'center'
     }, {
         title: '项目意向',
-        dataIndex: 'projectIntention',
-        align:'center'
+        dataIndex:'projectIntention',
+        align:'center',
+        render:(text,record) =>{
+            const str = this.intendedProgram(record.projectIntention)
+            return (
+                <span>{str}</span>
+            )
+        }
     },{
         title: '南京学籍',
         dataIndex: 'isNanjing',
@@ -141,7 +166,7 @@ class InterViewData extends Component {
     },{
         title: '操作',
         dataIndex: 'operating',
-        render: (text,record) => <a href="javascript:;" className = "updateAction" onClick={this.updataMsg.bind(text,record)}>修改</a>,
+        render: (text,record) => <a href="javascript:;" className = "updateAction" onClick={this.updataMsg.bind(text)}>修改</a>,
         align:'center'
     },
     ];
@@ -218,9 +243,10 @@ class InterViewData extends Component {
         this.getDataList(sort)
       }
     //修改信息
-    updataMsg = (text,record) => {
-    this.props.history.push('/management/updatemsg')
-    }
+    updataMsg = (text) => {
+        const key = text.key.substr(1,text.key.length)
+        this.props.history.push(`/management/updatemsg?id=${key}`)
+     }
     //批量操作
     rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
