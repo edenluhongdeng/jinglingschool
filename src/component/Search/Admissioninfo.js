@@ -6,6 +6,9 @@ import "./style.less";
 import Leftimg from "./../../imgs/H5-nav-return.png";
 import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 class Admissioninfo extends Component {
+  componentDidMount(){
+    document.title = "准考证信息查询";
+  }
   goBack = () => {
     this.props.history.goBack();
   };
@@ -105,7 +108,7 @@ class Admissioninfo extends Component {
           <img
             src={Rightimg}
             alt=""
-            onClick={this.goBackRight}
+            onClick={this.goBack}
             className="goback"
           />
         </div>

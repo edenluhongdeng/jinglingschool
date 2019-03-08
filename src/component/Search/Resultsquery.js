@@ -8,6 +8,9 @@ import Leftimg from "./../../imgs/H5-nav-return.png";
 import banner from "./../../imgs/H5-picture.png";
 import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 class Resultsquery extends Component {
+  componentDidMount(){
+    document.title = "成绩查询";
+  }
   goBack = () => {
     this.props.history.goBack();
   };
@@ -69,7 +72,7 @@ class Resultsquery extends Component {
           <img
             src={Rightimg}
             alt=""
-            onClick={this.goBackRight}
+            onClick={this.goBack}
             className="goback"
           />
         </div>
