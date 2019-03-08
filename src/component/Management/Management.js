@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Tag , Row, Col,Input,Button } from 'antd';
+import _ from 'lodash'
+import { Tag , Row, Col,Input,Button,message } from 'antd';
 import './style.less'
 import InterViewData from './interViewData/InterViewData'
-import {getStudyList} from '../../api/manageMent.js'
+import {getStudyList,downloadStudentInfo,getStudentinfoExcelPath} from '../../api/manageMent.js'
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
+const baseUrl = 'http://172.20.244.242:8080'
 class Management extends Component {
   state = {
     selectedTags: [],
@@ -315,7 +317,32 @@ inputSearch = (value) => {
     })
     this.getData(prams)
 }
-
+//获取下载参数
+getDownloadPramas = (data) => {
+  this.setState({
+    needTickets:data
+  })
+}
+//下载信息
+downloadStudentInfo = () => {
+  const { needTickets } = this.state
+  const studentExcelReq = {}
+  studentExcelReq.needTickets = needTickets
+  downloadStudentInfo(studentExcelReq)
+    .then(res => {
+      const code = _.get(res,'data.code')
+      const exelPath = _.get(res,'data.data')
+      const error = _.get(res,'data.error')
+      if(code == 200){
+        window.location.href = `${baseUrl}/enroll/teacherController/white/downloadStudentInfo?exelPath=${exelPath}`
+      }else{
+        message.error(error)
+      }
+    })
+    .catch(err=>{
+      message.error(err)
+    })
+}
   render() {
     return (
       <div className = "interviewManage">
@@ -473,7 +500,7 @@ inputSearch = (value) => {
                       <span className = "downLoad downLoad-false">
                           <i className = "downIcon"></i>下载
                       </span>:
-                      <span className = "downLoad downLoad-true">
+                      <span className = "downLoad downLoad-true" onClick={this.downloadStudentInfo}>
                         <i className = "downIcon"></i>下载
                     </span>
                    }
@@ -492,6 +519,7 @@ inputSearch = (value) => {
                     data={this.state.studyData}
                     getData = {this.getData}
                     prams = {this.state.prams}
+                    getDownloadPramas={this.getDownloadPramas}
                     />
               </div>
           </div>

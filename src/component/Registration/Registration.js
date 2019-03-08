@@ -6,11 +6,157 @@ import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePic
 import FailModal from '../FailModal'
 import InfoModal from '../InfoMoadl'
 const { Option } = Select
-const provinceData = ['Zhejiang', 'Jiangsu']
+const provinceData = ['鼓楼区', '秦淮区','建邺区','雨花台区','栖霞区','江宁区','浦口区','溧水区','高淳区','六合区','江北新区']
 const cityData = {
-  Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
-  Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
-};
+  鼓楼区: [
+    '南京师范大学附中',
+    '南京市金陵中学',
+    '南京宁海中学',
+    '南京大学附中',
+    '南京市第五十中学',
+    '南京市田家炳高级中学',
+    '南京商业学校',
+    '南京市第八中学',
+    '南京市第二十九中学初中部',
+    '江苏教育学院附属高级中学',
+    '南京29中教育集团致远校区',
+    '南京市宁海中学分校',
+    '南京市金陵汇文学校（初中部）',
+    '南京民办育英外国语学校',
+    '南京市第十二中学',
+    '南京市滨江中学',
+    '南京一中（求真分校）',
+    '南京晓庄学院附中（一中分校）',
+    '南京市第三十九中学',
+    '南京市第十二初级中学',
+    '南京市第六十六中学',
+    '南京市鼓楼实验中学',
+    '南师附中树人学校'],
+  秦淮区: [
+    '南京市第五初级中学',
+    '南京郑和外国语学校',
+    '南京市文昌初级中学',
+    '南京市文枢初级中学',
+    '南京市秦淮外国语',
+    '南京市第十八中学',
+    '南京市第二十七初级中学',
+    '南京市第一中学初中部',
+    '南京市行知实验中学',
+    '南京航空航天大学附属中学',
+    '南京市钟英中学'],
+  建邺区:[
+    '南京河西外国语学校',
+    '金陵中学河西分校',
+    '建邺初级中学',
+    '南湖第二中学',
+    '中华中学上新河初中',
+    '南京师范大学附属中学新城初级中学',
+    '南京师范大学附属中学新城初级中学黄山路分校',
+    '南京师范大学附属中学新城初级中学怡康街分校',
+    '莲花实验学校',
+    '江心州初级中学',
+    '南京外国语学校河西初级中学',
+    '致远初级中学'],
+  雨花台区:[
+    '南京市雨花台中学',
+    '南京市梅山高级中学',
+    '南京市板桥中学',
+    '南京市共青团路中学',
+    '南京市金陵中学西善分校',
+    '南京市孙家初级中学',
+    '南京市金陵中学岱山分校',
+    '南京市雨花台中学春江分校',
+    '南京市梅山第一中学',
+    '南京市梅山第二中学',
+    '南京市民办实验学校'],
+  栖霞区:[
+    '南京外国语学校仙林分校燕子矶校区',
+    '南京市栖霞区实验初级中学尧化校区',
+    '南京新港中等专业学校',
+    '南京外国语学校仙林分校',
+    '南京师范大学附属实验学校',
+    '南京师范大学附属中学丁家庄初级中学',
+    '南京市八卦洲中桥中学',
+    '南京市燕子矶初级中学',
+    '南京市华电中学',
+    '南京市第一中学马群分校',
+    '南京师范大学附属中学仙林学校初中部',
+    '南京市栖霞区实验初级中学南炼校区',
+    '南京市金陵中学仙林分校中学部',
+    '南京市花园中学',
+    '南京市营防中学',
+    '南京市栖霞中学',
+    '南京市燕子矶中学',
+    '南京市伯乐中学',
+    '南京市摄山中学'],
+  江宁区:[
+    '南京市江宁开发区学校',
+    '南京市竹山中学',
+    '南京市竹山中学分校清水亭学校',
+    '南京市上元中学',
+    '南京市百家湖中学',
+    '南京市天景山中学'],
+  浦口区:[
+    '浦口开放大学',
+    '南京市浦口区中等专业学校',
+    '江苏省江浦高级中学',
+    '江浦高级中学文昌校区',
+    '南京市浦口区第二中学',
+    '南京市浦口区第三中学',
+    '南京市浦口区第四中学',
+    '南京市浦口区乌江学校',
+    '浦口区行知中学',
+    '浦口区实验学校',
+    '浦口区大桥中学',
+    '浦口区桥林中学',
+    '浦口区石桥中学',
+    '浦口区汤泉中学',
+    '浦口区星甸中学',
+    '浦口区永宁中学',
+    '龙山学校',
+    '汉开书院'],
+  溧水区:[
+    '南京市溧水区云鹤初级中学',
+    '南京市溧水区第一初级中学',
+    '江苏省溧水高级中学附属初级中学',
+    '南京市溧水区实验学校',
+    '南京市溧水区东庐初级中学',
+    '南京市溧水区柘塘初级中学'],
+  高淳区:[
+    '江苏省高淳高级中学', 
+    '湖滨高级中学',
+    '淳辉高中',
+    '高淳区第一中学', 
+    '高淳区第二中学',
+    '高淳区第三中学 武家嘴实验学校', 
+    '漆桥中学 金陵汇淳学校 永丰中学', 
+    '砖墙中学 桠溪中学 东坝中学',
+    '固城中学',
+    '高淳外国语学校'],
+  六合区:[
+    '六合高级中学附属初级中学',
+    '科利华中学棠城分校',
+    '金陵中学龙湖分校初中部',
+    '励志学校初中部'],
+  江北新区:[
+    '扬子一中',
+    '南化二中',
+    '旭东中学',
+    '九龙中学',
+    '扬子一中长城分校',
+    '南京市第二十九中学天润城分校（初中部）',
+    '南京市第二十九中学威尼斯',
+    '沿江中学',
+    '浦厂中学',
+    '南信大附中',
+    '南京一中明发滨江分校',
+    '河西中学',
+    '浦口外国语学校（初中部）',
+    '十七中学',
+    '南京一中江北新区分校（初中部）',
+    '浦口外国语学校高新分校',
+    '六合玉带初中']
+  };
 function getBase64(img, callback) {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
@@ -73,7 +219,6 @@ class Registration extends Component {
           schoolSiteIndex,schoolNameIndex
          }
         const newStudentInfo = Object.assign({},newValue,studentInfo)
-        console.log({newStudentInfo})
         this.setState({studentInfo:newStudentInfo},()=>{
           this.showInfoModal()
         })
@@ -92,7 +237,6 @@ class Registration extends Component {
     })
   }
   beforeUpload = (file) => {
-    console.log({file})
     const isJPG = file.type === ('image/jpeg' || 'image/jpg' || 'image/gif' || 'image/png' || 'image/bmp')
     if (!isJPG) {
       message.warning('照片格式不正确!')
@@ -128,14 +272,42 @@ class Registration extends Component {
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
     const testName = (rule,value,callback) => {
-      const nameValue = getFieldValue('chinaName') || getFieldValue('fatherName') || getFieldValue('motherName') || getFieldValue('preparerName')
+      const nameValue = getFieldValue('chinaName')
+      if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
+      if(!reg.test(nameValue)) callback('请输入汉字!')
+      callback()
+    }
+    const testFatherName = (rule,value,callback) => {
+      const nameValue = getFieldValue('fatherName')
+      if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
+      if(!reg.test(nameValue)) callback('请输入汉字!')
+      callback()
+    }
+    const testMatherName = (rule,value,callback) => {
+      const nameValue = getFieldValue('matherName')
+      if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
+      if(!reg.test(nameValue)) callback('请输入汉字!')
+      callback()
+    }
+    const testPreparerName = (rule,value,callback) => {
+      const nameValue = getFieldValue('preparerName')
       if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
       if(!reg.test(nameValue)) callback('请输入汉字!')
       callback()
     }
     //手机号校验
     const testPhone = (rule,value,callback) => {
-      const phoneValue = getFieldValue('contactPhone') || getFieldValue('fatherPhone') || getFieldValue('matherPhone')
+      const phoneValue = getFieldValue('contactPhone')
+      if(!/^1[3456789]\d{9}$/.test(phoneValue)) callback('请输入正确的手机号!')
+      callback()
+    }
+    const testFatherPhone = (rule,value,callback) => {
+      const phoneValue = getFieldValue('fatherPhone')
+      if(!/^1[3456789]\d{9}$/.test(phoneValue)) callback('请输入正确的手机号!')
+      callback()
+    }
+    const testMatherPhone = (rule,value,callback) => {
+      const phoneValue = getFieldValue('matherPhone')
       if(!/^1[3456789]\d{9}$/.test(phoneValue)) callback('请输入正确的手机号!')
       callback()
     }
@@ -199,7 +371,7 @@ class Registration extends Component {
                   rules: [{validator:testID}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input' placeholder='请输入身份证号...' autoComplete="off"/>
+                  <Input className='regist-input' placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
                 )}
               </Form.Item>
             </Col>
@@ -209,7 +381,7 @@ class Registration extends Component {
                 {getFieldDecorator('contactPhone', {
                   rules: [{validator:testPhone}],
                 })(
-                  <Input className='regist-input' placeholder='请输入你的手机号...' autoComplete="off"/>
+                  <Input className='regist-input' placeholder='请输入你的手机号...' autoComplete="off" maxLength={11}/>
                 )}
               </Form.Item>
             </Col>
@@ -287,7 +459,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off"/>
+                    <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off" maxLength={20}/>
                     <span className='regist-span'>省</span>
                   </div>
                 )}
@@ -304,7 +476,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入市...' autoComplete="off"/>
+                    <Input className='regist-input3' placeholder='请输入市...' autoComplete="off" maxLength={20}/>
                     <span className='regist-span'>市</span>
                   </div>
                 )}
@@ -321,7 +493,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入区...' autoComplete="off"/>
+                    <Input className='regist-input3' placeholder='请输入区...' autoComplete="off" maxLength={20}/>
                     <span className='regist-span'>区</span>
                   </div>
                 )}
@@ -338,7 +510,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off"/>
+                    <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off" maxLength={20}/>
                     <span className='regist-span'>中学</span>
                   </div>
                 )}
@@ -416,7 +588,7 @@ class Registration extends Component {
               <p className='regist-title'><span>父亲姓名</span>/Father’s Name</p>
               <Form.Item>
                 {getFieldDecorator('fatherName', {
-                  rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
+                  rules: [{required: true, message: '请输入姓名!'},{validator:testFatherName}],
                   validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
@@ -430,7 +602,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请输入工作单位!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off"/>
+                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off" maxLength={20}/>
                 )}
               </Form.Item>
             </Col>
@@ -443,7 +615,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请输入工作职位!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off"/>
+                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off" maxLength={10}/>
                 )}
               </Form.Item>
             </Col>
@@ -451,10 +623,10 @@ class Registration extends Component {
               <p className='regist-title'><span>父亲手机</span>/Cellphone No.</p>
               <Form.Item>
                 {getFieldDecorator('fatherPhone', {
-                  rules: [{validator:testPhone}],
+                  rules: [{validator:testFatherPhone}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off"/>
+                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off" maxLength={11}/>
                 )}
               </Form.Item>
             </Col>
@@ -464,7 +636,7 @@ class Registration extends Component {
               <p className='regist-title'><span>母亲姓名</span>/Mother’s Name</p>
               <Form.Item>
                 {getFieldDecorator('matherName', {
-                  rules: [{required: true, message: '请输入姓名!'},{validator:testName}],
+                  rules: [{required: true, message: '请输入姓名!'},{validator:testMatherName}],
                   validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
@@ -478,7 +650,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请输入工作单位!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off"/>
+                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off" maxLength={20}/>
                 )}
               </Form.Item>
             </Col>
@@ -491,7 +663,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请输入工作职位!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off"/>
+                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off" maxLength={10}/>
                 )}
               </Form.Item>
             </Col>
@@ -499,10 +671,10 @@ class Registration extends Component {
               <p className='regist-title'><span>母亲手机</span>/Cellphone No.</p>
               <Form.Item>
                 {getFieldDecorator('matherPhone', {
-                  rules: [{validator:testPhone}],
+                  rules: [{validator:testMatherPhone}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off"/>
+                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off" maxLength={11}/>
                 )}
               </Form.Item>
             </Col>
@@ -515,7 +687,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请输入家庭地址!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里…' autoComplete="off"/>
+                  <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里…' autoComplete="off" maxLength={50}/>
                 )}
               </Form.Item>
             </Col>
@@ -526,7 +698,7 @@ class Registration extends Component {
               <p className='regist-title'><span>填表人姓名</span>/Applicant</p>
               <Form.Item>
                 {getFieldDecorator('preparerName', {
-                  rules: [{required: true, message: '请输入姓名!'}],
+                  rules: [{required: true, message: '请输入姓名!'},{validator:testPreparerName}],
                   validateTrigger: 'onBlur'
                 })(
                   <Input className='regist-input1' placeholder='请输入姓名…' maxLength={5} autoComplete="off"/>

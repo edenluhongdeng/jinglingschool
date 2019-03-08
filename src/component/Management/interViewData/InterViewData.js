@@ -5,12 +5,18 @@ import {withRouter} from 'react-router-dom'
 class InterViewData extends Component {
     state={
         data:[],
-        prams:{}
+        prams:{},
+        exam1RankDesc:false,//一模排名降序标志
+        exam1ScoreDesc:false,//一模分数降序标志
+        interviewResultDesc:false,//面试结果降序标志
+        juniorExamScoreDesc:false,//中考分数降序标志
+        volunteerInfoDesc:false,//志愿填报降序标志
+        writtenResultDesc:false,//笔试结果降序标志
     }
 
     //获取父组件传递过来的数据
     componentWillReceiveProps(props){
-        console.log(props,'-----------------')
+        // console.log(props,'-----------------')
         this.setState({
             data:props.data,
             prams:props.prams
@@ -77,38 +83,32 @@ class InterViewData extends Component {
     }, {
         title: '面试结果',
         dataIndex: 'interviewResult',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.writtenResults - b.writtenResults,
+        sorter: true,
         align:'center'
     },{
         title: '笔试结果',
         dataIndex: 'writtenResults',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.age - b.age,
+        sorter: true,
         align:'center'
     },{
         title: '志愿填报',
         dataIndex: 'volunteerReport',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.age - b.age,
+        sorter: true,
         align:'center'
     },{
         title: '中考分数',
         dataIndex: 'highSchoolScore',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.age - b.age,
+        sorter: true,
         align:'center'
     },{
         title: '一模分数',
         dataIndex: 'oneShotScore',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.age - b.age,
+        sorter: true,
         align:'center'
     },{
         title: '一模排名',
         dataIndex: 'oneShotRanking',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.age - b.age,
+        sorter: true,
         align:'center'
     }, {
         title: '项目意向',
@@ -175,7 +175,7 @@ class InterViewData extends Component {
     }
 
   //页码改变
-    pageChange(pageNumber){
+    pageChange = (pageNumber) => {
         const {prams} = this.state
         prams.pageNumber = pageNumber
         this.setState({
@@ -183,10 +183,39 @@ class InterViewData extends Component {
         })
         this.props.getData(prams)
     }
-
+    // exam1RankDesc:false,//一模排名降序标志
+    // exam1ScoreDesc:false,//一模分数降序标志
+    // interviewResultDesc:false,//面试结果降序标志
+    // juniorExamScoreDesc:false,//中考分数降序标志
+    // volunteerInfoDesc:false,//志愿填报降序标志
+    // writtenResultDesc:false,//笔试结果降序标志
     //tab 数据改变
+    getDataList = (str) =>{
+        const { prams } = this.state
+        const _prams = Object.assign({},prams,{
+            interviewResultDesc:null,
+            writtenResultDesc:null,
+            volunteerInfoDesc:null,
+            juniorExamScoreDesc:null,
+            exam1ScoreDesc:null,
+            exam1RankDesc:null
+        })
+        let type = ''
+        str === 'interviewResult' && (type = 'interviewResultDesc')
+        str === 'writtenResults' && (type = 'writtenResultDesc')
+        str === 'volunteerReport' && (type = 'volunteerInfoDesc')
+        str === 'highSchoolScore' && (type = 'juniorExamScoreDesc')
+        str === 'oneShotScore' && (type = 'exam1ScoreDesc')
+        str === 'oneShotRanking' && (type = 'exam1RankDesc')
+        const id  = this.state[type] ? 1 : 2
+        _prams[type] = id
+        this.props.getData(_prams)
+        this.setState({[type]:!this.state[type]})
+    }
     tabChange =  (pagination, filters, sorter)=> {
-        console.log('params', pagination, filters, sorter);
+        console.log({pagination, filters, sorter});
+        const sort = sorter.field
+        this.getDataList(sort)
       }
     //修改信息
     updataMsg = (text,record) => {
@@ -201,12 +230,13 @@ class InterViewData extends Component {
     //批量操作
     rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         if(selectedRows.length){
             this.props.downStatus(true)
         }else{
              this.props.downStatus(false)
         }
+        const needTickets = selectedRowKeys.length > 0 && selectedRowKeys.toString().replace(new RegExp("J","gm"),"").split(',')
+        this.props.getDownloadPramas(needTickets)
       },
     };
       
