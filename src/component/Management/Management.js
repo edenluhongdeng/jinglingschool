@@ -41,7 +41,7 @@ class Management extends Component {
       contactTime :null,// 联系时间 
       exam1Rank :null,//一模排名 
       exam1Score :null,//一模分数 ,
-      intendedProgram :null,//项目意向
+      intendedProgram :[],//项目意向
       contactName :null,//联系人姓名 ,
       inputBox:null
     }
@@ -292,7 +292,69 @@ getProjectIntention = (tag, checked) =>{
    ? [...ProjectIntention,tag]
    : ProjectIntention.filter(t => t !== tag);
    console.log('You are interested in: ', nextSelectedTags);
-  this.setState({ ProjectIntention: nextSelectedTags });
+   let Index = nextSelectedTags.indexOf('待定')
+   let arr = []
+   if(nextSelectedTags.length>1){
+   if(Index==0){
+    nextSelectedTags.splice(Index,1)
+    nextSelectedTags.map((item,index) => {
+      if(item==='中美'){
+        arr.push(0)
+      }
+      if(item==='中英'){
+        arr.push(1)
+      }
+      if(item==='中加'){
+        arr.push(2)
+      }
+    })
+    let setArr =new Set(arr)
+    let newArr = Array.from(setArr)
+    prams.intendedProgram=newArr
+   }
+   if(Index<0){
+    nextSelectedTags.map((item,index) => {
+      if(item==='中美'){
+        arr.push(0)
+      }
+      if(item==='中英'){
+        arr.push(1)
+      }
+      if(item==='中加'){
+        arr.push(2)
+      }
+    })
+    let setArr =new Set(arr)
+    let newArr = Array.from(setArr)
+    prams.intendedProgram=newArr
+   }
+   if(Index>0){
+    nextSelectedTags = nextSelectedTags[nextSelectedTags.length-1]
+    nextSelectedTags =new Array(nextSelectedTags)
+    prams.intendedProgram.length=0
+    prams.intendedProgram.push(3)
+   }
+   }else{
+     if(nextSelectedTags[0]==='中美'){
+      arr.push(0)
+     }
+     if(nextSelectedTags[0]==='中英'){
+      arr.push(1)
+     }
+     if(nextSelectedTags[0]==='中加'){
+      arr.push(2)
+     }
+     if(nextSelectedTags[0]==='待定'){
+      arr.push(3)
+     }
+     let setArr =new Set(arr)
+     let newArr = Array.from(setArr)
+     prams.intendedProgram=newArr
+   }
+   this.setState({ 
+     ProjectIntention: nextSelectedTags,
+     prams
+     });
 }
 
 //判断下载状态
