@@ -28,6 +28,13 @@ class Resultsquery extends Component {
     */
     return (
       <div className="Resultsquery">
+      {/* 导航 */}
+      <div className="nva">
+          <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
+          <span>成绩查询</span>
+          <span></span>
+          {/* <img src={Rightimg} alt="" onClick = {this.goBack} className="goback" /> */}
+        </div>
         <div className="header">
           <span>2019年金陵中学河西分校国际部成绩查询</span>
         </div>
@@ -67,7 +74,7 @@ class Resultsquery extends Component {
           </div>
         </div>
         {/* 导航 */}
-        <div className="nva">
+        {/* <div className="nva">
           <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
           <img
             src={Rightimg}
@@ -75,7 +82,7 @@ class Resultsquery extends Component {
             onClick={this.goBack}
             className="goback"
           />
-        </div>
+        </div> */}
       </div>
     );
   }

@@ -26,12 +26,13 @@ instance.interceptors.request.use(
     return Promise.reject(err)
   }
 )
-
 instance.interceptors.response.use(response => {
+
      return response.data
 })
 
 export default function Ajax(url = '', data = {}, type = 'post', config) {
+  console.log(config)
     if (type === 'GET') {
       let dataStr = ''
       Object.keys(data).forEach(key => {

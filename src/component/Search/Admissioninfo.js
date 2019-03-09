@@ -26,6 +26,13 @@ class Admissioninfo extends Component {
     */
     return (
       <div className="Admissioninfo">
+      {/* 导航 */}
+      <div className="nva">
+          <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
+          <span>准考证信息</span>
+          <span></span>
+          {/* <img src={Rightimg} alt="" onClick = {this.goBack} className="goback" /> */}
+        </div>
         <div className="box">
           <div className="header">
             <span>2019年金陵中学河西分校国际部准考证</span>
@@ -103,7 +110,7 @@ class Admissioninfo extends Component {
             </div>
           </div>
         </div>
-        <div className="nva">
+        {/* <div className="nva">
           <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
           <img
             src={Rightimg}
@@ -111,7 +118,7 @@ class Admissioninfo extends Component {
             onClick={this.goBack}
             className="goback"
           />
-        </div>
+        </div> */}
       </div>
     );
   }
