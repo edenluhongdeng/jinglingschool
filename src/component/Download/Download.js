@@ -3,7 +3,7 @@ import './download.less'
 import { downloadInformation, downloadFile} from '../../api/GetPhoto'
 import { Button } from 'antd';
 import _ from 'lodash'
-const imgUrl = 'http://172.20.244.199/enroll/studentController/getPhone'
+const imgUrl = 'http://localhost/enroll/studentController/getPhone'
 
 
 export default class Download extends Component {
@@ -20,7 +20,6 @@ export default class Download extends Component {
     componentDidMount(){
         
         downloadInformation().then(res=>{
-            console.log(res.data, '数据')
             const code = _.get(res,'data.code')
             if(code == 200){
                 this.setState({
@@ -31,7 +30,7 @@ export default class Download extends Component {
         })
     }
     downloadFile=()=>{
-        window.location.href='http://172.20.244.199/enroll/studentController/certificate/getCertificate'
+        window.location.href='http://localhost/enroll/studentController/certificate/getCertificate'
         return false
     }
   render() {

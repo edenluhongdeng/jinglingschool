@@ -12,7 +12,6 @@ export default class Result extends Component {
     }
   componentDidMount(){
     resultApi().then(res=>{
-      console.log(res,'数据')
       this.setState({
         data: res.data.data,
         a: res.data.data.interviewResult 
