@@ -420,7 +420,7 @@ class Registration extends Component {
           <img src={src1} alt=''/>
         </div>
         <Form onSubmit={this.handleSubmit}>
-          <h2 className='regist-h2'>学生情况<span>/Applicant Info</span></h2>
+          <h2 className='regist-h2'>学生情况<span>/Applicant Information</span></h2>
           <Row>
             <Col span={8}>
               <p className='regist-title'><span>中文姓名</span>/Chinese Name</p>
