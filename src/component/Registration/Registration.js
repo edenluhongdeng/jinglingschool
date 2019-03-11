@@ -452,14 +452,24 @@ class Registration extends Component {
               </Col>
             <Col span={8}>
                 <p className='regist-title'><span>出生年月</span>/Date of Birth</p>
-                <Form.Item>
-                {getFieldDecorator('birthDateStr', {
-                  initialValue: initData.birthDateStr ? moment(initData.birthDateStr, dateFormat) : moment('2019/03/08',dateFormat),
-                  rules: [{ required: true, message: '请选择你的出生日期!' }],
-                })(
-                  <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
-                )}
-              </Form.Item>
+                {
+                  initData.birthDateStr
+                  ? <Form.Item>
+                    {getFieldDecorator('birthDateStr', {
+                      initialValue:moment(initData.birthDateStr, dateFormat),
+                      rules: [{ required: true, message: '请选择你的出生日期!' }],
+                    })(
+                      <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
+                    )}
+                  </Form.Item>
+                  : <Form.Item>
+                    {getFieldDecorator('birthDateStr', {
+                      rules: [{ required: true, message: '请选择你的出生日期!' }],
+                    })(
+                      <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
+                    )}
+                  </Form.Item>
+                }
             </Col>
           </Row>
           <Row>
@@ -553,7 +563,7 @@ class Registration extends Component {
           {
             isShow == 0 && 
             <Row>
-            <Col span={5}>
+            <Col span={6}>
               <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
@@ -569,7 +579,7 @@ class Registration extends Component {
                 )}
               </Form.Item>
             </Col>
-            <Col span={5}>
+            <Col span={6}>
               <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
@@ -585,8 +595,8 @@ class Registration extends Component {
                 )}
               </Form.Item>
             </Col>
-            <Col span={5}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High</p>
+            <Col span={6}>
+              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
                 {getFieldDecorator('schoolSiteArea', {
@@ -601,7 +611,7 @@ class Registration extends Component {
                 )}
               </Form.Item>
             </Col>
-            <Col span={9}>
+            <Col span={6}>
               <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
