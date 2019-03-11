@@ -227,7 +227,6 @@ class Registration extends Component {
     })
   }
   handleProvinceChange = (value) => {
-    console.log({value})
     this.setState({
       cities: cityData[value],
       secondCity: cityData[value][0],
@@ -376,7 +375,6 @@ class Registration extends Component {
      } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
-    console.log({initData})
     const reg = /^[\u4e00-\u9fa5]+$/
     const testName = (rule,value,callback) => {
       const nameValue = getFieldValue('chinaName')
