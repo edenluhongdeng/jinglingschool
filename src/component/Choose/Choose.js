@@ -6,6 +6,7 @@ import downloadImg from "../../imgs/enrollment_download.png";
 import searchImg from "../../imgs/enrollment_search.png";
 import { resultApi } from "../../api/Result";
 import { from } from "rxjs";
+import Download from './../Download/Download';
 export default class Choose extends Component {
   constructor() {
     super();
@@ -61,12 +62,12 @@ export default class Choose extends Component {
         <div className="detail_choose" onClick={this.goUpdate}>
           <img src={updateImg} alt="修改学生信息"/>
           <p className="search">修改学生信息</p>
-          <p className="english">MODIFY STUDENT INFOR</p>
+          <p className="english">MODIFY STUDENT INFORMATION</p>
         </div>
         <div className="detail_choose" onClick={this.goDownload}>
           <img src={downloadImg} alt="下载准考证"/>
           <p className="search">下载准考证</p>
-          <p className="english">Download the admissi</p>
+          <p className="english">DOWNLOAD THE ADMISSION TICKET</p>
         </div>
         <div
           className="detail_choose"
@@ -75,7 +76,7 @@ export default class Choose extends Component {
         >
           <img src={searchImg} alt='查询成绩'/>
           <p className="search">查询成绩</p>
-          <p className="english">MODIFY STUDENT INFOR</p>
+          <p className="english">QUERY RESULTS</p>
         </div>
       </div>
     );
