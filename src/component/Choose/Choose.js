@@ -59,12 +59,12 @@ export default class Choose extends Component {
     return (
       <div className="detail">
         <div className="detail_choose" onClick={this.goUpdate}>
-          <img src={updateImg} />
+          <img src={updateImg} alt="修改学生信息"/>
           <p className="search">修改学生信息</p>
           <p className="english">MODIFY STUDENT INFOR</p>
         </div>
         <div className="detail_choose" onClick={this.goDownload}>
-          <img src={downloadImg} />
+          <img src={downloadImg} alt="下载准考证"/>
           <p className="search">下载准考证</p>
           <p className="english">Download the admissi</p>
         </div>
@@ -73,7 +73,7 @@ export default class Choose extends Component {
           style={{ background: this.state.clikeBut && "gainsboro" }}
           onClick={this.goGrade.bind(this)}
         >
-          <img src={searchImg} />
+          <img src={searchImg} alt='查询成绩'/>
           <p className="search">查询成绩</p>
           <p className="english">MODIFY STUDENT INFOR</p>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './download.less'
-import { downloadInformation, downloadFile} from '../../api/GetPhoto'
+import { downloadInformation} from '../../api/GetPhoto'
 import { Button } from 'antd';
 import _ from 'lodash'
 import baseUrl from '../../utils/index';
