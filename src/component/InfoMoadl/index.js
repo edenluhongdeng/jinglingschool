@@ -100,7 +100,7 @@ class InfoModal extends Component {
       <MyModal onClose={this.props.onClose} w={11}>
         <div className="infoModal-content">
           <h2 className="infoModal-h2">
-            学生情况<span>/Applicant Info</span>
+            学生情况<span>/Applicant Information</span>
           </h2>
           <div className="infoModal-content-div">
             <div>
@@ -139,13 +139,13 @@ class InfoModal extends Component {
                 </div>
                 <div>
                   <p className="infoModal-title">
-                    是否是南京初中学籍<span>/Student i</span>
+                    是否是南京初中学籍<span>/Student in Nanjing</span>
                   </p>
                   <p>{orNkStudent == 0 ? "不是" : "是"}</p>
                 </div>
                 <div>
                   <p className="infoModal-title">
-                    初中就读学校<span>/Junior High</span>
+                    初中就读学校<span>/Junior High School</span>
                   </p>
                   <p>
                     {orNkStudent == 0
@@ -157,19 +157,19 @@ class InfoModal extends Component {
               <div className="infoModal-div-flex infoModal-div-flex-last">
                 <div>
                   <p className="infoModal-title">
-                    一模总分<span>/Total Score of</span>
+                    一模总分<span>/Total Score of Mock Eaxm 1</span>
                   </p>
                   <p>{exam1Score}</p>
                 </div>
                 <div>
                   <p className="infoModal-title">
-                    一模年级排名<span>/School Ranki</span>
+                    一模年级排名<span>/School Ranking</span>
                   </p>
                   <p>{exam1Rank}</p>
                 </div>
                 <div>
                   <p className="infoModal-title">
-                    项目意向<span>/Intended Progr</span>
+                    项目意向<span>/Intended Program</span>
                   </p>
                   <p className="flex-p">
                     {intendedPrograms[0] == 0 && <span>中美 /American</span>}
@@ -183,7 +183,7 @@ class InfoModal extends Component {
             <img src={imageUrl} alt="" />
           </div>
           <h2 className="infoModal-h2">
-            家庭情况<span>/Family Informa</span>
+            家庭情况<span>/Family Information</span>
           </h2>
           <div>
             <div className="infoModal-div-flex">
@@ -248,7 +248,7 @@ class InfoModal extends Component {
             </div>
           </div>
           <h2 className="infoModal-h2">
-            填表信息<span>/Registration I</span>
+            填表信息<span>/Registration Information</span>
           </h2>
           <div style={{ width: "50%" }}>
             <div className="infoModal-div-flex infoModal-div-flex-last">
