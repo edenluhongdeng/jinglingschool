@@ -50,7 +50,7 @@ class StudentsMsg extends Component {
         <div className="ApplicantInfo">
           <div className="infomsg">
             <span>学生情况</span>
-            <span>/Applicant Info</span>
+            <span>/Applicant Information</span>
           </div>
           <Row>
             <Col span={21}>
@@ -94,7 +94,7 @@ class StudentsMsg extends Component {
                 <div className="5">
                   <div className="infomsgtitle">
                     <span>是否是南京初中学籍</span>
-                    <span>/Student i</span>
+                    <span>/Student in Nanjing</span>
                   </div>
                   <div className="infomsgcont">
                     {(list.orNkStudent == "0" && "不是") ||
@@ -116,7 +116,7 @@ class StudentsMsg extends Component {
                 <div className="1">
                   <div className="infomsgtitle">
                     <span>初中就读学校</span>
-                    <span> /Junior High</span>
+                    <span>/Junior High School</span>
                   </div>
                   <div className="infomsgcont">
                     {list.juniorSchoolName || "金陵附中"}
@@ -125,21 +125,21 @@ class StudentsMsg extends Component {
                 <div className="2">
                   <div className="infomsgtitle">
                     <span>一模总分 </span>
-                    <span>/Total Score of</span>
+                    <span>/Total Score of Mock Exam 1</span>
                   </div>
                   <div className="infomsgcont">{list.exam1Score || "790"}</div>
                 </div>
                 <div className="3">
                   <div className="infomsgtitle">
                     <span>一模年级排名 </span>
-                    <span>/School Ranki</span>
+                    <span>/School Ranking</span>
                   </div>
                   <div className="infomsgcont">{list.exam1Rank || "10"}</div>
                 </div>
                 <div className="4" style={{ width: "330px" }}>
                   <div className="infomsgtitle">
                     <span>项目意向 </span>
-                    <span>/Intended Progr</span>
+                    <span>/Intended Program</span>
                   </div>
                   <div className="infomsgcont">
                     {list.intendedProgram &&
@@ -178,7 +178,7 @@ class StudentsMsg extends Component {
         <div className="ApplicantInfo">
           <div className="infomsg">
             <span>家庭情况 </span>
-            <span>/Family Informa</span>
+            <span>/Family Information</span>
           </div>
           <Row>
             <Col span={24}>
@@ -214,8 +214,8 @@ class StudentsMsg extends Component {
                     <span>/Cellphone No.</span>
                   </div>
                   <div className="infomsgcont">
-                    {renderTime(list.fatherPhone).split(" ")[0] ||
-                      "2019年3月21日"}
+                    {list.fatherPhone ||
+                      "13545444444"}
                   </div>
                 </div>
               </div>
@@ -273,7 +273,7 @@ class StudentsMsg extends Component {
         <div className="ApplicantInfo">
           <div className="infomsg">
             <span>填表信息 </span>
-            <span> /Registration I</span>
+            <span>/Registration Information</span>
           </div>
           <Row>
             <Col span={8}>
@@ -290,7 +290,7 @@ class StudentsMsg extends Component {
                 <div className="2 flagTwo">
                   <div className="infomsgtitle">
                     <span>填表时间 </span>
-                    <span> /Date of Regist</span>
+                    <span>/Date of Registration</span>
                   </div>
                   <div className="infomsgcont">
                     {renderTime(list.preparerTime).split(" ")[0] ||
