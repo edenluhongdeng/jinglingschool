@@ -168,6 +168,8 @@ function getBase64(img, callback) {
 }
 class Registration extends Component {
   state = {
+    schoolNameIndex:'请选择',
+    schoolSiteIndex:'请选择',
     cities: cityData[provinceData[0]],
     secondCity: cityData[provinceData[0]][0],
     isFailModalShow:false,
@@ -351,7 +353,26 @@ class Registration extends Component {
     this.setState({schoolSiteProvinceVal:e.target.value})
   }
   render() {
-    const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl, studentInfo, initData,genderVal,orNkStudentVal,flag,intendedProgramVal,schoolSiteProvinceVal,schoolSiteCityVal,schoolSiteAreaVal,juniorSchoolNameVal,readOnly } = this.state
+    const { 
+      isShow=2,
+      cities,
+      isFailModalShow,
+      isInfoModalShow, 
+      imageUrl, 
+      studentInfo, 
+      initData,
+      genderVal,
+      orNkStudentVal,
+      flag,
+      intendedProgramVal,
+      schoolSiteProvinceVal,
+      schoolSiteCityVal,
+      schoolSiteAreaVal,
+      juniorSchoolNameVal,
+      readOnly,
+      schoolNameIndex,
+      schoolSiteIndex,
+     } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
@@ -527,7 +548,7 @@ class Registration extends Component {
                 })(
                   <div>
                     <Select
-                      defaultValue={'请选择'}
+                      value={schoolSiteIndex}
                       style={{ width: '85%' }}
                       onChange={this.handleProvinceChange}
                     >
@@ -548,7 +569,7 @@ class Registration extends Component {
                   <div>
                     <Select
                       style={{ width: '90%' }}
-                      defaultValue={'请选择'}
+                      value={schoolNameIndex}
                       onChange={this.onSecondCityChange}
                     >
                       {cities.map(city => <Option key={city}>{city}</Option>)}
