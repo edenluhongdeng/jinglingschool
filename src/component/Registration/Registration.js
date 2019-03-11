@@ -483,12 +483,12 @@ class Registration extends Component {
                   rules: [{validator:testPhone}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input' placeholder='请输入你的手机号...' autoComplete="off" maxLength={11}/>
+                  <Input className='regist-input' placeholder='请输入联系电话...' autoComplete="off" maxLength={11}/>
                 )}
               </Form.Item>
             </Col>
             <Col span={8}>
-              <p className='regist-title'><span>是否是南京初中学籍</span>/Student i</p>
+              <p className='regist-title'><span>是否是南京初中学籍</span>/Student in Nanjing</p>
               <Form.Item>
                   {getFieldDecorator('orNkStudent',{
                     initialValue: initData.orNkStudent || '',
@@ -509,7 +509,7 @@ class Registration extends Component {
             isShow == 1 && 
             <Row>
             <Col span={7}>
-              <p className='regist-title'><span>初中就读学校</span>/Junior High</p>
+              <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
                 {getFieldDecorator('schoolSiteIndex', {
@@ -529,7 +529,7 @@ class Registration extends Component {
               </Form.Item>
             </Col>
             <Col span={17}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High</p>
+              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
                 {getFieldDecorator('schoolNameIndex', {
@@ -554,7 +554,7 @@ class Registration extends Component {
             isShow == 0 && 
             <Row>
             <Col span={5}>
-              <p className='regist-title'><span>初中就读学校</span>/Junior High</p>
+              <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
                 {getFieldDecorator('schoolSiteProvince', {
@@ -570,7 +570,7 @@ class Registration extends Component {
               </Form.Item>
             </Col>
             <Col span={5}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High</p>
+              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
                 {getFieldDecorator('schoolSiteCity', {
@@ -602,7 +602,7 @@ class Registration extends Component {
               </Form.Item>
             </Col>
             <Col span={9}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High</p>
+              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
               <Form.Item
               >
                 {getFieldDecorator('juniorSchoolName', {
@@ -621,7 +621,7 @@ class Registration extends Component {
           }
           <Row>
             <Col span={24}>
-              <p className='regist-title'><span>项目意向</span>/Intended Progr</p>
+              <p className='regist-title'><span>项目意向</span>/Intended Program</p>
               <Form.Item>
                 {getFieldDecorator("intendedProgram", {
                   initialValue: initData.intendedPrograms,
@@ -643,7 +643,7 @@ class Registration extends Component {
           </Row>
           <Row>
             <Col span={8}>
-              <p className='regist-title'><span>一模总分</span>/Total Score of</p>
+              <p className='regist-title'><span>一模总分</span>/Total Score of Mock Exam 1</p>
               <Form.Item>
                 {getFieldDecorator('exam1Score', {
                   initialValue: initData.exam1Score || '',
@@ -655,7 +655,7 @@ class Registration extends Component {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <p className='regist-title'><span>一模年级排名</span>/School Ranki</p>
+              <p className='regist-title'><span>一模年级排名</span>/School Ranking</p>
               <Form.Item>
                 {getFieldDecorator('exam1Rank', {
                   initialValue: initData.exam1Rank || '',
@@ -686,7 +686,7 @@ class Registration extends Component {
               </div>
             </Col>
           </Row>
-          <h2 className='regist-h2'>家庭情况<span>/Family Informa</span></h2>
+          <h2 className='regist-h2'>家庭情况<span>/Family Information</span></h2>
           <Row>
             <Col span={12}>
               <p className='regist-title'><span>父亲姓名</span>/Father’s Name</p>
@@ -805,7 +805,7 @@ class Registration extends Component {
               </Form.Item>
             </Col>
           </Row>
-          <h2 className='regist-h2'>填表信息<span>/Registration I</span></h2>
+          <h2 className='regist-h2'>填表信息<span>/Registration Information</span></h2>
           <Row>
             <Col span={12}>
               <p className='regist-title'><span>填表人姓名</span>/Applicant</p>
