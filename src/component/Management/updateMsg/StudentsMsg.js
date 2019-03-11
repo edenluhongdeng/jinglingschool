@@ -1,11 +1,5 @@
 import React, { Component } from "react";
 import { Col, Row, Button, Modal } from "antd";
-// import { getStudyInfoTch } from "./../../../api/manageMent.js";
-import {
-  getStudyInfoTch,
-  getUpdataInfo,
-  getStudyPhoto
-} from "./../../../api/manageMent.js";
 import "./studentsmsg.less";
 import baseUrl from "./../../../utils/index";
 class StudentsMsg extends Component {
@@ -51,7 +45,6 @@ class StudentsMsg extends Component {
         .replace(/T/g, " ")
         .replace(/\.[\d]{3}Z/, "");
     }
-    console.log(list.intendedProgram && list.intendedProgram.split(","));
     return (
       <div className="studentsmsg">
         <div className="ApplicantInfo">
@@ -76,7 +69,8 @@ class StudentsMsg extends Component {
                     <span>性别</span>
                     <span> /Gender</span>
                   </div>
-                  <div className="infomsgcont">{list.gender || "未知"}</div>
+                  <div className="infomsgcont">{list.gender == 1 && "男"}</div>
+                  <div className="infomsgcont">{list.gender == 0 && "女"}</div>
                 </div>
                 <div className="3">
                   <div className="infomsgtitle">
@@ -149,42 +143,25 @@ class StudentsMsg extends Component {
                   </div>
                   <div className="infomsgcont">
                     {list.intendedProgram &&
-                      list.intendedProgram.split(",").map(itom => {
-                        console.log(itom);
-                        // itom == "0" && <span className="chin_contry">中美 /American</span>
+                      list.intendedProgram.split(",").map((itom,index) => {
                         if (itom == "0") {
                           return (
-                            <span className="chin_contry">中美 /American</span>
+                            <span key={index+1} className="chin_contry">中美 /American</span>
                           );
                         }
                         if (itom == "1") {
                           return (
-                            <span className="chin_contry">中英 /British</span>
+                            <span key={index+33} className="chin_contry">中英 /British</span>
                           );
                         }
                         if (itom == "2") {
                           return (
-                            <span className="chin_contry">中加 /Canadian</span>
+                            <span key={index+44} className="chin_contry">中加 /Canadian</span>
                           );
                         }
                         if (itom == "3") {
-                          return <span className="chin_contry">待定</span>;
+                          return <span key={index+66} className="chin_contry">待定</span>;
                         }
-                        // {
-                        //   itom == "1" && (
-                        //     <span className="chin_contry">中英 /British</span>
-                        //   );
-                        // }
-                        // {
-                        //   itom == "2" && (
-                        //     <span className="chin_contry">中加 /Canadian</span>
-                        //   );
-                        // }
-                        // {
-                        //   itom == "3" && (
-                        //     <span className="chin_contry">待定</span>
-                        //   );
-                        // }
                       })}
                   </div>
                 </div>

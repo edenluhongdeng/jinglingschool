@@ -51,7 +51,7 @@ class UpdateMsg extends Component {
       getStudyInfoTch({ admissionTicket: `${urlId}` })
         .then(item => {
           if (item.data.code === "10000") {
-            message.info("请登陆");
+            // message.info("请登陆");
             return;
           }
           if (item.data.code === "200") {
@@ -97,6 +97,7 @@ class UpdateMsg extends Component {
   };
   /* 笔试结果 */
   handleChangeResult = e => {
+    
     this.setState({
       writtenResult: e
     });
@@ -172,11 +173,10 @@ class UpdateMsg extends Component {
           message.info(item.data.msg);
           this.goBack()
         } else {
-          message.info("保存失败");
+          message.error("保存失败");
         }
       })
       .catch(() => {
-        message.info("保存失败");
       });
   };
 

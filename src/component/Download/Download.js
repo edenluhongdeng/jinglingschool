@@ -21,7 +21,6 @@ export default class Download extends Component {
     componentDidMount(){
         
         downloadInformation().then(res=>{
-            console.log(res.data, '数据')
             const code = _.get(res,'data.code')
             if(code == 200){
                 this.setState({

@@ -208,7 +208,9 @@ class Registration extends Component {
             schoolSiteProvinceVal:schoolSiteProvince,
             schoolSiteCityVal:schoolSiteCity,
             schoolSiteAreaVal:schoolSiteArea,
-            juniorSchoolNameVal:juniorSchoolName
+            juniorSchoolNameVal:juniorSchoolName,
+            readOnly:true,
+            upImgUrl:data.photo
           })
         }else{
             message.error(error)
@@ -348,7 +350,7 @@ class Registration extends Component {
     this.setState({schoolSiteProvinceVal:e.target.value})
   }
   render() {
-    const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl, studentInfo, initData,genderVal,orNkStudentVal,flag,intendedProgramVal,schoolSiteProvinceVal,schoolSiteCityVal,schoolSiteAreaVal,juniorSchoolNameVal } = this.state
+    const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl, studentInfo, initData,genderVal,orNkStudentVal,flag,intendedProgramVal,schoolSiteProvinceVal,schoolSiteCityVal,schoolSiteAreaVal,juniorSchoolNameVal,readOnly } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
@@ -464,11 +466,11 @@ class Registration extends Component {
               <p className='regist-title'><span>身份证号</span>/ID No.<a>(*作为登录信息使用)</a></p>
               <Form.Item>
                 {getFieldDecorator('idCard', {
-                  initialValue: initData.idCard || '',
+                  initialValue: initData.idCard  || '',
                   rules: [{validator:testID}],
                   validateTrigger: 'onBlur'
                 })(
-                  <Input className='regist-input' placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
+                  <Input className='regist-input' readOnly ={readOnly} placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
                 )}
               </Form.Item>
             </Col>
@@ -827,7 +829,7 @@ class Registration extends Component {
         }
         {
           isInfoModalShow && 
-          <InfoModal onClose={this.closeInfoModal} studentInfo={studentInfo} imageUrl={imageUrl} flag={flag}></InfoModal>
+          <InfoModal onClose={this.closeInfoModal} studentInfo={studentInfo} imageUrl={imageUrl} upImgUrl={this.state.upImgUrl} flag={flag}></InfoModal>
         }
       </div>
     );

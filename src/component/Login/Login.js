@@ -18,14 +18,13 @@ class Demo  extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         login(values).then(res=>{
-          console.log(res.data,'数据')
-          if(res.data.code=='200'&&res.data.data == '0'){
+          if(res.data.code=='200'&& res.data.data == '0'){
             this.setState({
               isShow:true
             })
           }else if(res.data.code=='200'&&res.data.data == '1'){
+            
             this.props.history.push({
               pathname: '/management',
             })
@@ -93,7 +92,7 @@ class Demo  extends Component {
                   validator: checkAdmission,
                 }],
               })(
-                  <Input placeholder="请输入身份证号..." style={inputStyle}/>
+                  <Input placeholder="请输入身份证号..."maxLength={18} style={inputStyle}/>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
@@ -105,7 +104,7 @@ class Demo  extends Component {
                 }],
               })(
                 <div className='phone'>
-                  <Input  placeholder="请输入手机号码..." style={inputStyle} onChange={this.changePhone}/>
+                  <Input  placeholder="请输入手机号码..." maxLength={11} style={inputStyle} onChange={this.changePhone}/>
                   {
                     this.state.isShow&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
                   }

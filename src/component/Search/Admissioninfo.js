@@ -1,10 +1,8 @@
 /*  */
 import React, { Component } from "react";
-import { withRouter, NavLink } from "react-router-dom";
-import { Button } from "antd-mobile";
+import { withRouter } from "react-router-dom";
 import "./style.less";
 import Leftimg from "./../../imgs/H5-nav-return.png";
-import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 class Admissioninfo extends Component {
   componentDidMount(){
     document.title = "准考证信息查询";
@@ -18,12 +16,7 @@ class Admissioninfo extends Component {
       return;
     }
     const arrList = this.props.location.state;
-    /* 
-    //     admissionTicket: 20192500
-    //     chinaName: "李艳强"
-    //     gender: "1"
-    //     interviewResult: "0"
-    */
+
     return (
       <div className="Admissioninfo">
       {/* 导航 */}
@@ -31,7 +24,6 @@ class Admissioninfo extends Component {
           <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
           <span>准考证信息</span>
           <span></span>
-          {/* <img src={Rightimg} alt="" onClick = {this.goBack} className="goback" /> */}
         </div>
         <div className="box">
           <div className="header">
@@ -110,15 +102,6 @@ class Admissioninfo extends Component {
             </div>
           </div>
         </div>
-        {/* <div className="nva">
-          <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
-          <img
-            src={Rightimg}
-            alt=""
-            onClick={this.goBack}
-            className="goback"
-          />
-        </div> */}
       </div>
     );
   }
