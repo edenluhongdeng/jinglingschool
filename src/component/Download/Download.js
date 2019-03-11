@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './download.less'
-import { downloadInformation, downloadFile} from '../../api/GetPhoto'
+import { downloadInformation} from '../../api/GetPhoto'
 import { Button } from 'antd';
 import _ from 'lodash'
 import baseUrl from '../../utils/index';
@@ -64,7 +64,7 @@ export default class Download extends Component {
             <tbody>
                 <tr>
                     <th>日期</th>
-                    <th>笔记+口试(时间)</th>
+                    <th>笔试+口试(时间)</th>
                 </tr>
                 <tr className="alt">
                     <td>待定</td>
