@@ -1,12 +1,10 @@
 /*  */
 import React, { Component } from "react";
-import { withRouter, NavLink } from "react-router-dom";
-import { Button } from "antd-mobile";
+import { withRouter } from "react-router-dom";
 
 import "./style.less";
 import Leftimg from "./../../imgs/H5-nav-return.png";
 import banner from "./../../imgs/H5-picture.png";
-import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 class Resultsquery extends Component {
   componentDidMount(){
     document.title = "成绩查询";
@@ -20,14 +18,14 @@ class Resultsquery extends Component {
       return;
     }
     const arrList = this.props.location.state;
-    /* 
-    //     admissionTicket: 20192500
-    //     chinaName: "李艳强"
-    //     gender: "1"
-    //     interviewResult: "0"
-    */
     return (
       <div className="Resultsquery">
+      {/* 导航 */}
+      <div className="nva">
+          <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
+          <span>成绩查询</span>
+          <span></span>
+        </div>
         <div className="header">
           <span>2019年金陵中学河西分校国际部成绩查询</span>
         </div>
@@ -57,7 +55,6 @@ class Resultsquery extends Component {
             </div>
           </div>
         </div>
-        {/* footer */}
         <div className="footer_bottom">
           <div className="thunk_info">
             感谢您对金陵中学河西分校国际部的支持！
@@ -65,16 +62,6 @@ class Resultsquery extends Component {
           <div className="class_logo">
             <img src={banner} alt="" />
           </div>
-        </div>
-        {/* 导航 */}
-        <div className="nva">
-          <img src={Leftimg} alt="" onClick={this.goBack} className="goback" />
-          <img
-            src={Rightimg}
-            alt=""
-            onClick={this.goBack}
-            className="goback"
-          />
         </div>
       </div>
     );

@@ -10,6 +10,7 @@ import { message } from 'antd'
 
 class App extends Component {
   componentDidMount (){
+    document.title = "考生信息管理"
     message.config({
       top: '50%',
     })
@@ -17,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <Router /* history={hashHistory} */>
-        <div>
+        <div className = "app">
           <Root />
         </div>
       </Router>

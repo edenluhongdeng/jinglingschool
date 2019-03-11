@@ -15,7 +15,11 @@ import {
 } from "antd";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-import { getStudyInfoTch, getUpdataInfo,getStudyPhoto } from "./../../../api/manageMent.js";
+import {
+  getStudyInfoTch,
+  getUpdataInfo,
+  getStudyPhoto
+} from "./../../../api/manageMent.js";
 import StudentsMsg from "./StudentsMsg";
 import "./style.less";
 const Option = Select.Option;
@@ -31,11 +35,11 @@ class UpdateMsg extends Component {
     contactTime: null
   };
   componentDidMount() {
-    document.title = "2019招生信息修改"
+    document.title = "2019招生信息修改";
     this.getInfo();
-    getStudyPhoto().then(res=>{
-        console.log(res,'---------------------------------------------')
-    })
+    // getStudyPhoto().then(res => {
+    //   console.log(res, "---------------------------------------------");
+    // });
   }
   /* 获取信息 */
   getInfo = () => {
@@ -47,7 +51,7 @@ class UpdateMsg extends Component {
       getStudyInfoTch({ admissionTicket: `${urlId}` })
         .then(item => {
           if (item.data.code === "10000") {
-            message.info("请登陆");
+            // message.info("请登陆");
             return;
           }
           if (item.data.code === "200") {
@@ -69,12 +73,12 @@ class UpdateMsg extends Component {
               contactTime: item.data.data.contactTime
             });
           } else {
-            message.error("接口错误")
+            message.error("接口错误");
             return;
           }
         })
         .catch(err => {
-            message.error("数据错误")
+          message.error("数据错误");
           console.log(err);
         });
     }
@@ -93,6 +97,7 @@ class UpdateMsg extends Component {
   };
   /* 笔试结果 */
   handleChangeResult = e => {
+    
     this.setState({
       writtenResult: e
     });
@@ -166,12 +171,12 @@ class UpdateMsg extends Component {
         if (item.data.code == "200") {
           this.getInfo();
           message.info(item.data.msg);
+          this.goBack()
         } else {
-          message.info("保存失败");
+          message.error("保存失败");
         }
       })
       .catch(() => {
-        message.info("保存失败");
       });
   };
 
@@ -187,7 +192,12 @@ class UpdateMsg extends Component {
         .replace(/T/g, " ")
         .replace(/\.[\d]{3}Z/, "");
     }
-    var Time = renderTime(this.state.contactTime).split(" ")[0];
+    var Time = null;
+    if (this.state.contactTime == null || this.state.contactTime == undefined) {
+      Time = renderTime(new Date()).split(" ")[0];
+    } else {
+      Time = renderTime(this.state.contactTime).split(" ")[0];
+    }
     return (
       <div className="updateMsg">
         <div className="updateMsg-content">
@@ -245,6 +255,7 @@ class UpdateMsg extends Component {
                           style={{ width: 800 }}
                           onChange={this.descriptionInput}
                           value={this.state.interviewDescribe}
+                          maxLength={100}
                         />
                         <span>{`${
                           this.state.interviewDescribe
@@ -265,7 +276,8 @@ class UpdateMsg extends Component {
                         onChange={this.handleChangeResult}
                         style={{ width: 240 }}
                         min={0}
-                        max={999}
+                        max={100}
+                        precision="0"
                       />
                     </div>
                   </Col>
@@ -293,6 +305,7 @@ class UpdateMsg extends Component {
                         value={this.state.juniorExamScore}
                         min={0}
                         max={999}
+                        precision="0"
                       />
                     </div>
                   </Col>
@@ -347,7 +360,6 @@ class UpdateMsg extends Component {
                       <h5>联系时间：</h5>
                       <DatePicker
                         value={moment(`${Time}`)}
-                        placeholder="选择日期"
                         format={dateFormat}
                         style={{ width: 240 }}
                         onChange={this.onChangeTime}
@@ -365,9 +377,8 @@ class UpdateMsg extends Component {
                     </div>
                   </Col>
                 </Row>
-
                 <Row type="flex">
-                  <Col span={6} order={1}>
+                  <Col span={24} order={1}>
                     <div>
                       <h5>备注记录：</h5>
                       <div className="description">
@@ -376,6 +387,7 @@ class UpdateMsg extends Component {
                           onChange={this.handleChangeRemark}
                           value={this.state.remark}
                           rows={4}
+                          maxLength={100}
                         />
                         <span>{`${
                           this.state.remark ? this.state.remark.length : 100

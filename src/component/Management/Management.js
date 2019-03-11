@@ -3,11 +3,11 @@ import _ from 'lodash'
 import { Tag , Row, Col,Input,Button,message ,InputNumber,Modal} from 'antd';
 import './style.less'
 import InterViewData from './interViewData/InterViewData'
-import {getStudyList,downloadStudentInfo,getStudentinfoExcelPath} from '../../api/manageMent.js'
+import {getStudyList,downloadStudentInfo} from '../../api/manageMent.js'
+import baseUrl from '../../utils'
 const CheckableTag = Tag.CheckableTag;
 const Search = Input.Search
 const confirm = Modal.confirm;
-const baseUrl = 'http://localhost:80'
 class Management extends Component {
   state = {
     selectedTags: [],
@@ -15,7 +15,7 @@ class Management extends Component {
     checkViewResult:['不限'],//面试结果
     IsArchive:['不限'], //是否提档
     IsPayment:['不限'], //缴费境况
-    oneShortNum:0,//一模分数
+
     oneShortSert:'',//一模排名
     VoluntaryReporting:['不限'],//志愿填报
     IsNanJing:['不限'] ,//是否南京学籍
@@ -44,7 +44,7 @@ class Management extends Component {
       exam1Score :null,//一模分数 ,
       intendedProgram :[],//项目意向
       contactName :null,//联系人姓名 ,
-      inputBox:null
+      inputBox:null,
     }
   };
 componentDidMount(){
@@ -53,14 +53,16 @@ componentDidMount(){
   this.getData(prams)
 }
 //获取数据
-getData = (prams) => {
-  getStudyList(prams).then(res=>{
+getData = (_prams) => {
+  const { prams } = this.state
+  getStudyList(_prams).then(res=>{
     if(res&&res.data.code==='200'){
-      console.log(res.data.data.list,'数据')
       if(res.data.data.list){
-          this.setState({
-            studyData:res.data.data
-          })
+        const newParams = Object.assign(prams,_prams)
+        this.setState({
+          studyData:res.data.data,
+          prams:newParams
+        })
       }
     }
   })
@@ -150,7 +152,6 @@ searchData = ()=>{
    const nextSelectedTags = checked
      ? [tag]
      : IsArchive.filter(t => t !== tag);
-     console.log('You are interested in: ', nextSelectedTags);
      let toFile =''
      if(nextSelectedTags[0]==='否'){
       toFile='0'
@@ -171,7 +172,6 @@ searchData = ()=>{
  const nextSelectedTags = checked
    ? [tag]
    : IsPayment.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let payInfo =''
    if(nextSelectedTags[0]==='否'){
     payInfo='0'
@@ -192,7 +192,6 @@ getVoluntaryReporting = (tag, checked) =>{
  const nextSelectedTags = checked
    ? [tag]
    : VoluntaryReporting.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let volunteerInfo = ''
    if(nextSelectedTags[0]==='1A'){
     volunteerInfo ='0'
@@ -216,7 +215,6 @@ getNanJing = (tag, checked) =>{
  const nextSelectedTags = checked
    ? [tag]
    : IsNanJing.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let orNkStudent =''
    if(nextSelectedTags[0]==='否'){
     orNkStudent='0'
@@ -237,7 +235,6 @@ getRetreat = (tag, checked) =>{
  const nextSelectedTags = checked
    ? [tag]
    : isRetreat.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let returnPay =''
    if(nextSelectedTags[0]==='否'){
     returnPay='0'
@@ -263,7 +260,7 @@ getExam1Score = (value)=>{
   })
 }
 //获取一模排名
-getExam1Rank  = (e)=>{
+getExam1Rank = (e)=>{
   const {prams} = this.state
   prams.exam1Rank = e
   this.setState({
@@ -293,7 +290,6 @@ getProjectIntention = (tag, checked) =>{
   let nextSelectedTags = checked
    ? [...ProjectIntention,tag]
    : ProjectIntention.filter(t => t !== tag);
-   console.log('You are interested in: ', nextSelectedTags);
    let Index = nextSelectedTags.indexOf('待定')
    let arr = []
    if(nextSelectedTags.length>1){
@@ -406,7 +402,7 @@ getDownloadPramas = (data) => {
           const exelPath = _.get(res,'data.data')
           const error = _.get(res,'data.error')
           if(code == 200){
-            window.location.href = `${baseUrl}/enroll/teacherController/white/downloadStudentInfo?exelPath=${exelPath}`
+            window.location.href = `${baseUrl}/enroll/teacherController/downloadStudentInfo?exelPath=${exelPath}`
           }else{
             message.error(error)
           }
@@ -479,7 +475,7 @@ getDownloadPramas = (data) => {
                           maxLength = '3'
                           defaultValue={0}
                           onChange={this.getExam1Score}/>
-                          <i>分（含）以上</i>
+                          <i className="sorcSize">分（含）以上</i>
                       </div>
                     </Col>
               </Row>
@@ -517,23 +513,25 @@ getDownloadPramas = (data) => {
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>中考分数:</h6>
                           <InputNumber className = "fraction" 
-                          onBlur = {this.getJuniorExamScore} 
+                          onChange = {this.getJuniorExamScore} 
                           maxLength={3}                         
                           max={999} 
-                          min={0} />
-                          <i>分（含）以上</i>
+                          min={0}
+                          defaultValue={0}
+                          />
+                          <i className="sorcSize">分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>
                     <div>
                           <h6 style={{ marginRight: 8, display: 'inline' }}>一模排名:</h6>
-                          <Input className = "fraction"
-                           onBlur={this.getExam1Rank}
-                           max={999} 
-                           min={0} 
+                          <InputNumber className = "fraction"
+                           onChange={this.getExam1Rank}
+                           precision={0}
+                           min={1} 
                            type='number'
                            />
-                          <i>名（含）以上</i>
+                          <i className="sorcSize">名（含）以上</i>
                       </div>
                     </Col>
               </Row>
@@ -572,11 +570,12 @@ getDownloadPramas = (data) => {
                           <h6 style={{ marginRight: 8, display: 'inline' }}>笔试结果:</h6>
                           <InputNumber className = "fraction" 
                           onChange={this.getWrittenResult}
-                          max={999} 
+                          max={100} 
                           min={0} 
                           maxLength={3}
+                          defaultValue={0}
                           />
-                          <i>分（含）以上</i>
+                          <i className="sorcSize">分（含）以上</i>
                       </div>
                     </Col>
                     <Col span={6} order={4}>

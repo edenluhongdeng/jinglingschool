@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row, Button, Modal } from "antd";
-import { getStudyInfoTch } from "./../../../api/manageMent.js";
 import "./studentsmsg.less";
-
+import baseUrl from "./../../../utils/index";
 class StudentsMsg extends Component {
   constructor(props) {
     super(props);
@@ -26,16 +25,13 @@ class StudentsMsg extends Component {
     this.setState({
       confirmLoading: true
     });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false
-      });
-    }, 1000);
+    this.setState({
+      visible: false,
+      confirmLoading: false
+    });
     this.props.subButton();
   };
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false
     });
@@ -73,7 +69,8 @@ class StudentsMsg extends Component {
                     <span>性别</span>
                     <span> /Gender</span>
                   </div>
-                  <div className="infomsgcont">{list.gender || "未知"}</div>
+                  <div className="infomsgcont">{list.gender == 1 && "男"}</div>
+                  <div className="infomsgcont">{list.gender == 0 && "女"}</div>
                 </div>
                 <div className="3">
                   <div className="infomsgtitle">
@@ -81,7 +78,8 @@ class StudentsMsg extends Component {
                     <span> /Date of Birth</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.birthDate&&list.birthDate.split('T')[0] || "2019.8"}
+                    {(list.birthDate && list.birthDate.split("T")[0]) ||
+                      "2019.8"}
                   </div>
                 </div>
                 <div className="4">
@@ -144,28 +142,34 @@ class StudentsMsg extends Component {
                     <span>/Intended Progr</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.intendedProgram == "0" && (
-                      <span className="chin_contry">中美 /American</span>
-                    )}
-                    {list.intendedProgram == "1" && (
-                      <span className="chin_contry">中英 /British</span>
-                    )}
-                    {list.intendedProgram == "2" && (
-                      <span className="chin_contry">中加 /Canadian</span>
-                    )}
-                    {list.intendedProgram == "3" && (
-                      <span className="chin_contry">待定</span>
-                    )}
-                    {!list.intendedProgram && (
-                      <span className="chin_contry">未选择</span>
-                    )}
+                    {list.intendedProgram &&
+                      list.intendedProgram.split(",").map((itom,index) => {
+                        if (itom == "0") {
+                          return (
+                            <span key={index+1} className="chin_contry">中美 /American</span>
+                          );
+                        }
+                        if (itom == "1") {
+                          return (
+                            <span key={index+33} className="chin_contry">中英 /British</span>
+                          );
+                        }
+                        if (itom == "2") {
+                          return (
+                            <span key={index+44} className="chin_contry">中加 /Canadian</span>
+                          );
+                        }
+                        if (itom == "3") {
+                          return <span key={index+66} className="chin_contry">待定</span>;
+                        }
+                      })}
                   </div>
                 </div>
               </div>
             </Col>
             <Col span={3}>
               <div className="photo">
-                <img src={list.photo} alt="" />
+                <img src={`${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${list.photo}`} alt="" />
               </div>
             </Col>
           </Row>

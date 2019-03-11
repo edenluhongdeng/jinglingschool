@@ -2,10 +2,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Button, Toast } from "antd-mobile";
-import Ajax from "./../../api/Ajax";
+import { Input } from "antd";
+import AjaxM from "./../../api/AjaxM";
 import "./style.less";
-import Leftimg from "./../../imgs/H5-nav-return.png"; 
-import Rightimg from "./../../imgs/H5-nav-returnRight.png";
 import errimg from "./../../imgs/H5-icon-error.png";
 import banner from "./../../imgs/H5-picture.png";
 class Search extends Component {
@@ -27,20 +26,17 @@ class Search extends Component {
     document.title = "2019招生信息查询";
     // this.getLoginInfo("130126199110143918", "18210609262");
     this.getPublickKey();
-    this.getStudentSquery();
+    // this.getStudentSquery();
   }
   /* 登陆前获取共匙  */
 
   getPublickKey = () => {
-    Ajax(`/studentController/white/getPublicKey`, {}, "GET").then(item => {
+    AjaxM(`/studentController/white/getPublicKey`, {}, "GET").then(item => {
       if (item.data.code === "200") {
         this.setState({
           publicKey: item.data.data
         });
       }
-      // jsencrypt.setPublicKey(item.data.data);
-      // let str = jsencrypt.encrypt("123123123");
-      // console.log(str)
     });
   };
   /* 选择准考证 */
@@ -60,7 +56,7 @@ class Search extends Component {
   /* 登陆验证 */
   getLoginInfo = (sfzNum, shjNum) => {
     if (sfzNum !== "" && shjNum !== "") {
-      Ajax(
+      AjaxM(
         `/studentController/white/login?idCard=${sfzNum}&contactPhone=${shjNum}`,
         {},
         "GET"
@@ -86,15 +82,16 @@ class Search extends Component {
   };
   /* input 身份证信息 */
   shenFengZheng = e => {
+    let value = e.target.value.replace(/[^\d]/g, "");
     this.setState({
-      sfzNum: e.target.value
+      sfzNum: value
     });
     var idcardReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
-    var cardNo = e.target.value;
+    var cardNo = value;
     if (idcardReg.test(cardNo)) {
       this.setState({
         sfzshow: false,
-        sfzNum: e.target.value
+        sfzNum: value
       });
       this.getLoginInfo(cardNo, this.state.shjNum);
     } else {
@@ -105,17 +102,18 @@ class Search extends Component {
   };
   /* input 手机号验证 */
   shouJiHao = e => {
+    let value = e.target.value.replace(/[^\d]/g, "");
     this.setState({
-      shjNum: e.target.value
+      shjNum: value
     });
     var regex = /^((\+)?86|((\+)?86)?)0?1[3458]\d{9}$/;
     // if (e.target.value.length > 10) {
-    if (regex.test(e.target.value)) {
+    if (regex.test(value)) {
       this.setState({
         shjhshow: false,
-        shjNum: e.target.value
+        shjNum: value
       });
-      this.getLoginInfo(this.state.sfzNum, e.target.value);
+      this.getLoginInfo(this.state.sfzNum, value);
     } else {
       this.setState({
         shjhshow: true
@@ -139,7 +137,7 @@ class Search extends Component {
   };
   /* 获取成绩信息 /studentController/white/selectResult*/
   getStudentSquery = () => {
-    Ajax(`/studentController/selectResult`, {}, "GET").then(item => {
+    AjaxM(`/studentController/selectResult`, {}, "GET").then(item => {
       if (item.data.code === "200") {
         this.setState({
           pacNumber: item.data.data
@@ -159,7 +157,6 @@ class Search extends Component {
     this.props.history.goBack();
   };
   goBackRight = () => {
-    // this.props.history.go(1);
     this.props.history.goBack();
   };
   render() {
@@ -179,9 +176,9 @@ class Search extends Component {
           <div className="info_serch_xhengkaozhen inputmsg">
             <div>请输入身份证号：</div>
             <div className="input_msg">
-              <input
+              <Input
                 onChange={this.shenFengZheng}
-                placeholder="23540720190307XXXX"
+                placeholder=""
                 maxLength={"18"}
                 value={this.state.sfzNum}
               />
@@ -199,9 +196,9 @@ class Search extends Component {
           <div className="info_serch_name inputmsg">
             <div>请输入联系电话：</div>
             <div className="input_msg">
-              <input
+              <Input
                 onChange={this.shouJiHao}
-                placeholder="183XXXX8888"
+                placeholder=""
                 maxLength={"11"}
                 value={this.state.shjNum}
               />
@@ -233,22 +230,25 @@ class Search extends Component {
 
         <Button
           className={
-            reNumberonChange === "2"
+            (reNumberonChange === "2" &&
+            (this.state.pacNumber &&
+              this.state.pacNumber.interviewResult != null))
               ? "getinfo_box info_change"
               : "getinfo_box info_notfind"
           }
           onClick={this.onChangeResults}
-          disabled={!(reNumberonChange === "2" ? true : false)}
+          disabled={
+            !((reNumberonChange === "2" &&
+            (this.state.pacNumber &&
+              this.state.pacNumber.interviewResult))
+              ? true
+              : false)
+          }
         >
           <span className="info_text info_notfind">
             查询成绩&nbsp;【查询2019年国际部招生结果】
           </span>
         </Button>
-        {/* 导航 */}
-        <div className="nva">
-          <img src={Leftimg} alt="" onClick = {this.goBack} className="goback" />
-          <img src={Rightimg} alt="" onClick = {this.goBack} className="goback" />
-        </div>
       </div>
     );
   }

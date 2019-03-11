@@ -120,8 +120,12 @@
       "react-app"
     ]
   },
+<<<<<<< HEAD
   
   "proxy": "http://localhost:80",
+=======
+  "proxy": "http://172.20.244.74",
+>>>>>>> 8bbb89081cbccab78ed366ddaea4503cc47f2270
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
     "encryptjs": "^2.0.0",
