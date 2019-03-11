@@ -330,6 +330,7 @@ class Registration extends Component {
       }));
     }else{
       message.error('照片上传失败!')
+      this.setState({loading: false})
     }
   }
   genderChange = e => {
