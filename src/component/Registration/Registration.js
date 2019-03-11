@@ -527,7 +527,7 @@ class Registration extends Component {
                 })(
                   <div>
                     <Select
-                      defaultValue={provinceData[0]}
+                      defaultValue={'请选择'}
                       style={{ width: '85%' }}
                       onChange={this.handleProvinceChange}
                     >
@@ -548,7 +548,7 @@ class Registration extends Component {
                   <div>
                     <Select
                       style={{ width: '90%' }}
-                      value={this.state.secondCity}
+                      defaultValue={'请选择'}
                       onChange={this.onSecondCityChange}
                     >
                       {cities.map(city => <Option key={city}>{city}</Option>)}
