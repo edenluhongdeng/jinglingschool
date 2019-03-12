@@ -267,14 +267,6 @@ class InterViewData extends Component {
         }
         const needTickets = selectedRowKeys.length > 0 && selectedRowKeys.toString().replace(new RegExp("J","gm"),"").split(',')
         this.props.getDownloadPramas(needTickets)
-      },
-      onSelectAll:(selected, selectedRows, changeRows) => {
-          console.log(selected, selectedRows, changeRows,'////////////////////////')
-          if(selected==true){
-            this.setState({
-                tabSelected:selected
-            })             
-          }
       }
     };
       
