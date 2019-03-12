@@ -1,4 +1,4 @@
 
-const baseUrl = 'http://192.168.137.100'
+const baseUrl = 'http://172.20.244.186'
 
 export default baseUrl
