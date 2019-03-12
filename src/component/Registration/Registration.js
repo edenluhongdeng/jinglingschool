@@ -197,7 +197,7 @@ class Registration extends Component {
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
           const intendedProgramVal = data.intendedPrograms
-          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
+          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
           this.setState({
             initData:data,
             genderVal,
@@ -212,7 +212,8 @@ class Registration extends Component {
             schoolSiteAreaVal:schoolSiteArea,
             juniorSchoolNameVal:juniorSchoolName,
             readOnly:true,
-            upImgUrl:data.photo
+            upImgUrl:data.photo,
+            intendedPrograms
           })
         }else{
             message.error(error)
@@ -254,7 +255,7 @@ class Registration extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault()
-    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal } = this.state
+    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms } = this.state
     if(!imageUrl) {
       message.warning('请先上传照片!')
       return
@@ -265,15 +266,15 @@ class Registration extends Component {
         return
       }
     }
-    
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const newValue = { 
           ...values,
           birthDateStr:values['birthDateStr'].format('YYYY-MM-DD'),
-          schoolSiteIndex,schoolNameIndex
+          schoolSiteIndex,schoolNameIndex,intendedPrograms
          }
         const newStudentInfo = Object.assign(studentInfo,newValue)
+
         this.setState({studentInfo:newStudentInfo},()=>{
           this.showInfoModal()
         })
@@ -297,10 +298,10 @@ class Registration extends Component {
       })
     }
     const { studentInfo } = this.state
-    
-    studentInfo.intendedPrograms = intendedProgramVal.sort()
+    const intendedPrograms = intendedProgramVal.sort()
+    studentInfo.intendedPrograms = intendedPrograms
     this.setState({
-      studentInfo,intendedProgramVal
+      studentInfo,intendedProgramVal,intendedPrograms
     })
   }
   beforeUpload = (file) => {
@@ -654,7 +655,7 @@ class Registration extends Component {
             <Col span={24}>
               <p className='regist-title'><span>项目意向</span>/Intended Program</p>
               <Form.Item>
-                {getFieldDecorator("intendedProgram", {
+                {getFieldDecorator("intendedPrograms", {
                   initialValue: initData.intendedPrograms,
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'

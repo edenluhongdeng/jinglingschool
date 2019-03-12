@@ -82,7 +82,7 @@ class InfoModal extends Component {
       fatherPosition,
       gender,
       idCard,
-      intendedProgram,
+      intendedPrograms,
       juniorSchoolName,
       matherCompany,
       matherName,
@@ -172,10 +172,10 @@ class InfoModal extends Component {
                     项目意向<span>/Intended Program</span>
                   </p>
                   <p className="flex-p">
-                    {intendedProgram[0] == 0 && <span>中美 /American</span>}
-                    {intendedProgram[1] == 1 && <span>中英 /British</span>}
-                    {intendedProgram[2] == 2 && <span>中加 /Canadian</span>}
-                    {intendedProgram[3] == 3 && <span>待定 /TBA</span>}
+                    {intendedPrograms[0] == 0 && <span>中美 /American</span>}
+                    {intendedPrograms[1] == 1 && <span>中英 /British</span>}
+                    {intendedPrograms[2] == 2 && <span>中加 /Canadian</span>}
+                    {intendedPrograms[3] == 3 && <span>待定 /TBA</span>}
                   </p>
                 </div>
               </div>
