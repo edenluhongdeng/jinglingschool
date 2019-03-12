@@ -172,10 +172,19 @@ class InfoModal extends Component {
                     项目意向<span>/Intended Program</span>
                   </p>
                   <p className="flex-p">
-                    {intendedPrograms[0] == 0 && <span>中美 /American</span>}
-                    {intendedPrograms[1] == 1 && <span>中英 /British</span>}
-                    {intendedPrograms[2] == 2 && <span>中加 /Canadian</span>}
-                    {intendedPrograms[3] == 3 && <span>待定 /TBA</span>}
+                    {
+                      intendedPrograms.map(item=>{
+                        if(item == 0){
+                          return (<span>中美 /American</span>)
+                        }else if(item == 1){
+                          return (<span>中英 /British</span>)
+                        }else if(item == 2){
+                          return (<span>中加 /Canadian</span>)
+                        }else if(item == 3){
+                          return (<span>待定 /TBA</span>)
+                        }
+                      })
+                    }
                   </p>
                 </div>
               </div>
