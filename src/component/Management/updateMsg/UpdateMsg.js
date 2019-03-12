@@ -170,7 +170,8 @@ class UpdateMsg extends Component {
       .then(item => {
         if (item.data.code == "200") {
           this.getInfo();
-          message.info(item.data.msg);
+          // message.info(item.data.msg);
+          message.error("保存成功");
           this.goBack()
         } else {
           message.error("保存失败");
@@ -247,12 +248,12 @@ class UpdateMsg extends Component {
                     </div>
                   </Col>
 
-                  <Col span={6} order={2}>
+                  <Col span={15} order={2}>
                     <div>
                       <h5>面试描述：</h5>
                       <div className="description">
                         <Input
-                          style={{ width: 800 }}
+                        width={800}
                           onChange={this.descriptionInput}
                           value={this.state.interviewDescribe}
                           maxLength={100}
@@ -360,6 +361,7 @@ class UpdateMsg extends Component {
                       <h5>联系时间：</h5>
                       <DatePicker
                         value={moment(`${Time}`)}
+                        placeholder="Select Month"
                         format={dateFormat}
                         style={{ width: 240 }}
                         onChange={this.onChangeTime}
@@ -389,7 +391,7 @@ class UpdateMsg extends Component {
                           rows={4}
                           maxLength={100}
                         />
-                        <span>{`${
+                        <span style={{marginLeft:'15px'}}>{`${
                           this.state.remark ?  (this.state.remark.length) : 0
                         }/100`}</span>
                       </div>
