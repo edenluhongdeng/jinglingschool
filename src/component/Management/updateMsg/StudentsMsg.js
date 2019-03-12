@@ -61,7 +61,7 @@ class StudentsMsg extends Component {
                     <span>/Chinese Name</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.chinaName || "阿凡达"}
+                    {list.chinaName}
                   </div>
                 </div>
                 <div className="2">
@@ -78,8 +78,7 @@ class StudentsMsg extends Component {
                     <span> /Date of Birth</span>
                   </div>
                   <div className="infomsgcont">
-                    {(list.birthDate && list.birthDate.split("T")[0]) ||
-                      "2019.8"}
+                    {(list.birthDate && list.birthDate.split("T")[0]) || ""}
                   </div>
                 </div>
                 <div className="4">
@@ -88,7 +87,7 @@ class StudentsMsg extends Component {
                     <span>/ID No.</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.idCard || "2434234234"}
+                    {list.idCard || ""}
                   </div>
                 </div>
                 <div className="5">
@@ -99,7 +98,7 @@ class StudentsMsg extends Component {
                   <div className="infomsgcont">
                     {(list.orNkStudent == "0" && "不是") ||
                       (list.orNkStudent == "1" && "是") ||
-                      "不是"}
+                      ""}
                   </div>
                 </div>
                 <div className="6">
@@ -108,7 +107,7 @@ class StudentsMsg extends Component {
                     <span> /Cellphone No.</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.contactPhone || "1832312312"}
+                    {list.contactPhone || ""}
                   </div>
                 </div>
               </div>
@@ -119,7 +118,7 @@ class StudentsMsg extends Component {
                     <span>/Junior High School</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.juniorSchoolName || "金陵附中"}
+                    {list.juniorSchoolName || ""}
                   </div>
                 </div>
                 <div className="2">
@@ -127,14 +126,14 @@ class StudentsMsg extends Component {
                     <span>一模总分 </span>
                     <span>/Total Score of Mock Exam 1</span>
                   </div>
-                  <div className="infomsgcont">{list.exam1Score || "790"}</div>
+                  <div className="infomsgcont">{list.exam1Score || ""}</div>
                 </div>
                 <div className="3">
                   <div className="infomsgtitle">
                     <span>一模年级排名 </span>
                     <span>/School Ranking</span>
                   </div>
-                  <div className="infomsgcont">{list.exam1Rank || "10"}</div>
+                  <div className="infomsgcont">{list.exam1Rank || ""}</div>
                 </div>
                 <div className="4" style={{ width: "330px" }}>
                   <div className="infomsgtitle">
@@ -188,7 +187,7 @@ class StudentsMsg extends Component {
                     <span>父亲姓名 </span>
                     <span>/Father’s Name</span>
                   </div>
-                  <div className="infomsgcont">{list.fatherName || "兔子"}</div>
+                  <div className="infomsgcont">{list.fatherName || ""}</div>
                 </div>
                 <div className="2 flag">
                   <div className="infomsgtitle">
@@ -196,7 +195,7 @@ class StudentsMsg extends Component {
                     <span> /Company</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.fatherCompany || "数字统计局"}
+                    {list.fatherCompany || ""}
                   </div>
                 </div>
                 <div className="3 flag">
@@ -205,7 +204,7 @@ class StudentsMsg extends Component {
                     <span> /Occupation</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.fatherPosition || "统计员"}{" "}
+                    {list.fatherPosition || ""}
                   </div>
                 </div>
                 <div className="4 flag flag4">
@@ -215,7 +214,7 @@ class StudentsMsg extends Component {
                   </div>
                   <div className="infomsgcont">
                     {list.fatherPhone ||
-                      "13545444444"}
+                      ""}
                   </div>
                 </div>
               </div>
@@ -226,7 +225,7 @@ class StudentsMsg extends Component {
                     <span>/Mother’s Name</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.matherName || "兔子2号"}
+                    {list.matherName || ""}
                   </div>
                 </div>
                 <div className="2 flag">
@@ -235,7 +234,7 @@ class StudentsMsg extends Component {
                     <span> /Company</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.matherCompany || "规划局"}
+                    {list.matherCompany || ""}
                   </div>
                 </div>
                 <div className="3 flag">
@@ -244,7 +243,7 @@ class StudentsMsg extends Component {
                     <span> /Occupation</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.matherPosition || "统计员2"}{" "}
+                    {list.matherPosition || ""}{" "}
                   </div>
                 </div>
                 <div className="4 flag flag4">
@@ -253,7 +252,7 @@ class StudentsMsg extends Component {
                     <span>/Cellphone No.</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.matherPhone || "123435123"}
+                    {list.matherPhone || ""}
                   </div>
                 </div>
               </div>
@@ -284,7 +283,7 @@ class StudentsMsg extends Component {
                     <span> /Applicant </span>
                   </div>
                   <div className="infomsgcont">
-                    {list.preparerName || "李益康"}
+                    {list.preparerName || ""}
                   </div>
                 </div>
                 <div className="2 flagTwo">
@@ -294,7 +293,7 @@ class StudentsMsg extends Component {
                   </div>
                   <div className="infomsgcont">
                     {renderTime(list.preparerTime).split(" ")[0] ||
-                      "2019年3月21日"}
+                      ""}
                   </div>
                 </div>
               </div>
