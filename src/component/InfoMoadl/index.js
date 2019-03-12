@@ -48,7 +48,7 @@ class InfoModal extends Component {
               const code = _.get(res, "data.code")
               const error = _.get(res, "data.error")
               if (code == 200) {
-                message.success("添加成功!", 1)
+                message.success("上传成功!", 1)
                 this.props.history.push("/download")
               } else if (code == "10000") {
                 message.error("登陆失败，重新提交")

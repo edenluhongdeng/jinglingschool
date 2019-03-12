@@ -76,17 +76,20 @@
   color: rgba(51, 51, 51, 1);
 }
 //面试描述 备注记录
-.ant-row-flex > .ant-col-6 .description {
+.ant-row-flex > .ant-col-15 .description {
   display: flex;
+  position: relative;
 }
-.ant-row-flex > .ant-col-6 .description > span {
+.ant-row-flex > .ant-col-15 .description > span {
   display: inline-block;
-  // margin-left: -0.6rem;
+  position: absolute!important;
+  right: -50px;
   z-index: 1;
   line-height: 0.32rem;
 }
 .ant-row-flex > .ant-col-6 .description > input {
-  padding-right: 0.65rem;
+  // padding-right: 0.65rem;
+  width: 9.5rem;
 }
 //分割线
 .line {
@@ -119,6 +122,9 @@
     color: rgba(0, 0, 0, 0.65);
   }
   .ant-input-number-handler-wrap{
+    display: none;
+  }
+  .ant-calendar-picker-clear{
     display: none;
   }
 }

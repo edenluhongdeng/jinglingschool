@@ -15,7 +15,6 @@ class Management extends Component {
     checkViewResult:['不限'],//面试结果
     IsArchive:['不限'], //是否提档
     IsPayment:['不限'], //缴费境况
-
     oneShortSert:'',//一模排名
     VoluntaryReporting:['不限'],//志愿填报
     IsNanJing:['不限'] ,//是否南京学籍
@@ -143,7 +142,6 @@ searchData = ()=>{
        checkViewResult: nextSelectedTags,
        prams
       });
-
   }
 
   //获取提档情况
@@ -379,6 +377,7 @@ inputSearch = (value) => {
 }
 //获取下载参数
 getDownloadPramas = (data) => {
+  console.log(data,'------------------------')
   this.setState({
     needTickets:data
   })
@@ -392,7 +391,7 @@ getDownloadPramas = (data) => {
     okText:'确定',
     cancelText:'取消',
     onOk(){
-        const { needTickets } = _state
+        const { needTickets,excessTickets } = _state
         const studentExcelReq = {}
         studentExcelReq.needTickets = needTickets
         //下载
@@ -473,7 +472,6 @@ getDownloadPramas = (data) => {
                           max={999} 
                           min={0} 
                           maxLength = '3'
-                          defaultValue={0}
                           onChange={this.getExam1Score}/>
                           <i className="sorcSize">分（含）以上</i>
                       </div>
@@ -517,7 +515,6 @@ getDownloadPramas = (data) => {
                           maxLength={3}                         
                           max={999} 
                           min={0}
-                          defaultValue={0}
                           />
                           <i className="sorcSize">分（含）以上</i>
                       </div>
@@ -573,7 +570,6 @@ getDownloadPramas = (data) => {
                           max={100} 
                           min={0} 
                           maxLength={3}
-                          defaultValue={0}
                           />
                           <i className="sorcSize">分（含）以上</i>
                       </div>
@@ -596,7 +592,7 @@ getDownloadPramas = (data) => {
                       </span>:
                       <Button className = "downLoad downLoad-true" onClick={this.showConfirm}>
                         <i className = "downIcon"></i>下载
-                    </Button>
+                     </Button>
                    }
                     <span>
                     <Search
