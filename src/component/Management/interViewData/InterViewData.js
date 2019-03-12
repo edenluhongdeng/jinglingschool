@@ -211,6 +211,15 @@ class InterViewData extends Component {
         this.props.getData(prams)
     }
 
+     onShowSizeChange = (current, pageSize) => {
+        const {prams} = this.state
+        prams.pageNumber = current
+        prams.pageSize = pageSize
+        this.setState({
+            prams
+        })
+        this.props.getData(prams)
+      }
     //tab 数据改变
     getDataList = (str) =>{
         const { prams } = this.state
@@ -282,10 +291,10 @@ class InterViewData extends Component {
             />
             <Pagination
             className = "pagination" 
-            showQuickJumper 
+            showSizeChanger 
             defaultCurrent={1} 
             total={data.total} 
-            onChange={this.pageChange} />
+            onShowSizeChange={this.onShowSizeChange} />
       </div>
     );
   }

@@ -130,7 +130,6 @@ class Demo  extends Component {
               )}
             </FormItem>
             <FormItem>
-              
               <Button 
                 type="primary" 
                 htmlType="submit" 
@@ -142,7 +141,6 @@ class Demo  extends Component {
                   height: '0.4rem',
                   marginLeft: '0.3rem'
                 }}
-                
               >
                 登录
               </Button>
