@@ -1,74 +1,75 @@
-import React, { Component } from "react";
-import "./index.less";
-import MyModal from "../Common/MyModal";
-import { Button, message } from "antd";
-import { withRouter } from "react-router-dom";
-import _ from "lodash";
-import { addStudentInfo, updateStudentInfo } from "../../api";
-import { login } from "../../api/Login";
+import React, { Component } from "react"
+import "./index.less"
+import MyModal from "../Common/MyModal"
+import { Button, message } from "antd"
+import { withRouter } from "react-router-dom"
+import _ from "lodash"
+import { addStudentInfo, updateStudentInfo } from "../../api"
+import { login } from "../../api/Login"
 class InfoModal extends Component {
-  state = {};
+  state = {}
   handleClick1 = () => {
-    this.props.onClose();
-  };
+    this.props.onClose()
+  }
   handleClick2 = () => {
-    const { studentInfo, flag } = this.props;
+    const { studentInfo, flag } = this.props
     if (flag) {
-      studentInfo.photo = this.props.upImgUrl;
+      studentInfo.photo = this.props.upImgUrl
       updateStudentInfo(studentInfo)
         .then(res => {
-          const code = _.get(res, "data.code");
-          const error = _.get(res, "data.error");
-          console.log(code);
+          const code = _.get(res, "data.code")
+          const error = _.get(res, "data.error")
+          console.log(code)
           if (code == 200) {
-            message.success("修改成功!", 1);
-            this.props.history.push("/download");
+            message.success("修改成功!", 1)
+            this.props.history.push("/download")
           } else if (code == "10004") {
-            message.info("身份证号已存在");
-            return;
+            message.info("身份证号已存在")
+            return
           } else {
-            message.error(error);
+            message.error(error)
           }
         })
         .catch(err => {
-          message.error(err);
-        });
+          message.error(err)
+        })
     } else {
       addStudentInfo(studentInfo)
         .then(res => {
-          const code = _.get(res, "data.code");
-          const error = _.get(res, "data.error");
-          const msg = _.get(res, "data.msg");
+          const code = _.get(res, "data.code")
+          const error = _.get(res, "data.error")
+          const msg = _.get(res, "data.msg")
           if (code == 200) {
             const dataLogin = {
               idCard: studentInfo.idCard,
               contactPhone: studentInfo.contactPhone
-            };
+            }
             login(dataLogin).then(data => {
-              const code = _.get(res, "data.code");
-              const error = _.get(res, "data.error");
+              const code = _.get(res, "data.code")
+              const error = _.get(res, "data.error")
               if (code == 200) {
-                this.props.history.push("/download");
+                message.success("添加成功!", 1)
+                this.props.history.push("/download")
               } else if (code == "10000") {
-                message.error("登陆失败，重新提交");
+                message.error("登陆失败，重新提交")
               } else {
-                message.error(error);
+                message.error(error)
               }
-            });
+            })
           } else if (code == 10004) {
             alert(msg)
-            return;
+            return
           } else {
-            message.error(error);
+            message.error(error)
           }
         })
         .catch(err => {
-          message.error(err);
-        });
+          message.error(err)
+        })
     }
-  };
+  }
   render() {
-    const { studentInfo, imageUrl } = this.props;
+    const { studentInfo, imageUrl } = this.props
     const {
       birthDateStr,
       chinaName,
@@ -95,7 +96,7 @@ class InfoModal extends Component {
       schoolSiteCity,
       schoolSiteIndex,
       schoolSiteProvince
-    } = studentInfo;
+    } = studentInfo
     return (
       <MyModal onClose={this.props.onClose} w={11}>
         <div className="infoModal-content">
@@ -286,7 +287,7 @@ class InfoModal extends Component {
           </div>
         </div>
       </MyModal>
-    );
+    )
   }
 }
-export default withRouter(InfoModal);
+export default withRouter(InfoModal)
