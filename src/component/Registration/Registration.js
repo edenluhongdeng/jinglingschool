@@ -267,6 +267,10 @@ class Registration extends Component {
       }
     }
     this.props.form.validateFields((err, values) => {
+      if(err){
+        message.error('请完善信息后重新提交!')
+        return
+      }
       if (!err) {
         const newValue = { 
           ...values,
