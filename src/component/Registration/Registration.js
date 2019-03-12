@@ -168,6 +168,8 @@ function getBase64(img, callback) {
 }
 class Registration extends Component {
   state = {
+    schoolNameIndex:'请选择',
+    schoolSiteIndex:'请选择',
     cities: cityData[provinceData[0]],
     secondCity: cityData[provinceData[0]][0],
     isFailModalShow:false,
@@ -195,7 +197,7 @@ class Registration extends Component {
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
           const intendedProgramVal = data.intendedPrograms
-          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
+          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
           this.setState({
             initData:data,
             genderVal,
@@ -210,7 +212,8 @@ class Registration extends Component {
             schoolSiteAreaVal:schoolSiteArea,
             juniorSchoolNameVal:juniorSchoolName,
             readOnly:true,
-            upImgUrl:data.photo
+            upImgUrl:data.photo,
+            intendedPrograms
           })
         }else{
             message.error(error)
@@ -252,7 +255,7 @@ class Registration extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault()
-    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal } = this.state
+    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms } = this.state
     if(!imageUrl) {
       message.warning('请先上传照片!')
       return
@@ -263,15 +266,19 @@ class Registration extends Component {
         return
       }
     }
-    
     this.props.form.validateFields((err, values) => {
+      if(err){
+        message.error('请完善信息后重新提交!')
+        return
+      }
       if (!err) {
         const newValue = { 
           ...values,
           birthDateStr:values['birthDateStr'].format('YYYY-MM-DD'),
-          schoolSiteIndex,schoolNameIndex
+          schoolSiteIndex,schoolNameIndex,intendedPrograms
          }
         const newStudentInfo = Object.assign(studentInfo,newValue)
+
         this.setState({studentInfo:newStudentInfo},()=>{
           this.showInfoModal()
         })
@@ -295,10 +302,10 @@ class Registration extends Component {
       })
     }
     const { studentInfo } = this.state
-    
-    studentInfo.intendedPrograms = intendedProgramVal.sort()
+    const intendedPrograms = intendedProgramVal.sort()
+    studentInfo.intendedPrograms = intendedPrograms
     this.setState({
-      studentInfo,intendedProgramVal
+      studentInfo,intendedProgramVal,intendedPrograms
     })
   }
   beforeUpload = (file) => {
@@ -351,7 +358,26 @@ class Registration extends Component {
     this.setState({schoolSiteProvinceVal:e.target.value})
   }
   render() {
-    const { isShow=2,cities,isFailModalShow,isInfoModalShow, imageUrl, studentInfo, initData,genderVal,orNkStudentVal,flag,intendedProgramVal,schoolSiteProvinceVal,schoolSiteCityVal,schoolSiteAreaVal,juniorSchoolNameVal,readOnly } = this.state
+    const { 
+      isShow=2,
+      cities,
+      isFailModalShow,
+      isInfoModalShow, 
+      imageUrl, 
+      studentInfo, 
+      initData,
+      genderVal,
+      orNkStudentVal,
+      flag,
+      intendedProgramVal,
+      schoolSiteProvinceVal,
+      schoolSiteCityVal,
+      schoolSiteAreaVal,
+      juniorSchoolNameVal,
+      readOnly,
+      schoolNameIndex,
+      schoolSiteIndex,
+     } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
@@ -527,7 +553,7 @@ class Registration extends Component {
                 })(
                   <div>
                     <Select
-                      defaultValue={'请选择'}
+                      value={schoolSiteIndex}
                       style={{ width: '85%' }}
                       onChange={this.handleProvinceChange}
                     >
@@ -548,7 +574,7 @@ class Registration extends Component {
                   <div>
                     <Select
                       style={{ width: '90%' }}
-                      defaultValue={'请选择'}
+                      value={schoolNameIndex}
                       onChange={this.onSecondCityChange}
                     >
                       {cities.map(city => <Option key={city}>{city}</Option>)}
@@ -633,7 +659,7 @@ class Registration extends Component {
             <Col span={24}>
               <p className='regist-title'><span>项目意向</span>/Intended Program</p>
               <Form.Item>
-                {getFieldDecorator("intendedProgram", {
+                {getFieldDecorator("intendedPrograms", {
                   initialValue: initData.intendedPrograms,
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'

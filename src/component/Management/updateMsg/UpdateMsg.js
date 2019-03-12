@@ -259,8 +259,8 @@ class UpdateMsg extends Component {
                         />
                         <span>{`${
                           this.state.interviewDescribe
-                            ? (100 - this.state.interviewDescribe.length)
-                            : 100
+                            ? ( this.state.interviewDescribe.length)
+                            : 0
                         }/100`}</span>
                       </div>
                     </div>
@@ -390,7 +390,7 @@ class UpdateMsg extends Component {
                           maxLength={100}
                         />
                         <span>{`${
-                          this.state.remark ?  (100 - this.state.remark.length) : 100
+                          this.state.remark ?  (this.state.remark.length) : 0
                         }/100`}</span>
                       </div>
                     </div>
@@ -408,18 +408,4 @@ class UpdateMsg extends Component {
 }
 
 export default withRouter(UpdateMsg);
-/* add 添加 */
-// {
-//     "admissionTicket": "准考证号",
-//     "contactName": "联系人姓名",
-//     "contactTime": "联系时间",
-//     "interviewDescribe": "面试描述",
-//     "interviewResult": "面试结果(0：Excellent-优秀，1：Pass-合格，2：Fail-不合格)",
-//     "juniorExamScore": "中考分数",
-//     "payInfo": "缴费情况(0：否，1：是)",
-//     "remark": "备注",
-//     "returnPay": "退费情况(0：否，1：是 2:考虑)",
-//     "toFile": "提档情况(0：否，1：是)",
-//     "volunteerInfo": "志愿填报(0：1A，1：1B，2：1C)",
-//     "writtenResult": "笔试结果"
-//   }
+
