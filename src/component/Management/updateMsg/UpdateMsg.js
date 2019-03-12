@@ -171,7 +171,7 @@ class UpdateMsg extends Component {
         if (item.data.code == "200") {
           this.getInfo();
           // message.info(item.data.msg);
-          message.error("保存成功");
+          message.success("保存成功");
           this.goBack()
         } else {
           message.error("保存失败");
