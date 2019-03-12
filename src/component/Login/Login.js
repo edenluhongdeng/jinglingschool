@@ -17,10 +17,10 @@ class Demo  extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if(err){
-        message.error('请完善信息再登录!')
-        return
-      }
+      // if(err){
+      //   message.error('请完善信息再登录!')
+      //   return
+      // }
       if (!err) {
         login(values).then(res=>{
           if(res.data.code=='500' || res.data.code=='503'){
