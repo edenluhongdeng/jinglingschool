@@ -377,6 +377,7 @@ inputSearch = (value) => {
 }
 //获取下载参数
 getDownloadPramas = (data) => {
+  console.log(data,'------------------------')
   this.setState({
     needTickets:data
   })
@@ -390,7 +391,7 @@ getDownloadPramas = (data) => {
     okText:'确定',
     cancelText:'取消',
     onOk(){
-        const { needTickets } = _state
+        const { needTickets,excessTickets } = _state
         const studentExcelReq = {}
         studentExcelReq.needTickets = needTickets
         //下载
@@ -591,7 +592,7 @@ getDownloadPramas = (data) => {
                       </span>:
                       <Button className = "downLoad downLoad-true" onClick={this.showConfirm}>
                         <i className = "downIcon"></i>下载
-                    </Button>
+                     </Button>
                    }
                     <span>
                     <Search

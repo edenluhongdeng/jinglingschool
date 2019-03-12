@@ -18,6 +18,7 @@ class InterViewData extends Component {
         volunteerInfoDesc:false,//志愿填报降序标志
         writtenResultDesc:false,//笔试结果降序标志
         intendedProgramDesc:false,//项目意向的降序标志
+        tabSelected:false
     }
 
     //获取父组件传递过来的数据
@@ -256,6 +257,14 @@ class InterViewData extends Component {
         const needTickets = selectedRowKeys.length > 0 && selectedRowKeys.toString().replace(new RegExp("J","gm"),"").split(',')
         this.props.getDownloadPramas(needTickets)
       },
+      onSelectAll:(selected, selectedRows, changeRows) => {
+          console.log(selected, selectedRows, changeRows,'////////////////////////')
+          if(selected==true){
+            this.setState({
+                tabSelected:selected
+            })             
+          }
+      }
     };
       
   render() {
