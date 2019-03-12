@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './login.less'
 import logo from '../../imgs/enrollment_login.png'
-import { Form, Input, Button, } from 'antd'
+import { Form, Input, Button, message} from 'antd'
 import {login} from '../../api/Login'
 const FormItem = Form.Item;
 
@@ -17,9 +17,23 @@ class Demo  extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      if(err){
+        message.error('请完善信息再登录!')
+        return
+      }
       if (!err) {
         login(values).then(res=>{
-          if(res.data.code=='200'&& res.data.data == '0'){
+          if(res.data.code=='500' || res.data.code=='503'){
+            message.info('服务器故障！！')
+          }else if(res.data.code=='403'){
+            message.info('Forbidden')
+          }else if(res.data.code=='401'){
+            message.info('Unauthorized')
+          }else if(res.data.code=='404'){
+            message.info('Not Found')
+          }
+          
+          else if(res.data.code=='200'&& res.data.data == '0'){
             this.setState({
               isShow:true
             })
@@ -33,6 +47,10 @@ class Demo  extends Component {
               pathname: '/choose',
             })
           }
+          
+        })
+        .catch(err=>{
+          message.error(err)
         })
       }
     });
@@ -62,7 +80,6 @@ class Demo  extends Component {
       const admissionValue=getFieldValue('idCard')
       if(!admissionID.test(admissionValue)) {
         callback('请输入正确的身份证号!')
-        
       }
       callback()
       
@@ -92,7 +109,7 @@ class Demo  extends Component {
                   validator: checkAdmission,
                 }],
               })(
-                  <Input placeholder="请输入身份证号..."maxLength={18} style={inputStyle} autocomplete="off"/>
+                  <Input placeholder="请输入身份证号..."maxLength={18} style={inputStyle} autoComplete="off"/>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
@@ -104,7 +121,7 @@ class Demo  extends Component {
                 }],
               })(
                 <div className='phone'>
-                  <Input  placeholder="请输入手机号码..." maxLength={11} style={inputStyle} onChange={this.changePhone} autocomplete="off"/>
+                  <Input  placeholder="请输入手机号码..." maxLength={11} style={inputStyle} onChange={this.changePhone} autoComplete="off"/>
                   {
                     this.state.isShow&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
                   }
