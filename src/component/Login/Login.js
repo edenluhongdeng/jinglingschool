@@ -92,7 +92,7 @@ class Demo  extends Component {
                   validator: checkAdmission,
                 }],
               })(
-                  <Input placeholder="请输入身份证号..."maxLength={18} style={inputStyle}/>
+                  <Input placeholder="请输入身份证号..."maxLength={18} style={inputStyle} autocomplete="off"/>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
@@ -104,7 +104,7 @@ class Demo  extends Component {
                 }],
               })(
                 <div className='phone'>
-                  <Input  placeholder="请输入手机号码..." maxLength={11} style={inputStyle} onChange={this.changePhone}/>
+                  <Input  placeholder="请输入手机号码..." maxLength={11} style={inputStyle} onChange={this.changePhone} autocomplete="off"/>
                   {
                     this.state.isShow&&<p className='phoneNumber'>身份证号与手机号码不一致！</p>
                   }
