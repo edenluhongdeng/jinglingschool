@@ -276,7 +276,7 @@ class StudentsMsg extends Component {
             <span>/Registration Information</span>
           </div>
           <Row>
-            <Col span={8}>
+            <Col span={10}>
               <div className="student_info_top student_info_top_two">
                 <div className="1 flagTwo">
                   <div className="infomsgtitle">

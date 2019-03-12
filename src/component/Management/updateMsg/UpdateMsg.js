@@ -259,8 +259,8 @@ class UpdateMsg extends Component {
                         />
                         <span>{`${
                           this.state.interviewDescribe
-                            ? (100 - this.state.interviewDescribe.length)
-                            : 100
+                            ? ( this.state.interviewDescribe.length)
+                            : 0
                         }/100`}</span>
                       </div>
                     </div>
@@ -390,7 +390,7 @@ class UpdateMsg extends Component {
                           maxLength={100}
                         />
                         <span>{`${
-                          this.state.remark ?  (100 - this.state.remark.length) : 100
+                          this.state.remark ?  (this.state.remark.length) : 0
                         }/100`}</span>
                       </div>
                     </div>
