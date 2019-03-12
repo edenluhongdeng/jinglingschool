@@ -49,7 +49,7 @@ class InfoModal extends Component {
               const error = _.get(res, "data.error")
               if (code == 200) {
                 message.success("上传成功!", 1)
-                this.props.history.push("/download")
+                this.props.history.push("/choose")
               } else if (code == "10000") {
                 message.error("登陆失败，重新提交")
               } else {
