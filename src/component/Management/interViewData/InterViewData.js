@@ -283,6 +283,7 @@ class InterViewData extends Component {
             />
             <Pagination
             className = "pagination" 
+            pageSizeOptions={['10','20','30','40','50']}
             showSizeChanger 
             defaultCurrent={1} 
             total={data.total} 
