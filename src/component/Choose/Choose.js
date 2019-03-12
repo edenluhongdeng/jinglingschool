@@ -6,6 +6,7 @@ import downloadImg from "../../imgs/enrollment_download.png";
 import searchImg from "../../imgs/enrollment_search.png";
 import searchImg2 from "../../imgs/enrollment_search_not_editable.png";
 import { resultApi } from "../../api/Result";
+import moment from 'moment'
 export default class Choose extends Component {
   constructor() {
     super();
@@ -14,25 +15,35 @@ export default class Choose extends Component {
       clikeBut: 1
     };
   }
+  
   componentDidMount() {
-    resultApi().then(res => {
-      if (res.data.code == "200") {
-        console.log(res.data,'shuju')
-        const datainter = res.data.data.interviewResult;
-        this.setState({
-          interviewResult: datainter
-        });
-        if ((datainter && datainter) == null) {
-          this.setState({
-            clikeBut: 0
-          });
-        }
-      }
-    });
+    let nowDate = moment().valueOf()
+    let startDate = moment('2019-06-1').valueOf()
+    let date = nowDate-startDate
+    
+    // resultApi().then(res => {
+    //   if (res.data.code == "200") {
+    //     console.log(res.data,'shuju')
+    //     const datainter = res.data.data.interviewResult;
+    //     this.setState({
+    //       interviewResult: datainter
+    //     });
+    //     if ((datainter && datainter) == null) {
+    //       this.setState({
+    //         clikeBut: 0
+    //       });
+    //     }
+    //   }
+    // });
+    if(date< 0){
+      this.setState({
+        clikeBut: 0
+      });
+    }
   }
   goGrade = () => {
-    const typeFay = this.state.interviewResult && this.state.interviewResult;
-    if (typeFay == null) {
+    // const typeFay = this.state.interviewResult && this.state.interviewResult;
+    if (this.state.clikeBut == 0) {
       message.info("未到查询时间，不能查询");
       // alert("成绩暂未公布")
     } else {
