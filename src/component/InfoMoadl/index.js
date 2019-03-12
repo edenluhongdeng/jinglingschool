@@ -22,7 +22,7 @@ class InfoModal extends Component {
           console.log(code)
           if (code == 200) {
             message.success("修改成功!", 1)
-            this.props.history.push("/download")
+            this.props.history.push("/choose")
           } else if (code == "10004") {
             message.info("身份证号已存在")
             return
