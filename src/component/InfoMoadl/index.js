@@ -155,7 +155,10 @@ class InfoModal extends Component {
                   </p>
                 </div>
               </div>
-              <div className="infoModal-div-flex infoModal-div-flex-last">
+            </div>
+            <img src={imageUrl} alt="" />
+          </div>
+          <div className="infoModal-div-flex infoModal-div-flex-last"> 
                 <div>
                   <p className="infoModal-title">
                     一模总分<span>/Total Score of Mock Eaxm 1</span>
@@ -189,9 +192,6 @@ class InfoModal extends Component {
                   </p>
                 </div>
               </div>
-            </div>
-            <img src={imageUrl} alt="" />
-          </div>
           <h2 className="infoModal-h2">
             家庭情况<span>/Family Information</span>
           </h2>

@@ -377,7 +377,6 @@ inputSearch = (value) => {
 }
 //获取下载参数
 getDownloadPramas = (data) => {
-  console.log(data,'------------------------')
   this.setState({
     needTickets:data
   })
