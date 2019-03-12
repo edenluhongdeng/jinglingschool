@@ -108,17 +108,18 @@ class Demo  extends Component {
                 }, {
                   validator: checkAdmission,
                 }],
+                validateTrigger: 'onBlur'
               })(
                   <Input placeholder="请输入身份证号..."maxLength={18} style={inputStyle} autoComplete="off"/>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="手机号码">
               {getFieldDecorator('contactPhone', {
-                rules: [{
-                  required: false, message: '手机号码格式不正确!',
+                rules: [{required: false, message: '手机号码格式不正确!',
                 }, {
                   validator: checkFhone,
                 }],
+                validateTrigger: 'onBlur'
               })(
                 <div className='phone'>
                   <Input  placeholder="请输入手机号码..." maxLength={11} style={inputStyle} onChange={this.changePhone} autoComplete="off"/>
