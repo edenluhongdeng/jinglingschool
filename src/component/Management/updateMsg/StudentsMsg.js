@@ -118,7 +118,7 @@ class StudentsMsg extends Component {
                     <span>/Junior High School</span>
                   </div>
                   <div className="infomsgcont">
-                    {list.schoolNameIndex || ""}
+                    {list.schoolNameIndex || list.juniorSchoolName || ""}
                   </div>
                 </div>
                 <div className="2">
