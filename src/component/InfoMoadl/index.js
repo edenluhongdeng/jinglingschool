@@ -150,8 +150,8 @@ class InfoModal extends Component {
                   </p>
                   <p>
                     {orNkStudent == 0
-                      ? `${schoolSiteProvince}${schoolSiteCity}${schoolSiteArea}${juniorSchoolName}`
-                      : `${schoolSiteIndex}${schoolNameIndex}`}
+                      ? `${schoolSiteProvince}-${schoolSiteCity}-${schoolSiteArea}-${juniorSchoolName}`
+                      : `${schoolSiteIndex}-${schoolNameIndex}`}
                   </p>
                 </div>
               </div>
