@@ -599,7 +599,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off" maxLength={20} value={schoolSiteProvinceVal || ''} onChange={this.inputChang4}/>
+                    <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off" maxLength={10} value={schoolSiteProvinceVal || ''} onChange={this.inputChang4}/>
                     <span className='regist-span'>省</span>
                   </div>
                 )}
@@ -615,7 +615,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入市...' autoComplete="off" maxLength={20} value={schoolSiteCityVal || ''} onChange={this.inputChang3}/>
+                    <Input className='regist-input3' placeholder='请输入市...' autoComplete="off" maxLength={10} value={schoolSiteCityVal || ''} onChange={this.inputChang3}/>
                     <span className='regist-span'>市</span>
                   </div>
                 )}
@@ -631,7 +631,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input3' placeholder='请输入区...' autoComplete="off" maxLength={20} value={schoolSiteAreaVal || ''} onChange={this.inputChang2}/>
+                    <Input className='regist-input3' placeholder='请输入区...' autoComplete="off" maxLength={10} value={schoolSiteAreaVal || ''} onChange={this.inputChang2}/>
                     <span className='regist-span'>区</span>
                   </div>
                 )}
@@ -647,7 +647,7 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                    <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off" maxLength={20} value={juniorSchoolNameVal || ''} onChange={this.inputChang1}/>
+                    <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off" maxLength={30} value={juniorSchoolNameVal || ''} onChange={this.inputChang1}/>
                     <span className='regist-span'>中学</span>
                   </div>
                 )}
