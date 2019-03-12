@@ -257,7 +257,7 @@ class StudentsMsg extends Component {
                 </div>
               </div>
               <div className="student_info_top student_info_bottom">
-                <div className="1 flag">
+                <div className="1 flag flagflame">
                   <div className="infomsgtitle">
                     <span>家庭住址 </span>
                     <span> /Family Address</span>

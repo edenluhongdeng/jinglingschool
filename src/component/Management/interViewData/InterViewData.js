@@ -223,21 +223,23 @@ class InterViewData extends Component {
             exam1RankDesc:null,
             intendedProgramDesc:null
         })
-        let type = ''
-        str === 'interviewResult' && (type = 'interviewResultDesc')
-        str === 'writtenResults' && (type = 'writtenResultDesc')
-        str === 'volunteerReport' && (type = 'volunteerInfoDesc')
-        str === 'highSchoolScore' && (type = 'juniorExamScoreDesc')
-        str === 'oneShotScore' && (type = 'exam1ScoreDesc')
-        str === 'oneShotRanking' && (type = 'exam1RankDesc')
-        str ==='projectIntention'&&(type='intendedProgramDesc')
-        const id  = this.state[type] ? 1 : 2
-        _prams[type] = id
+        if(str){
+            let type = ''
+            str === 'interviewResult' && (type = 'interviewResultDesc')
+            str === 'writtenResults' && (type = 'writtenResultDesc')
+            str === 'volunteerReport' && (type = 'volunteerInfoDesc')
+            str === 'highSchoolScore' && (type = 'juniorExamScoreDesc')
+            str === 'oneShotScore' && (type = 'exam1ScoreDesc')
+            str === 'oneShotRanking' && (type = 'exam1RankDesc')
+            str ==='projectIntention'&&(type='intendedProgramDesc')
+            const id  = this.state[type] ? 1 : 2
+            _prams[type] = id
+            this.setState({[type]:!this.state[type]})
+        }
         this.props.getData(_prams)
-        this.setState({[type]:!this.state[type]})
     }
-    tabChange =  (pagination, filters, sorter)=> {
-        console.log({pagination, filters, sorter});
+    tabChange =  (pagination, filters, sorter,extra)=> {
+        console.log({pagination,filters,sorter,extra})
         const sort = sorter.field
         this.getDataList(sort)
       }
