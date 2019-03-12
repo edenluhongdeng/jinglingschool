@@ -197,7 +197,7 @@ class Registration extends Component {
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
           const intendedProgramVal = data.intendedPrograms
-          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName} = data
+          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
           this.setState({
             initData:data,
             genderVal,
@@ -212,7 +212,8 @@ class Registration extends Component {
             schoolSiteAreaVal:schoolSiteArea,
             juniorSchoolNameVal:juniorSchoolName,
             readOnly:true,
-            upImgUrl:data.photo
+            upImgUrl:data.photo,
+            intendedPrograms
           })
         }else{
             message.error(error)
@@ -255,19 +256,17 @@ class Registration extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms } = this.state
-    // if(!imageUrl) {
-    //   message.warning('请先上传照片!')
-    //   return
-    // }
-    // if(orNkStudentVal == 1){
-    //   if(!schoolSiteIndex || !schoolNameIndex) {
-    //     message.warning('请选择初中就读学校信息!')
-    //     return
-    //   }
-    // }
-    this.props.form.validateFields((err, values) => {
-      console.log({values})
+    if(!imageUrl) {
+      message.warning('请先上传照片!')
       return
+    }
+    if(orNkStudentVal == 1){
+      if(!schoolSiteIndex || !schoolNameIndex) {
+        message.warning('请选择初中就读学校信息!')
+        return
+      }
+    }
+    this.props.form.validateFields((err, values) => {
       if (!err) {
         const newValue = { 
           ...values,
@@ -275,6 +274,7 @@ class Registration extends Component {
           schoolSiteIndex,schoolNameIndex,intendedPrograms
          }
         const newStudentInfo = Object.assign(studentInfo,newValue)
+
         this.setState({studentInfo:newStudentInfo},()=>{
           this.showInfoModal()
         })
