@@ -161,6 +161,7 @@ class Search extends Component {
   };
   render() {
     const { reNumber, pacNumber } = this.state;
+    const then = this;
     let reNumberonChange = reNumber;
     if (pacNumber) {
       reNumberonChange = "2";
@@ -238,11 +239,18 @@ class Search extends Component {
           }
           onClick={this.onChangeResults}
           disabled={
-            !((reNumberonChange === "2" &&
-            (this.state.pacNumber &&
-              this.state.pacNumber.interviewResult))
-              ? true
-              : false)
+            (function(){
+              if(new Date().valueOf() >= new Date('2019-06-01').valueOf()){
+              if(reNumberonChange === "2"){
+                return !((then.state.pacNumber && then.state.pacNumber.interviewResult)? true: false)
+              } else {
+                return true
+              }
+            } else {
+              return true
+            }
+            }())
+            
           }
         >
           <span className="info_text info_notfind">
