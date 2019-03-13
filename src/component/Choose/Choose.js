@@ -73,12 +73,12 @@ export default class Choose extends Component {
         <div className="detail_choose" onClick={this.goUpdate}>
           <img src={updateImg} alt="修改学生信息"/>
           <p className="search">修改学生信息</p>
-          <p className="english">MODIFY STUDENT INFORMATION</p>
+          <p className="english_1">MODIFY STUDENT INFORMATION</p>
         </div>
         <div className="detail_choose" onClick={this.goDownload}>
           <img src={downloadImg} alt="下载准考证"/>
           <p className="search">下载准考证</p>
-          <p className="english">DOWNLOAD THE ADMISSION TICKET</p>
+          <p className="english_1">DOWNLOAD THE ADMISSION TICKET</p>
         </div>
         {clikeBut == 1&&<div
           className="detail_choose"
@@ -87,7 +87,7 @@ export default class Choose extends Component {
         >
           <img src={searchImg} alt='查询成绩'/>
           <p className="search">查询成绩</p>
-          <p className="english">QUERY RESULTS</p>
+          <p className="english_1">QUERY RESULTS</p>
         </div>
         }
         {clikeBut == 0&&<div
