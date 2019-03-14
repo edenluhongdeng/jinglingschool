@@ -18,8 +18,15 @@ class InterViewData extends Component {
         volunteerInfoDesc:false,//志愿填报降序标志
         writtenResultDesc:false,//笔试结果降序标志
         intendedProgramDesc:false,//项目意向的降序标志
-        tabSelected:false
+        tabSelected:false,
+        arr:[]
     }
+
+    // componentDidMount(){
+    //     this.setState({
+    //         arr:[]
+    //     })
+    // }
 
     //获取父组件传递过来的数据
     componentWillReceiveProps(props){
@@ -257,29 +264,32 @@ class InterViewData extends Component {
        const key = text.key.substr(1,text.key.length)
         this.props.history.push(`/management/updatemsg?id=${key }`)
      }
-    //批量操作
-    rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        if(selectedRows.length){
-            this.props.downStatus(true)
-        }else{
-            this.props.downStatus(false)
-        }
-        let newArr = []
-        selectedRows.map((item,index) => {
-            newArr.push(item.key)
-        })
-        const needTickets = newArr.length > 0 && newArr.toString().replace(new RegExp("J","gm"),"").split(',')
-        this.props.getDownloadPramas(needTickets)
-      }
-    };
+    
       
   render() {
+      //批量操作
+    let rowSelection = {
+        selectedRowKeys: this.props.selectedRowKeys,
+        onChange: (selectedRowKeys, selectedRows) => {
+            this.props.selectedRowKeysChange(selectedRowKeys);
+            if(selectedRows.length){
+                this.props.downStatus(true)
+            }else{
+                this.props.downStatus(false)
+            }
+            let newArr = []
+            selectedRows.map((item,index) => {
+              newArr.push(item.key)
+            })
+            const needTickets = newArr.length > 0 && newArr.toString().replace(new RegExp("J","gm"),"").split(',')
+            this.props.getDownloadPramas(needTickets)
+          }
+        };
       const {data} = this.state
     return (
       <div className = "tab-data">
             <Table 
-            rowSelection={this.rowSelection} 
+            rowSelection={rowSelection} 
             columns={this.columns} 
             dataSource={this.data()} 
             pagination={false}

@@ -25,6 +25,7 @@ class Management extends Component {
     isDown:false,//下载
     studyData:[],//学生数据
     isSearch:false,
+    selectedRowKeys: [], //选中的行
     prams:{
       pageNumber:1,
       pageSize:10,
@@ -69,10 +70,8 @@ getData = (_prams) => {
 
 //搜索
 searchData = ()=>{
-  this.setState({
-    isSearch:true
-  })
- const {prams} = this.state
+ const {prams} = this.state;
+ this.selectedRowKeysChange([]);
  this.getData(prams)
 }
 
@@ -185,6 +184,11 @@ searchData = ()=>{
     IsPayment: nextSelectedTags,
     prams
    });
+}
+
+//改变table选中
+selectedRowKeysChange = (selectedRowKeys) => {
+  this.setState({selectedRowKeys})
 }
 
 //获取填报志愿情况
@@ -614,6 +618,8 @@ getDownloadPramas = (data) => {
                     getData = {this.getData}
                     prams = {this.state.prams}
                     getDownloadPramas={this.getDownloadPramas}
+                    selectedRowKeys={this.state.selectedRowKeys}
+                    selectedRowKeysChange={this.selectedRowKeysChange}
                     />
               </div>
           </div>
