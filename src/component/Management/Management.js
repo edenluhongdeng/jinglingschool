@@ -24,7 +24,7 @@ class Management extends Component {
     writeResult:0,//笔试结果
     isDown:false,//下载
     studyData:[],//学生数据
-    //接口参数
+    isSearch:false,
     prams:{
       pageNumber:1,
       pageSize:10,
@@ -69,6 +69,9 @@ getData = (_prams) => {
 
 //搜索
 searchData = ()=>{
+  this.setState({
+    isSearch:true
+  })
  const {prams} = this.state
  this.getData(prams)
 }
@@ -377,10 +380,11 @@ inputSearch = (value) => {
 }
 //获取下载参数
 getDownloadPramas = (data) => {
-  this.setState({
-    needTickets:data
-  })
-}
+    this.setState({
+      needTickets:data
+    })
+  }
+
 
 //确认下载
  showConfirm=()=>{
@@ -390,10 +394,11 @@ getDownloadPramas = (data) => {
     okText:'确定',
     cancelText:'取消',
     onOk(){
-        const { needTickets,excessTickets } = _state
+        const { needTickets } = _state
         const studentExcelReq = {}
         studentExcelReq.needTickets = needTickets
         //下载
+        console.log(needTickets,'------------------')
         downloadStudentInfo(studentExcelReq)
         .then(res => {
           const code = _.get(res,'data.code')

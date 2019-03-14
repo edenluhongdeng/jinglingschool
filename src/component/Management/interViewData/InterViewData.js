@@ -263,9 +263,13 @@ class InterViewData extends Component {
         if(selectedRows.length){
             this.props.downStatus(true)
         }else{
-             this.props.downStatus(false)
+            this.props.downStatus(false)
         }
-        const needTickets = selectedRowKeys.length > 0 && selectedRowKeys.toString().replace(new RegExp("J","gm"),"").split(',')
+        let newArr = []
+        selectedRows.map((item,index) => {
+            newArr.push(item.key)
+        })
+        const needTickets = newArr.length > 0 && newArr.toString().replace(new RegExp("J","gm"),"").split(',')
         this.props.getDownloadPramas(needTickets)
       }
     };
