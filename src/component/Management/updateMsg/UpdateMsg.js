@@ -375,6 +375,7 @@ class UpdateMsg extends Component {
                         style={{ width: 240 }}
                         onChange={this.handleChangeContactName}
                         value={this.state.contactName}
+                        maxLength={9}
                       />
                     </div>
                   </Col>
