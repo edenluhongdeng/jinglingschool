@@ -17,34 +17,34 @@ export default class Choose extends Component {
   }
   
   componentDidMount() {
-    // let nowDate = moment().valueOf()
-    // let startDate = moment('2019-06-1').valueOf()
-    // let date = nowDate-startDate
-    // if(date< 0){
-    //   this.setState({
-    //     clikeBut: 0
-    //   });
-    // }
-    resultApi().then(res => {
-      if (res.data.code == "200") {
-        console.log(res.data,'shuju')
-        const datainter = res.data.data.interviewResult;
-        this.setState({
-          interviewResult: datainter
-        });
-        if ((datainter && datainter) == null) {
-          this.setState({
-            clikeBut: 0
-          });
-        }
-      }
-    });
+    let nowDate = moment().valueOf()
+    let startDate = moment('2019-08-1').valueOf()
+    let date = nowDate-startDate
+    if(date< 0){
+      this.setState({
+        clikeBut: 0
+      });
+    }
+    // resultApi().then(res => {
+    //   if (res.data.code == "200") {
+    //     console.log(res.data,'shuju')
+    //     const datainter = res.data.data.interviewResult;
+    //     this.setState({
+    //       interviewResult: datainter
+    //     });
+    //     if ((datainter && datainter) == null) {
+    //       this.setState({
+    //         clikeBut: 0
+    //       });
+    //     }
+    //   }
+    // });
     
   }
   goGrade = () => {
     const typeFay = this.state.interviewResult && this.state.interviewResult;
-    // if (this.state.clikeBut == 0) {
-      if (typeFay == null) {
+    if (this.state.clikeBut == 0) {
+      // if (typeFay == null) {
       message.info("未到查询时间，不能查询");
     } else {
       this.props.history.push({
