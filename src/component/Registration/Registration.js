@@ -177,7 +177,6 @@ class Registration extends Component {
     loading: false,
     studentInfo:{},
     initData:{},
-    isCloseShow:false
   }
   componentDidMount(){
     document.title = "2019招生信息登记"
@@ -227,23 +226,6 @@ class Registration extends Component {
     this.setState({
       flag
     })
-  }
-  handleMouseEnter = () => {
-    const { imageUrl } = this.state
-    if (imageUrl) {
-      this.setState({
-        isCloseShow:true
-      })
-    }
-    
-  }
-  handelMouseLeave = () => {
-    const { imageUrl } = this.state
-    if (imageUrl) {
-      this.setState({
-        isCloseShow:false
-      })
-    }
   }
   closeImg = () => {
     this.setState({
@@ -413,7 +395,6 @@ class Registration extends Component {
       readOnly,
       schoolNameIndex,
       schoolSiteIndex,
-      isCloseShow
      } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
@@ -748,8 +729,8 @@ class Registration extends Component {
             <Col span={8}>
               <p className='regist-title'><span>上传照片</span>/Photo</p>
               <Form.Item>
-                <div className="dropbox" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handelMouseLeave}>
-                { isCloseShow && <span className='close' onClick={this.closeImg}></span> }
+                <div className="dropbox">
+                {imageUrl && <span className='close' onClick={this.closeImg}></span> }
                 {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
                   <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
                     <Icon type={this.state.loading ? 'loading' : ''} />
