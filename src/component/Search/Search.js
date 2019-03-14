@@ -240,7 +240,7 @@ class Search extends Component {
           onClick={this.onChangeResults}
           disabled={
             (function(){
-              if(new Date().valueOf() >= new Date('2019-06-01').valueOf()){
+              if(new Date().valueOf() >= new Date('2019-08-01').valueOf()){
               if(reNumberonChange === "2"){
                 return !((then.state.pacNumber && then.state.pacNumber.interviewResult)? true: false)
               } else {
