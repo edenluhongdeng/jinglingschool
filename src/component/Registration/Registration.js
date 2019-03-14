@@ -3,7 +3,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import './index.less'
 import { selectForUpdate } from '../../api'
-import src1 from '../../imgs/enrollment_logo.png'
+import src1 from '../../imgs/enrollment_logo.jpg'
 import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePicker, message, Icon } from 'antd'
 import FailModal from '../FailModal'
 import InfoModal from '../InfoMoadl'
@@ -278,15 +278,26 @@ class Registration extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault()
-    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms } = this.state
+    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
+
     if(!imageUrl) {
       message.warning('请先上传照片!')
       return
     }
-    if(orNkStudentVal == 1){
-      if(!schoolSiteIndex || !schoolNameIndex) {
-        message.warning('请选择初中就读学校信息!')
+    if(orNkStudentVal == undefined){
+      message.warning('请选择初中就读学校信息!')
         return
+    }
+    if(orNkStudentVal == 1){
+      if(schoolSiteIndex === "请选择" || schoolNameIndex === "请选择"){
+        message.warning('请选择初中就读学校信息!')
+          return
+      }
+    }
+    if(orNkStudentVal == 0){
+      if(!(juniorSchoolNameVal&&schoolSiteAreaVal&&schoolSiteCityVal&&schoolSiteProvinceVal)){
+        message.warning('请选择初中就读学校信息!')
+          return
       }
     }
     this.props.form.validateFields((err, values) => {
@@ -358,8 +369,10 @@ class Registration extends Component {
         loading: false,
         studentInfo
       }));
-    }else{
+    }else if (info.file.status === 'error') {
       message.error('照片上传失败!')
+      // message.error(`${info.file.name} file upload failed.`);
+    } else{
       this.setState({loading: false})
     }
   }

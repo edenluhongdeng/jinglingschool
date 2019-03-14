@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import './login.less'
-import logo from '../../imgs/enrollment_login.png'
+import logo from '../../imgs/enrollment_login.jpg'
 import { Form, Input, Button, message} from 'antd'
 import {login} from '../../api/Login'
 const FormItem = Form.Item;
