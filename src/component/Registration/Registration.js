@@ -176,7 +176,8 @@ class Registration extends Component {
     isInfoModalShow:false,
     loading: false,
     studentInfo:{},
-    initData:{}
+    initData:{},
+    isCloseShow:false
   }
   componentDidMount(){
     document.title = "2019招生信息登记"
@@ -225,6 +226,28 @@ class Registration extends Component {
     }
     this.setState({
       flag
+    })
+  }
+  handleMouseEnter = () => {
+    const { imageUrl } = this.state
+    if (imageUrl) {
+      this.setState({
+        isCloseShow:true
+      })
+    }
+    
+  }
+  handelMouseLeave = () => {
+    const { imageUrl } = this.state
+    if (imageUrl) {
+      this.setState({
+        isCloseShow:false
+      })
+    }
+  }
+  closeImg = () => {
+    this.setState({
+      imageUrl:''
     })
   }
   handleProvinceChange = (value) => {
@@ -390,6 +413,7 @@ class Registration extends Component {
       readOnly,
       schoolNameIndex,
       schoolSiteIndex,
+      isCloseShow
      } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
@@ -444,13 +468,17 @@ class Registration extends Component {
     //一模总分
     const testExam1Score = (rule,value,callback) => {
       const exam1ScoreValue = getFieldValue('exam1Score')
-      if(!/^[1-9]\d{0,2}$/.test(exam1ScoreValue)) callback('分数范围1-999!')
+      if(exam1ScoreValue){
+        if(!/^[1-9]\d{0,2}$/.test(exam1ScoreValue)) callback('分数范围1-999!')
+      }
       callback()
     }
     //一模排名 
     const testExam1Rank = (rule,value,callback) => {
       const exam1RankValue = getFieldValue('exam1Rank')
-      if(!/^[1-9]\d*$/.test(exam1RankValue)) callback('排名应为正整数!')
+      if(exam1RankValue){
+        if(!/^[1-9]\d*$/.test(exam1RankValue)) callback('排名应为正整数!')
+      }
       callback()
     }
     return (
@@ -692,7 +720,7 @@ class Registration extends Component {
           </Row>
           <Row>
             <Col span={8}>
-              <p className='regist-title'><span>一模总分</span>/Total Score of Mock Exam 1</p>
+              <p className='regist-title'><span>一模总分</span>/Total Score of Mock Exam 1 (选填)</p>
               <Form.Item>
                 {getFieldDecorator('exam1Score', {
                   initialValue: initData.exam1Score || '',
@@ -704,7 +732,7 @@ class Registration extends Component {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <p className='regist-title'><span>一模年级排名</span>/School Ranking</p>
+              <p className='regist-title'><span>一模年级排名</span>/School Ranking (选填)</p>
               <Form.Item>
                 {getFieldDecorator('exam1Rank', {
                   initialValue: initData.exam1Rank || '',
@@ -720,11 +748,13 @@ class Registration extends Component {
             <Col span={8}>
               <p className='regist-title'><span>上传照片</span>/Photo</p>
               <Form.Item>
-                <div className="dropbox">
+                <div className="dropbox" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handelMouseLeave}>
+                { isCloseShow && <span className='close' onClick={this.closeImg}></span> }
                 {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
-                    <Upload.Dragger name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
-                      <Icon type={this.state.loading ? 'loading' : ''} />
-                    </Upload.Dragger>}
+                  <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
+                    <Icon type={this.state.loading ? 'loading' : ''} />
+                  </Upload.Dragger>
+                  }
                 </div>
               </Form.Item>
             </Col>

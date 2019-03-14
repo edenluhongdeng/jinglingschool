@@ -63,9 +63,21 @@
     box-sizing: border-box;
 }
 .dropbox {
+    position: relative;
     width:1.35rem;
     height:1.8rem;
     margin-top:0.04rem;
+}
+.dropbox > .close {
+    position: absolute;
+    width:10px;
+    height:10px;
+    background-image: url('../../imgs/photo_close.png');
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    top:3px;
+    right:3px;
 }
 .avatar-uploader{
     width:1.35rem;
