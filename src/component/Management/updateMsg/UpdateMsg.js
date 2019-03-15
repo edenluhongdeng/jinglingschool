@@ -97,7 +97,7 @@ class UpdateMsg extends Component {
   };
   /* 笔试结果 */
   handleChangeResult = e => {
-    
+
     this.setState({
       writtenResult: e
     });
@@ -152,10 +152,16 @@ class UpdateMsg extends Component {
   };
   /* 提交总按钮 */
   subButton = () => {
+    var time = ""
+    if (this.state.contactTime == null) {
+      time = moment().format("YYYY-MM-DD")
+    } else {
+      time = this.state.contactTime
+    }
     const req = {
       admissionTicket: this.state.admissionTicket,
       contactName: this.state.contactName,
-      contactTime: this.state.contactTime,
+      contactTime: time,
       interviewDescribe: this.state.interviewDescribe,
       interviewResult: this.state.interviewResult,
       juniorExamScore: this.state.juniorExamScore,
@@ -253,16 +259,16 @@ class UpdateMsg extends Component {
                       <h5>面试描述：</h5>
                       <div className="description">
                         <Input
-                        width={800}
+                          width={800}
                           onChange={this.descriptionInput}
                           value={this.state.interviewDescribe}
                           maxLength={100}
                         />
                         <span>{`${
                           this.state.interviewDescribe
-                            ? ( this.state.interviewDescribe.length)
+                            ? (this.state.interviewDescribe.length)
                             : 0
-                        }/100`}</span>
+                          }/100`}</span>
                       </div>
                     </div>
                   </Col>
@@ -392,9 +398,9 @@ class UpdateMsg extends Component {
                           rows={4}
                           maxLength={100}
                         />
-                        <span style={{marginLeft:'15px'}}>{`${
-                          this.state.remark ?  (this.state.remark.length) : 0
-                        }/100`}</span>
+                        <span style={{ marginLeft: '15px' }}>{`${
+                          this.state.remark ? (this.state.remark.length) : 0
+                          }/100`}</span>
                       </div>
                     </div>
                   </Col>
