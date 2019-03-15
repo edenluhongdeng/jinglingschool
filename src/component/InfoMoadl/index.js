@@ -19,7 +19,6 @@ class InfoModal extends Component {
         .then(res => {
           const code = _.get(res, "data.code")
           const error = _.get(res, "data.error")
-          console.log(code)
           if (code == 200) {
             message.success("修改成功!", 1)
             this.props.history.push("/choose")

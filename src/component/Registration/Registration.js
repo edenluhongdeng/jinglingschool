@@ -428,6 +428,7 @@ class Registration extends Component {
     this.setState({isFailModalShow:true})
   }
   handleSubmit = (e) => {
+    
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
@@ -465,6 +466,22 @@ class Registration extends Component {
         const newStudentInfo = Object.assign(studentInfo,newValue)
 
         this.setState({studentInfo:newStudentInfo},()=>{
+          const { orNkStudent, schoolSiteCity, schoolNameIndex, schoolSiteProvince } = studentInfo
+          const _isTrue = schoolSiteProvince.includes('江苏')
+          const isTrue = schoolSiteCity.includes('南京')
+          if( orNkStudent == 0){
+            if(isTrue){
+              message.info("学籍与城市不统一")
+              return
+            }
+          }else{
+            if(schoolNameIndex == '其它'){
+              if(!isTrue || !_isTrue){
+                message.info("学籍与城市不统一")
+                return
+              }
+            }
+          }
           this.showInfoModal()
         })
       }
