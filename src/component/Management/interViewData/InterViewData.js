@@ -106,7 +106,8 @@ class InterViewData extends Component {
       },{
         title: '姓名',
         dataIndex: 'name',
-        align:'center'
+        align:'center',
+        width:'110px'
     }, {
         title: '面试结果',
         dataIndex: 'interviewResult',
@@ -271,7 +272,6 @@ class InterViewData extends Component {
     let rowSelection = {
         selectedRowKeys: this.props.selectedRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
-            this.props.selectedRowKeysChange(selectedRowKeys);
             if(selectedRows.length){
                 this.props.downStatus(true)
             }else{
@@ -281,8 +281,9 @@ class InterViewData extends Component {
             selectedRows.map((item,index) => {
               newArr.push(item.key)
             })
-            const needTickets = newArr.length > 0 && newArr.toString().replace(new RegExp("J","gm"),"").split(',')
+            const needTickets =  newArr.length > 0 ? newArr.toString().replace(new RegExp("J","gm"),"").split(','):[]
             this.props.getDownloadPramas(needTickets)
+            this.props.selectedRowKeysChange(selectedRowKeys);
           }
         };
       const {data} = this.state
@@ -301,7 +302,9 @@ class InterViewData extends Component {
             showSizeChanger 
             defaultCurrent={1} 
             total={data.total} 
-            onShowSizeChange={this.onShowSizeChange} />
+            onShowSizeChange={this.onShowSizeChange}
+            onChange = {this.pageChange}
+            />
       </div>
     );
   }

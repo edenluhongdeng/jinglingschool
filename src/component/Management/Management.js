@@ -68,13 +68,6 @@ getData = (_prams) => {
   })
 }
 
-//搜索
-searchData = ()=>{
- const {prams} = this.state;
- this.selectedRowKeysChange([]);
- this.getData(prams)
-}
-
   //面试结果
    tagsFromServer = [
     '不限',
@@ -186,10 +179,7 @@ searchData = ()=>{
    });
 }
 
-//改变table选中
-selectedRowKeysChange = (selectedRowKeys) => {
-  this.setState({selectedRowKeys})
-}
+
 
 //获取填报志愿情况
 getVoluntaryReporting = (tag, checked) =>{
@@ -359,6 +349,18 @@ getProjectIntention = (tag, checked) =>{
      prams
      });
 }
+//改变table选中
+selectedRowKeysChange = (selectedRowKeys) => {
+  this.setState({selectedRowKeys})
+}
+
+//搜索
+searchData = ()=>{
+  const {prams} = this.state;
+  this.selectedRowKeysChange([]);
+  this.downStatus(false)
+  this.getData(prams)
+ }
 
 //判断下载状态
 downStatus = (isDown) => {
@@ -402,7 +404,7 @@ getDownloadPramas = (data) => {
         const studentExcelReq = {}
         studentExcelReq.needTickets = needTickets
         //下载
-        console.log(needTickets,'------------------')
+        //console.log(needTickets,'------------------')
         downloadStudentInfo(studentExcelReq)
         .then(res => {
           const code = _.get(res,'data.code')
