@@ -469,8 +469,14 @@ class Registration extends Component {
         this.setState({studentInfo:newStudentInfo},()=>{
           const { schoolSiteCity, schoolNameIndex, schoolSiteProvince } = studentInfo
           const { orNkStudentVal } = this.state
-          const _isTrue = schoolSiteProvince.includes('江苏')
-          const isTrue = schoolSiteCity.includes('南京')
+          let _isTrue = false
+          let isTrue = false
+          if(schoolSiteProvince){
+            _isTrue = schoolSiteProvince.includes('江苏')
+          }
+          if(schoolSiteCity){
+            isTrue = schoolSiteCity.includes('南京')
+          }
           if( orNkStudentVal == 0){
             if(isTrue){
               message.info("学籍与城市不统一")
