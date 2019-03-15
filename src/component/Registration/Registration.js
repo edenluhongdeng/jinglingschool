@@ -337,13 +337,14 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
+          console.log({orNkStudentVal})
           if(data.photo){
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
           let isShow
-          if(orNkStudentVal){
+          if(orNkStudentVal === '1'){
             if(schoolNameIndex == '其它'){
               isShow = 0
             }else{
