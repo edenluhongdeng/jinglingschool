@@ -121,7 +121,7 @@
     ]
   },
 
-  "proxy": "http://172.20.244.200:88",
+  "proxy": "http://180.101.225.214:88",
 
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
