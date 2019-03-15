@@ -70,7 +70,8 @@ class InfoModal extends Component {
   }
   render() {
     const { studentInfo, imageUrl } = this.props
-    const {
+    console.log({studentInfo})
+    let {
       birthDateStr,
       chinaName,
       contactPhone,
@@ -97,6 +98,9 @@ class InfoModal extends Component {
       schoolSiteIndex,
       schoolSiteProvince
     } = studentInfo
+    if(schoolNameIndex == '其它'){
+      schoolNameIndex = `${juniorSchoolName}中学`
+    }
     return (
       <MyModal onClose={this.props.onClose} w={11}>
         <div className="infoModal-content">
@@ -150,7 +154,7 @@ class InfoModal extends Component {
                   </p>
                   <p>
                     {orNkStudent == 0
-                      ? `${schoolSiteProvince}-${schoolSiteCity}-${schoolSiteArea}-${juniorSchoolName}`
+                      ? `${schoolSiteProvince}-${schoolSiteCity}-${schoolSiteArea}-${juniorSchoolName}中学`
                       : `${schoolSiteIndex}-${schoolNameIndex}`}
                   </p>
                 </div>

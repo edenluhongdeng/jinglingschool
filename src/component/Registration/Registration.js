@@ -30,7 +30,8 @@ const cityData = {
     '南京铁路分局南京铁路职工子弟第二中学',
     '南京铁路分局南京铁路职工子弟中学',
     '南京市第十三中学红山校区',
-    '马厂镇第二中学'],
+    '马厂镇第二中学',
+    '其它'],
   鼓楼区: [
     '南京师范大学附中',
     '南京市金陵中学',
@@ -54,7 +55,8 @@ const cityData = {
     '南京市第十二初级中学',
     '南京市第六十六中学',
     '南京市鼓楼实验中学',
-    '南师附中树人学校'],
+    '南师附中树人学校',
+    '其它'],
   秦淮区: [
     '南京市第五初级中学',
     '南京郑和外国语学校',
@@ -66,7 +68,8 @@ const cityData = {
     '南京市第一中学初中部',
     '南京市行知实验中学',
     '南京航空航天大学附属中学',
-    '南京市钟英中学'],
+    '南京市钟英中学',
+    '其它'],
   建邺区:[
     '南京河西外国语学校',
     '金陵中学河西分校',
@@ -79,7 +82,8 @@ const cityData = {
     '莲花实验学校',
     '江心州初级中学',
     '南京外国语学校河西初级中学',
-    '致远初级中学'],
+    '致远初级中学',
+    '其它'],
   雨花台区:[
     '南京市雨花台中学',
     '南京市梅山高级中学',
@@ -91,7 +95,8 @@ const cityData = {
     '南京市雨花台中学春江分校',
     '南京市梅山第一中学',
     '南京市梅山第二中学',
-    '南京市民办实验学校'],
+    '南京市民办实验学校',
+    '其它'],
   栖霞区:[
     '南京外国语学校仙林分校燕子矶校区',
     '南京市栖霞区实验初级中学尧化校区',
@@ -111,7 +116,8 @@ const cityData = {
     '南京市栖霞中学',
     '南京市燕子矶中学',
     '南京市伯乐中学',
-    '南京市摄山中学'],
+    '南京市摄山中学',
+    '其它'],
   江宁区:[
     '南京市江宁开发区学校',
     '南京市竹山中学',
@@ -119,7 +125,8 @@ const cityData = {
     '南京市上元中学',
     '南京市百家湖中学',
     '南京市天景山中学',
-    '南京师范大学附属中学江宁分校（初中）'],
+    '南京师范大学附属中学江宁分校（初中）',
+    '其它'],
   浦口区:[
     '浦口开放大学',
     '南京市浦口区中等专业学校',
@@ -138,14 +145,16 @@ const cityData = {
     '浦口区星甸中学',
     '浦口区永宁中学',
     '龙山学校',
-    '汉开书院'],
+    '汉开书院',
+    '其它'],
   溧水区:[
     '南京市溧水区云鹤初级中学',
     '南京市溧水区第一初级中学',
     '江苏省溧水高级中学附属初级中学',
     '南京市溧水区实验学校',
     '南京市溧水区东庐初级中学',
-    '南京市溧水区柘塘初级中学'],
+    '南京市溧水区柘塘初级中学',
+    '其它'],
   高淳区:[
     '江苏省高淳高级中学', 
     '湖滨高级中学',
@@ -156,12 +165,14 @@ const cityData = {
     '漆桥中学 金陵汇淳学校 永丰中学', 
     '砖墙中学 桠溪中学 东坝中学',
     '固城中学',
-    '高淳外国语学校'],
+    '高淳外国语学校',
+    '其它'],
   六合区:[
     '六合高级中学附属初级中学',
     '科利华中学棠城分校',
     '金陵中学龙湖分校初中部',
-    '励志学校初中部'],
+    '励志学校初中部',
+    '其它'],
   江北新区:[
     '扬子一中',
     '南化二中',
@@ -180,7 +191,8 @@ const cityData = {
     '南京一中江北新区分校（初中部）',
     '浦口外国语学校高新分校',
     '六合玉带初中',
-    '南京（大厂）民办育英第二外国语学校']
+    '南京（大厂）民办育英第二外国语学校',
+    '其它']
   };
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -219,11 +231,21 @@ class Registration extends Component {
           }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
+          let isShow
+          if(orNkStudentVal){
+            if(schoolNameIndex == '其它'){
+              isShow = 0
+            }else{
+              isShow = 1
+            }
+          }else{
+            isShow = 0
+          }
           this.setState({
             initData:data,
             genderVal,
             orNkStudentVal,
-            isShow:orNkStudentVal,
+            isShow,
             imageUrl,
             intendedProgramVal,
             schoolNameIndex,
@@ -262,10 +284,25 @@ class Registration extends Component {
   }
 
   onSecondCityChange = (value) => {
-    this.setState({
-      secondCity: value,
-      schoolNameIndex:value,
-    });
+    if(value == '其它'){
+      this.setState({
+        secondCity: value,
+        schoolNameIndex:value,
+        isShow:0
+      })
+    }else{
+      this.setState({
+        secondCity: value,
+        schoolNameIndex:value,
+      })
+    }
+  }
+  onSecondCityBlur = value => {
+    if(value == '其它'){
+      this.setState({
+        isShow:0
+      })
+    }
   }
   closeInfoModal = () => {
     this.setState({isInfoModalShow:false})
@@ -327,6 +364,11 @@ class Registration extends Component {
     this.setState({
       isShow: e.target.value,
       orNkStudentVal:e.target.value,
+      schoolSiteProvinceVal:'',
+      schoolSiteCityVal:'',
+      schoolSiteAreaVal:'',
+      juniorSchoolNameVal:''
+
     })
   }
   checkboxGroupChange = value => {
@@ -374,7 +416,7 @@ class Registration extends Component {
       }));
     }else if (info.file.status === 'error') {
       message.error('照片上传失败!')
-      // message.error(`${info.file.name} file upload failed.`);
+      this.setState({loading: false})
     } else{
       this.setState({loading: false})
     }
@@ -619,6 +661,7 @@ class Registration extends Component {
                       style={{ width: '90%' }}
                       value={schoolNameIndex}
                       onChange={this.onSecondCityChange}
+                      onBlur = {this.onSecondCityBlur}
                     >
                       {cities.map(city => <Option key={city}>{city}</Option>)}
                     </Select>
@@ -673,7 +716,7 @@ class Registration extends Component {
                   rules: [{ required: true, message: '请输入你的学校信息!' },],
                   validateTrigger: 'onBlur'
                 })(
-                  <div>
+                  <div> 
                     <Input className='regist-input3' placeholder='请输入区...' autoComplete="off" maxLength={10} value={schoolSiteAreaVal || ''} onChange={this.inputChang2}/>
                     <span className='regist-span'>区</span>
                   </div>
