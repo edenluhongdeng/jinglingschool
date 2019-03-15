@@ -466,10 +466,11 @@ class Registration extends Component {
         const newStudentInfo = Object.assign(studentInfo,newValue)
 
         this.setState({studentInfo:newStudentInfo},()=>{
-          const { orNkStudent, schoolSiteCity, schoolNameIndex, schoolSiteProvince } = studentInfo
+          const { schoolSiteCity, schoolNameIndex, schoolSiteProvince } = studentInfo
+          const { orNkStudentVal } = this.state
           const _isTrue = schoolSiteProvince.includes('江苏')
           const isTrue = schoolSiteCity.includes('南京')
-          if( orNkStudent == 0){
+          if( orNkStudentVal == 0){
             if(isTrue){
               message.info("学籍与城市不统一")
               return
