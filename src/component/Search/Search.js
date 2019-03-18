@@ -82,7 +82,8 @@ class Search extends Component {
   };
   /* input 身份证信息 */
   shenFengZheng = e => {
-    let value = e.target.value.replace(/[^\d]/g, "");
+    // let value = e.target.value.replace(/[^\d]/g, "");
+    let value = e.target.value ;
     this.setState({
       sfzNum: value
     });
