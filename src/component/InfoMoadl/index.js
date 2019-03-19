@@ -102,6 +102,21 @@ class InfoModal extends Component {
     }
     return (
       <MyModal onClose={this.props.onClose} w={11}>
+      <div className="infoModal-footer">
+            <Button
+              className="infoModal-footer-btn"
+              onClick={this.handleClick1}
+            >
+              返回修改
+            </Button>
+            <Button
+              className="infoModal-footer-btn"
+              type="primary"
+              onClick={this.handleClick2}
+            >
+              确认提交
+            </Button>
+          </div>
         <div className="infoModal-content">
           <h2 className="infoModal-h2">
             学生情况<span>/Applicant Information</span>
@@ -129,7 +144,7 @@ class InfoModal extends Component {
                 </div>
                 <div>
                   <p className="infoModal-title">
-                    身份证号<span>/ID No.</span>
+                    学生身份证号<span>/ID No.</span>
                   </p>
                   <p>{idCard}</p>
                 </div>
@@ -273,21 +288,7 @@ class InfoModal extends Component {
               </div>
             </div>
           </div>
-          <div className="infoModal-footer">
-            <Button
-              className="infoModal-footer-btn"
-              onClick={this.handleClick1}
-            >
-              返回修改
-            </Button>
-            <Button
-              className="infoModal-footer-btn"
-              type="primary"
-              onClick={this.handleClick2}
-            >
-              确认提交
-            </Button>
-          </div>
+          
         </div>
       </MyModal>
     )
