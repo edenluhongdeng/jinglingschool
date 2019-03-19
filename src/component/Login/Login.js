@@ -46,6 +46,11 @@ class Demo  extends Component {
             this.props.history.push({
               pathname: '/choose',
             })
+          }else if(res.data.code=='200'&&res.data.data == '3'){
+            this.props.history.push({
+              pathname: '/management',
+              state:{permisson:'3'}
+            })
           }
           
         })
