@@ -432,11 +432,6 @@ class Registration extends Component {
     
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
-
-    if(!imageUrl) {
-      message.warning('请先上传照片!')
-      return
-    }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
