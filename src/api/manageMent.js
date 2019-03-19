@@ -33,3 +33,9 @@ export function getStudentinfoExcelPath(exelPath){
 export function getStudyPhoto(){
     return Ajax('/studentController/getPhone',{},'GET')
 }
+
+//超级管理员删除信息  /enroll/teacherController/deleteStudent?admissionTicket=33333333
+export function deleteMsg(admissionTicket){
+    return Ajax(`/teacherController/deleteStudent`,{admissionTicket},'GET')
+}
+

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Table,Pagination } from 'antd';
+import { Table,Pagination,Tag,Popconfirm, message } from 'antd';
 import {withRouter} from 'react-router-dom'
+import {deleteMsg} from '../../../api/manageMent'
 const _obj = {
     '0':'中美',
     '1':'中英',
@@ -19,14 +20,26 @@ class InterViewData extends Component {
         writtenResultDesc:false,//笔试结果降序标志
         intendedProgramDesc:false,//项目意向的降序标志
         tabSelected:false,
-        arr:[]
+        arr:[],
+        delete:false,//是否有删除权限
     }
 
-    // componentDidMount(){
-    //     this.setState({
-    //         arr:[]
-    //     })
-    // }
+    componentDidMount(){
+        if(this.props.history.location.search){
+            const url = this.props.history.location.search
+            let params = url.substr(1)
+            const type = params.split('=')[1]
+            if(type==3){
+                this.setState({
+                    delete:true
+                })
+            }else{
+                this.setState({
+                    delete:false
+                })
+            }
+        }
+    }
 
     //获取父组件传递过来的数据
     componentWillReceiveProps(props){
@@ -176,7 +189,23 @@ class InterViewData extends Component {
     },{
         title: '操作',
         dataIndex: 'operating',
-        render: (text,record) => <a href="javascript:;" className = "updateAction" onClick={this.updataMsg.bind(text,record)}>修改</a>,
+        render: (text,record) => 
+        <span>
+           <Tag><a href="javascript:;" className = "updateAction" onClick={this.updataMsg.bind(text,record)}>修改</a></Tag> 
+            { this.state.delete &&<Popconfirm 
+            title="你确定要删除此信息吗?" 
+            onConfirm={this.confirm} onCancel={this.cancel} 
+            okText="Yes" 
+            cancelText="No">
+            <Tag>
+            <a href="javascript:;" 
+            className = "updateAction" 
+            onClick={this.deleteMsg.bind(text,record)}
+            >
+            删除</a>
+            </Tag>
+            </Popconfirm>}
+        </span>,
         align:'center'
     },
     ];
@@ -255,6 +284,7 @@ class InterViewData extends Component {
         }
         this.props.getData(_prams)
     }
+
     tabChange =  (pagination, filters, sorter,extra)=> {
         console.log({pagination,filters,sorter,extra})
         const sort = sorter.field
@@ -265,6 +295,33 @@ class InterViewData extends Component {
        const key = text.key.substr(1,text.key.length)
         this.props.history.push(`/management/updatemsg?id=${key }`)
      }
+
+    //超级管理员删除信息
+    deleteMsg = (text,record) =>{
+        let id = text.key
+        const newId = id.substr(1)
+        this.setState({
+            id:newId
+        })
+
+    }
+
+     confirm = (e)=> {
+        const {id,prams} = this.state
+        deleteMsg(id).then(res=>{
+            if(res&&res.data.code==='200'){
+                message.info(res.data.msg)
+                this.props.getData(prams)
+            }else{
+                message.info(res.data.msg)
+            }
+        })
+      }
+      
+       cancel = (e) => {
+        // console.log(e);
+        // message.error('Click on No');
+      }
     
       
   render() {
