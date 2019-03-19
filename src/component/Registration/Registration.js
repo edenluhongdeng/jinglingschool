@@ -433,7 +433,6 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
-   
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
