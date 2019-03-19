@@ -100,6 +100,7 @@ class InfoModal extends Component {
     if(schoolNameIndex == '其它'){
       schoolNameIndex = `${juniorSchoolName}中学`
     }
+            
     return (
       <MyModal onClose={this.props.onClose} w={11}>
       <div className="infoModal-footer">
