@@ -615,6 +615,7 @@ class Registration extends Component {
       if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
       if(!reg.test(nameValue)) callback('请输入汉字!')
       callback()
+      console.log(123)
     }
     const testPreparerName = (rule,value,callback) => {
       const nameValue = getFieldValue('preparerName')
@@ -721,7 +722,7 @@ class Registration extends Component {
           </Row>
           <Row>
             <Col span={8}>
-              <p className='regist-title'><span>身份证号</span>/ID No.<a>(*作为登录信息使用)</a></p>
+              <p className='regist-title'><span>学生身份证号</span>/ID No.<a>(*作为登录信息使用)</a></p>
               <Form.Item>
                 {getFieldDecorator('idCard', {
                   initialValue: initData.idCard  || '',
@@ -790,7 +791,7 @@ class Registration extends Component {
               <Form.Item
               >
                 {getFieldDecorator('schoolNameIndex', {
-                  initialValue: initData.schoolNameIndex || '',
+                  initialValue: initData.schoolNameIndex || '',   
                 })(
                   <div>
                     <Select
