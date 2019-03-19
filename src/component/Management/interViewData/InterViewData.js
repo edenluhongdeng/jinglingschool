@@ -319,8 +319,8 @@ class InterViewData extends Component {
       }
       
        cancel = (e) => {
-        console.log(e);
-        message.error('Click on No');
+        // console.log(e);
+        // message.error('Click on No');
       }
     
       
