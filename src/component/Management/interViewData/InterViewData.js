@@ -322,8 +322,21 @@ class InterViewData extends Component {
         // console.log(e);
         // message.error('Click on No');
       }
-    
-      
+    //显示总条数
+      showTotal = (total) =>{
+        return `共 ${total} 条记录`;
+      }
+    //每页显示条数
+      pageSizeOptions = () => {
+          let opactionArr = ['10']
+          const {data} = this.state
+          let page =Math.ceil(data.total/100) 
+          for (let i = 1;i<=page;i++){
+            opactionArr.push(String(100*i))
+          }
+          console.log(opactionArr)
+          return opactionArr
+      }
   render() {
       //批量操作
     let rowSelection = {
@@ -355,12 +368,13 @@ class InterViewData extends Component {
             />
             <Pagination
             className = "pagination" 
-            pageSizeOptions={['10','20','30','40','50']}
+            pageSizeOptions={this.pageSizeOptions()}
             showSizeChanger 
             defaultCurrent={1} 
             total={data.total} 
             onShowSizeChange={this.onShowSizeChange}
             onChange = {this.pageChange}
+            showTotal={this.showTotal}
             />
       </div>
     );
