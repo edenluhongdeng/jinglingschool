@@ -286,7 +286,6 @@ class InterViewData extends Component {
     }
 
     tabChange =  (pagination, filters, sorter,extra)=> {
-        console.log({pagination,filters,sorter,extra})
         const sort = sorter.field
         this.getDataList(sort)
       }

@@ -39,12 +39,11 @@ class StudentsMsg extends Component {
   };
   // 修改学生信息
   subButtonChange =(a,b)=>{
-    console.log(a,b)
-    const role = a;
     this.props.history.push({
       pathname: `/registration`,
       state: {
-        a
+        role :a,
+        admissionTicket:this.props.list.admissionTicket
       }
     });
   }

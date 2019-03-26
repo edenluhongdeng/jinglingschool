@@ -19,3 +19,8 @@ export function updateStudentInfo(studentInfo){
 export function selectStudentBaseInfoForUpdate(idCard){
     return Ajax(`/teacherController/selectStudentBaseInfoForUpdate`,{idCard},'GET')
 }
+
+// 管理员修改    /studentController/white/addStudentInfo
+export function addStudentInfoUpDate(studentInfo){
+    return Ajax(`/teacherController/updateStudentBaseInfo`,studentInfo)
+} 

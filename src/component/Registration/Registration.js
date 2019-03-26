@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import './index.less'
-import { selectForUpdate } from '../../api'
+import { selectForUpdate ,selectStudentBaseInfoForUpdate} from '../../api'
 import src1 from '../../imgs/enrollment_logo.jpg'
 import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePicker, message, Icon } from 'antd'
 import FailModal from '../FailModal'
@@ -321,6 +321,7 @@ class Registration extends Component {
     loading: false,
     studentInfo:{},
     initData:{},
+    stateRole:0
   }
   componentDidMount(){
     document.title = "2019招生信息登记"
@@ -328,8 +329,14 @@ class Registration extends Component {
     const { state } = this.props.location
     if (state && state.role) flag = true
     if(flag){
-      selectForUpdate()
-      .then(res => {
+      this.setState({
+        stateRole: state.role,
+        admissionTicket:state.admissionTicket
+      }
+      )
+      var listApi = state.role == 2 ? selectForUpdate() : selectStudentBaseInfoForUpdate(state.role)
+      
+      listApi.then(res => {
         const code = _.get(res,'data.code')
         const error = _.get(res,'data.error')
         const data = _.get(res,'data.data')
@@ -337,7 +344,6 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
-          console.log({orNkStudentVal})
           if(data.photo){
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
@@ -433,10 +439,10 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
-    if(!imageUrl) {
-      message.warning('请先上传照片!')
-      return
-    }
+    // if(!imageUrl) {
+    //   message.warning('请先上传照片!')
+    //   return
+    // }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -1091,7 +1097,7 @@ class Registration extends Component {
         }
         {
           isInfoModalShow && 
-          <InfoModal onClose={this.closeInfoModal} studentInfo={studentInfo} imageUrl={imageUrl} upImgUrl={this.state.upImgUrl} flag={flag}></InfoModal>
+          <InfoModal onClose={this.closeInfoModal} stateRole={this.state.stateRole}  admissionTicket={this.state.admissionTicket} studentInfo={studentInfo} imageUrl={imageUrl} upImgUrl={this.state.upImgUrl} flag={flag}></InfoModal>
         }
       </div>
     );
