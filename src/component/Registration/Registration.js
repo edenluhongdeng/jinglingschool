@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import './index.less'
-import { selectForUpdate } from '../../api'
+import { selectForUpdate,selectStudentBaseInfoForUpdate } from '../../api'
 import src1 from '../../imgs/enrollment_logo.jpg'
 import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePicker, message, Icon } from 'antd'
 import FailModal from '../FailModal'
@@ -326,10 +326,64 @@ class Registration extends Component {
     document.title = "2019招生信息登记"
     let flag = false
     const { state } = this.props.location
-    console.log(this.props.location,'asdfghjgsdfg')
-    if (state && state.role) flag = true
-    if(flag){
+    console.log(this.props.location)
+    // if (state && state.role) flag = true
+    if(state && state.role){
+      flag = true
+      //学生修改前查询
       selectForUpdate()
+      .then(res => {
+        const code = _.get(res,'data.code')
+        const error = _.get(res,'data.error')
+        const data = _.get(res,'data.data')
+        if(code == 200){
+          let imageUrl = ''
+          const genderVal = data.gender
+          const orNkStudentVal = data.orNkStudent
+          if(data.photo){
+            imageUrl = `${baseUrl}/enroll/studentController/getPhone`
+          }
+          const intendedProgramVal = data.intendedPrograms
+          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
+          let isShow
+          if(orNkStudentVal === '1'){
+            if(schoolNameIndex == '其它'){
+              isShow = 0
+            }else{
+              isShow = 1
+            }
+          }else{
+            isShow = 0
+          }
+          this.setState({
+            initData:data,
+            genderVal,
+            orNkStudentVal,
+            isShow,
+            imageUrl,
+            intendedProgramVal,
+            schoolNameIndex,
+            schoolSiteIndex,
+            schoolSiteProvinceVal:schoolSiteProvince,
+            schoolSiteCityVal:schoolSiteCity,
+            schoolSiteAreaVal:schoolSiteArea,
+            juniorSchoolNameVal:juniorSchoolName,
+            readOnly:true,
+            upImgUrl:data.photo,
+            intendedPrograms
+          })
+        }else{
+            message.error(error)
+        }
+      })
+      .catch(err=>{
+        message.error(err)
+      })
+    }
+    //管理员修改前查询
+    if(state && state.a){
+      flag = true
+      selectStudentBaseInfoForUpdate(state.a)
       .then(res => {
         const code = _.get(res,'data.code')
         const error = _.get(res,'data.error')
@@ -381,6 +435,7 @@ class Registration extends Component {
     this.setState({
       flag
     })
+    
   }
   closeImg = () => {
     this.setState({
@@ -433,10 +488,6 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
-    if(!imageUrl) {
-      message.warning('请先上传照片!')
-      return
-    }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -688,8 +739,9 @@ class Registration extends Component {
                     initialValue: initData.gender || '',
                     rules: [{required: true, message: '请选择你的姓别!'}],
                   })(
-                   <div className='regist-radioGroup'>
-                    <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
+                   <div>
+                   <Input className='regist-input' disabled/>
+                    <Radio.Group style={{position:"relative",top:'-40px',left:'20px'}} value={genderVal || ''} onChange={this.genderChange}>
                       <Radio value="1">男</Radio>
                       <Radio value="0">女</Radio>
                     </Radio.Group>
@@ -886,7 +938,9 @@ class Registration extends Component {
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <div className='regist-CheckboxGroup'>
+                  <div>
+                  <Input className='regist-input regist-input-add' disabled/>
+                  <div style={{position:'relative',top:'-40px',left:'20px'}}>
                   <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
                       <Checkbox value="0">中美 /American</Checkbox>
                       <Checkbox value="1">中英 /British</Checkbox>
@@ -894,6 +948,7 @@ class Registration extends Component {
                       <Checkbox value="3">待定 /TBA</Checkbox>
                   </Checkbox.Group>
                   <span className='regist-CheckboxGroup-span'>*可进行多项选择</span>
+                  </div>
                   </div>
                 )}
               </Form.Item>

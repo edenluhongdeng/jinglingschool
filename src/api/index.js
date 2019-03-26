@@ -14,3 +14,8 @@ export function selectForUpdate(){
 export function updateStudentInfo(studentInfo){
     return Ajax(`/studentController/updateStudentInfo`,studentInfo)
 }
+
+//老师根据学生IdCard查询 teacherController/selectStudentBaseInfoForUpdate
+export function selectStudentBaseInfoForUpdate(idCard){
+    return Ajax(`/teacherController/selectStudentBaseInfoForUpdate`,{idCard},'GET')
+}
