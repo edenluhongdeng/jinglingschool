@@ -381,6 +381,7 @@ class Registration extends Component {
     this.setState({
       flag
     })
+    debugger
   }
   closeImg = () => {
     this.setState({
@@ -685,8 +686,9 @@ class Registration extends Component {
                     initialValue: initData.gender || '',
                     rules: [{required: true, message: '请选择你的姓别!'}],
                   })(
-                   <div className='regist-radioGroup'>
-                    <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
+                   <div>
+                   <Input className='regist-input' disabled/>
+                    <Radio.Group style={{position:"relative",top:'-40px',left:'20px'}} value={genderVal || ''} onChange={this.genderChange}>
                       <Radio value="1">男</Radio>
                       <Radio value="0">女</Radio>
                     </Radio.Group>
@@ -883,7 +885,8 @@ class Registration extends Component {
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <div className='regist-CheckboxGroup'>
+                  <div>
+                  <Input className='regist-input' disabled/>
                   <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
                       <Checkbox value="0">中美 /American</Checkbox>
                       <Checkbox value="1">中英 /British</Checkbox>
