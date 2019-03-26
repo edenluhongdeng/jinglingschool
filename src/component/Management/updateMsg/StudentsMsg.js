@@ -38,13 +38,13 @@ class StudentsMsg extends Component {
     });
   };
   // 修改学生信息
-  subButtonChange =()=>{
-    console.log(this.props)
-    const role = 2;
+  subButtonChange =(a,b)=>{
+    console.log(a,b)
+    const role = a;
     this.props.history.push({
       pathname: `/registration`,
       state: {
-        role
+        a
       }
     });
   }
@@ -59,7 +59,7 @@ class StudentsMsg extends Component {
     }
     return (
       <div className="studentsmsg">
-      <Button className="button_change" onClick={this.subButtonChange}>修改</Button>
+      <Button className="button_change" onClick={this.subButtonChange.bind(this,list.idCard)}>修改</Button>
         <div className="ApplicantInfo">
           <div className="infomsg">
             <span>学生情况</span>

@@ -381,7 +381,6 @@ class Registration extends Component {
     this.setState({
       flag
     })
-    
   }
   closeImg = () => {
     this.setState({
@@ -434,6 +433,10 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
+    if(!imageUrl) {
+      message.warning('请先上传照片!')
+      return
+    }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -685,9 +688,8 @@ class Registration extends Component {
                     initialValue: initData.gender || '',
                     rules: [{required: true, message: '请选择你的姓别!'}],
                   })(
-                   <div>
-                   <Input className='regist-input' disabled/>
-                    <Radio.Group style={{position:"relative",top:'-40px',left:'20px'}} value={genderVal || ''} onChange={this.genderChange}>
+                   <div className='regist-radioGroup'>
+                    <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
                       <Radio value="1">男</Radio>
                       <Radio value="0">女</Radio>
                     </Radio.Group>
@@ -884,9 +886,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <div>
-                  <Input className='regist-input regist-input-add' disabled/>
-                  <div style={{position:'relative',top:'-40px',left:'20px'}}>
+                  <div className='regist-CheckboxGroup'>
                   <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
                       <Checkbox value="0">中美 /American</Checkbox>
                       <Checkbox value="1">中英 /British</Checkbox>
@@ -894,7 +894,6 @@ class Registration extends Component {
                       <Checkbox value="3">待定 /TBA</Checkbox>
                   </Checkbox.Group>
                   <span className='regist-CheckboxGroup-span'>*可进行多项选择</span>
-                  </div>
                   </div>
                 )}
               </Form.Item>
