@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import './index.less'
-import { selectForUpdate,selectStudentBaseInfoForUpdate } from '../../api'
+import { selectForUpdate } from '../../api'
 import src1 from '../../imgs/enrollment_logo.jpg'
 import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePicker, message, Icon } from 'antd'
 import FailModal from '../FailModal'
@@ -310,22 +310,6 @@ function getBase64(img, callback) {
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
-// isIE
-function IEVersion(){
-  var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
-  var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
-  var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
-  var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
-  if(isIE) {  
-      return false;
-  } else if(isEdge) {
-      return false;//edge
-  } else if(isIE11) {
-      return false; //IE11  
-  }else{
-      return true;//不是ie浏览器
-  }
-}
 class Registration extends Component {
   state = {
     schoolNameIndex:'请选择',
@@ -337,22 +321,13 @@ class Registration extends Component {
     loading: false,
     studentInfo:{},
     initData:{},
-    isIE: false,
   }
   componentDidMount(){
-    if(!IEVersion()){
-      this.setState({
-        isIE:true
-      })
-    }
     document.title = "2019招生信息登记"
     let flag = false
     const { state } = this.props.location
-    console.log(this.props.location)
-    // if (state && state.role) flag = true
-    if(state && state.role){
-      flag = true
-      //学生修改前查询
+    if (state && state.role) flag = true
+    if(flag){
       selectForUpdate()
       .then(res => {
         const code = _.get(res,'data.code')
@@ -362,58 +337,7 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
-          if(data.photo){
-            imageUrl = `${baseUrl}/enroll/studentController/getPhone`
-          }
-          const intendedProgramVal = data.intendedPrograms
-          const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
-          let isShow
-          if(orNkStudentVal === '1'){
-            if(schoolNameIndex == '其它'){
-              isShow = 0
-            }else{
-              isShow = 1
-            }
-          }else{
-            isShow = 0
-          }
-          this.setState({
-            initData:data,
-            genderVal,
-            orNkStudentVal,
-            isShow,
-            imageUrl,
-            intendedProgramVal,
-            schoolNameIndex,
-            schoolSiteIndex,
-            schoolSiteProvinceVal:schoolSiteProvince,
-            schoolSiteCityVal:schoolSiteCity,
-            schoolSiteAreaVal:schoolSiteArea,
-            juniorSchoolNameVal:juniorSchoolName,
-            readOnly:true,
-            upImgUrl:data.photo,
-            intendedPrograms
-          })
-        }else{
-            message.error(error)
-        }
-      })
-      .catch(err=>{
-        message.error(err)
-      })
-    }
-    //管理员修改前查询
-    if(state && state.a){
-      flag = true
-      selectStudentBaseInfoForUpdate(state.a)
-      .then(res => {
-        const code = _.get(res,'data.code')
-        const error = _.get(res,'data.error')
-        const data = _.get(res,'data.data')
-        if(code == 200){
-          let imageUrl = ''
-          const genderVal = data.gender
-          const orNkStudentVal = data.orNkStudent
+          console.log({orNkStudentVal})
           if(data.photo){
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
@@ -457,7 +381,6 @@ class Registration extends Component {
     this.setState({
       flag
     })
-    
   }
   closeImg = () => {
     this.setState({
@@ -510,6 +433,10 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
+    if(!imageUrl) {
+      message.warning('请先上传照片!')
+      return
+    }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -667,7 +594,6 @@ class Registration extends Component {
       readOnly,
       schoolNameIndex,
       schoolSiteIndex,
-      isIE,
      } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
@@ -689,6 +615,7 @@ class Registration extends Component {
       if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
       if(!reg.test(nameValue)) callback('请输入汉字!')
       callback()
+      console.log(123)
     }
     const testPreparerName = (rule,value,callback) => {
       const nameValue = getFieldValue('preparerName')
@@ -735,12 +662,10 @@ class Registration extends Component {
       }
       callback()
     }
-    const styleimg={width:'500px',height:'60px', marginLeft: "110px",marginBottom: "60px",textAlign: "center"}
-    
     return (
       <div className='regist'>
-        <div className={ isIE ? "" : 'regist-header' } style={styleimg}>
-          <img src={src1} alt='' style={styleimg}/>
+        <div className='regist-header'>
+          <img src={src1} alt=''/>
         </div>
         <Form onSubmit={this.handleSubmit}>
           <h2 className='regist-h2'>学生情况<span>/Applicant Information</span></h2>
@@ -764,8 +689,7 @@ class Registration extends Component {
                     initialValue: initData.gender || '',
                     rules: [{required: true, message: '请选择你的姓别!'}],
                   })(
-
-                   <div className={isIE ? "" : 'regist-radioGroup'}>
+                   <div className='regist-radioGroup'>
                     <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
                       <Radio value="1">男</Radio>
                       <Radio value="0">女</Radio>
@@ -829,7 +753,7 @@ class Registration extends Component {
                     rules: [{required: true, message: '请选择你的学籍!'}],
                     validateTrigger: 'onBlur'
                   })(
-                   <div className={isIE ? "" :'regist-radioGroup'}>
+                   <div className='regist-radioGroup'>
                     <Radio.Group onChange={this.radioGroupChange} value={orNkStudentVal || ''}>
                       <Radio value="1">是</Radio>
                       <Radio value="0">否</Radio>
@@ -963,7 +887,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <div className={isIE ? "" : 'regist-CheckboxGroup'}>
+                  <div className='regist-CheckboxGroup'>
                   <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
                       <Checkbox value="0">中美 /American</Checkbox>
                       <Checkbox value="1">中英 /British</Checkbox>
@@ -1006,7 +930,7 @@ class Registration extends Component {
             <Col span={8}>
               <p className='regist-title'><span>上传照片</span>/Photo</p>
               <Form.Item>
-                <div className={isIE ? "" :"dropbox" }>
+                <div className="dropbox">
                 {imageUrl && <span className='close' onClick={this.closeImg}></span> }
                 {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
                   <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
