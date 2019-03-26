@@ -381,7 +381,7 @@ class Registration extends Component {
     this.setState({
       flag
     })
-    debugger
+    
   }
   closeImg = () => {
     this.setState({
@@ -886,7 +886,8 @@ class Registration extends Component {
                   validateTrigger: 'onBlur'
                 })(
                   <div>
-                  <Input className='regist-input' disabled/>
+                  <Input className='regist-input regist-input-add' disabled/>
+                  <div style={{position:'relative',top:'-40px',left:'20px'}}>
                   <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
                       <Checkbox value="0">中美 /American</Checkbox>
                       <Checkbox value="1">中英 /British</Checkbox>
@@ -894,6 +895,7 @@ class Registration extends Component {
                       <Checkbox value="3">待定 /TBA</Checkbox>
                   </Checkbox.Group>
                   <span className='regist-CheckboxGroup-span'>*可进行多项选择</span>
+                  </div>
                   </div>
                 )}
               </Form.Item>
