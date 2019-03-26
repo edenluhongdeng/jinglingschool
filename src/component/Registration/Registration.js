@@ -326,6 +326,7 @@ class Registration extends Component {
     document.title = "2019招生信息登记"
     let flag = false
     const { state } = this.props.location
+    console.log(this.props.location,'asdfghjgsdfg')
     if (state && state.role) flag = true
     if(flag){
       selectForUpdate()
@@ -337,7 +338,6 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
-          console.log({orNkStudentVal})
           if(data.photo){
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
@@ -612,7 +612,6 @@ class Registration extends Component {
       if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
       if(!reg.test(nameValue)) callback('请输入汉字!')
       callback()
-      console.log(123)
     }
     const testPreparerName = (rule,value,callback) => {
       const nameValue = getFieldValue('preparerName')
