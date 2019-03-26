@@ -310,6 +310,22 @@ function getBase64(img, callback) {
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
+// isIE
+function IEVersion(){
+  var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+  var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+  var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+  var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+  if(isIE) {  
+      return false;
+  } else if(isEdge) {
+      return false;//edge
+  } else if(isIE11) {
+      return false; //IE11  
+  }else{
+      return true;//不是ie浏览器
+  }
+}
 class Registration extends Component {
   state = {
     schoolNameIndex:'请选择',
@@ -321,8 +337,14 @@ class Registration extends Component {
     loading: false,
     studentInfo:{},
     initData:{},
+    isIE: false,
   }
   componentDidMount(){
+    if(!IEVersion()){
+      this.setState({
+        isIE:true
+      })
+    }
     document.title = "2019招生信息登记"
     let flag = false
     const { state } = this.props.location
@@ -594,6 +616,7 @@ class Registration extends Component {
       readOnly,
       schoolNameIndex,
       schoolSiteIndex,
+      isIE,
      } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
@@ -662,10 +685,12 @@ class Registration extends Component {
       }
       callback()
     }
+    const styleimg={width:'500px',height:'60px', marginLeft: "150px",marginBottom: "60px",textAlign: "center"}
+    
     return (
       <div className='regist'>
-        <div className='regist-header'>
-          <img src={src1} alt=''/>
+        <div className={ isIE ? "" : 'regist-header' } style={styleimg}>
+          <img src={src1} alt='' style={styleimg}/>
         </div>
         <Form onSubmit={this.handleSubmit}>
           <h2 className='regist-h2'>学生情况<span>/Applicant Information</span></h2>
@@ -689,7 +714,7 @@ class Registration extends Component {
                     initialValue: initData.gender || '',
                     rules: [{required: true, message: '请选择你的姓别!'}],
                   })(
-                   <div className='regist-radioGroup'>
+                   <div className={isIE ? "" : 'regist-radioGroup'}>
                     <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
                       <Radio value="1">男</Radio>
                       <Radio value="0">女</Radio>
@@ -753,7 +778,7 @@ class Registration extends Component {
                     rules: [{required: true, message: '请选择你的学籍!'}],
                     validateTrigger: 'onBlur'
                   })(
-                   <div className='regist-radioGroup'>
+                   <div className={isIE ? "" :'regist-radioGroup'}>
                     <Radio.Group onChange={this.radioGroupChange} value={orNkStudentVal || ''}>
                       <Radio value="1">是</Radio>
                       <Radio value="0">否</Radio>
@@ -887,7 +912,7 @@ class Registration extends Component {
                   rules: [{required: true, message: '请选择你的项目意向!'}],
                   validateTrigger: 'onBlur'
                 })(
-                  <div className='regist-CheckboxGroup'>
+                  <div className={isIE ? "" : 'regist-CheckboxGroup'}>
                   <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
                       <Checkbox value="0">中美 /American</Checkbox>
                       <Checkbox value="1">中英 /British</Checkbox>
@@ -930,7 +955,7 @@ class Registration extends Component {
             <Col span={8}>
               <p className='regist-title'><span>上传照片</span>/Photo</p>
               <Form.Item>
-                <div className="dropbox">
+                <div className={isIE ? "" :"dropbox" }>
                 {imageUrl && <span className='close' onClick={this.closeImg}></span> }
                 {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
                   <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>

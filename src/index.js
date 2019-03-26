@@ -5,6 +5,8 @@ import './style/reset.css'
 import 'antd-mobile/dist/antd-mobile.css'; 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// import 'react-app-polyfill/ie9'
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
