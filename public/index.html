@@ -29,29 +29,9 @@
 </head>
 
 <body >
-  <script>
-    // isIE
-    function IEVersion() {
-            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
-            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
-            var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
-            var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
-            if(isIE) {  
-                return false;
-            } else if(isEdge) {
-                return false;//edge
-            } else if(isIE11) {
-                return false; //IE11  
-            }else{
-                return true;//不是ie浏览器
-            }
-        }
-        // if(!IEVersion()){
-        //       document.write("<div style='position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; width: 100%; height: 100%; padding-top: 200px;  background-color: #fff'><P  style='font-size: 50px; text-align: center'>请使用谷歌浏览器！<br><span style='font-size: 30px;'></span><br><span style='font-size: 30px;'>谷歌浏览器推荐下载地址:<a  style='color: #343434; text-decoration: underline' href='https://www.google.cn/chrome'/>https://www.google.cn/chrome/</a></span></P></div>")
-        // }
-
-  </script>
+  
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="ieBox"></div>
   <div id="root"></div>
 
   <!--
@@ -96,5 +76,30 @@
 
   })(document, window);
 </script>
+<script>
+    // isIE
+    function IEVersion() {
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+            var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+            var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+            if(isIE) {  
+                return false;
+            } else if(isEdge) {
+                return false;//edge
+            } else if(isIE11) {
+                return false; //IE11  
+            }else{
+                return true;//不是ie浏览器
+            }
+        }
+        // if(!IEVersion()){
+        //       document.write("<div style='position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; width: 100%; height: 100%; padding-top: 200px;  background-color: #fff'><P  style='font-size: 50px; text-align: center'>请使用谷歌浏览器！<br><span style='font-size: 30px;'></span><br><span style='font-size: 30px;'>谷歌浏览器推荐下载地址:<a  style='color: #343434; text-decoration: underline' href='https://www.google.cn/chrome'/>https://www.google.cn/chrome/</a></span></P></div>")
+        // }
+        if(!IEVersion()){      
+            var div = document.getElementById("ieBox")       
+            div.innerHTML = '由于部分IE浏览器版本兼容问题，推荐使用谷歌浏览器 <a href="https://www.google.cn/chrome">www.google.cn/chrome</a>'     
+        }
 
+  </script>
 </html>

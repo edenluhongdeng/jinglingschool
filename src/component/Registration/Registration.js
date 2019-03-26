@@ -338,6 +338,7 @@ class Registration extends Component {
     studentInfo:{},
     initData:{},
     isIE: false,
+    aa:'',
   }
   componentDidMount(){
     if(!IEVersion()){
@@ -400,10 +401,14 @@ class Registration extends Component {
         message.error(err)
       })
     }
-    this.setState({
-      flag
-    })
+    setTimeout(()=>{
+      this.setState({
+        flag
+      })
+    },5000)
+    
   }
+  
   closeImg = () => {
     this.setState({
       imageUrl:''
@@ -597,6 +602,7 @@ class Registration extends Component {
     this.setState({schoolSiteProvinceVal:e.target.value})
   }
   render() {
+    
     const { 
       isShow=2,
       cities,
@@ -685,7 +691,7 @@ class Registration extends Component {
       }
       callback()
     }
-    const styleimg={width:'500px',height:'60px', marginLeft: "150px",marginBottom: "60px",textAlign: "center"}
+    const styleimg={width:'500px',height:'60px', marginLeft: "70px",marginBottom: "60px",textAlign: "center"}
     
     return (
       <div className='regist'>
