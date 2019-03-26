@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Col, Row, Button, Modal } from "antd";
 import "./studentsmsg.less";
 import baseUrl from "./../../../utils/index";
+import { withRouter } from "react-router-dom";
 class StudentsMsg extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,17 @@ class StudentsMsg extends Component {
       visible: false
     });
   };
+  // 修改学生信息
+  subButtonChange =()=>{
+    console.log(this.props)
+    const role = 2;
+    this.props.history.push({
+      pathname: `/registration`,
+      state: {
+        role
+      }
+    });
+  }
   render() {
     const list = this.props.list;
     function renderTime(date) {
@@ -47,6 +59,7 @@ class StudentsMsg extends Component {
     }
     return (
       <div className="studentsmsg">
+      <Button className="button_change" onClick={this.subButtonChange}>修改</Button>
         <div className="ApplicantInfo">
           <div className="infomsg">
             <span>学生情况</span>
@@ -325,4 +338,4 @@ class StudentsMsg extends Component {
   }
 }
 
-export default StudentsMsg;
+export default withRouter(StudentsMsg) ;
