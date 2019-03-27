@@ -178,7 +178,7 @@ class UpdateMsg extends Component {
           this.getInfo();
           // message.info(item.data.msg);
           message.success("保存成功");
-          this.goBack()
+          this.props.history.push(`/management`)
         } else {
           message.error("保存失败");
         }

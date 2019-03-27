@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import './index.less'
-import { selectForUpdate } from '../../api'
+import { selectForUpdate ,selectStudentBaseInfoForUpdate} from '../../api'
 import src1 from '../../imgs/enrollment_logo.jpg'
 import { Form, Input, Select, Row, Col, Checkbox, Button, Radio, Upload, DatePicker, message, Icon } from 'antd'
 import FailModal from '../FailModal'
@@ -310,7 +310,6 @@ function getBase64(img, callback) {
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
-// isIE
 function IEVersion(){
   var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
   var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
@@ -339,6 +338,7 @@ class Registration extends Component {
     initData:{},
     isIE: false,
     aa:'',
+    stateRole:0
   }
   componentDidMount(){
     if(!IEVersion()){
@@ -351,8 +351,14 @@ class Registration extends Component {
     const { state } = this.props.location
     if (state && state.role) flag = true
     if(flag){
-      selectForUpdate()
-      .then(res => {
+      this.setState({
+        stateRole: state.role,
+        admissionTicket:state.admissionTicket
+      }
+      )
+      var listApi = state.role == 2 ? selectForUpdate() : selectStudentBaseInfoForUpdate(state.role)
+      
+      listApi.then(res => {
         const code = _.get(res,'data.code')
         const error = _.get(res,'data.error')
         const data = _.get(res,'data.data')
@@ -360,7 +366,6 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
-          console.log({orNkStudentVal})
           if(data.photo){
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
           }
@@ -460,10 +465,10 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
-    if(!imageUrl) {
-      message.warning('请先上传照片!')
-      return
-    }
+    // if(!imageUrl) {
+    //   message.warning('请先上传照片!')
+    //   return
+    // }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -695,436 +700,436 @@ class Registration extends Component {
     
     return (
       <div className='regist'>
-        <div className={ isIE ? "" : 'regist-header' } style={styleimg}>
-          <img src={src1} alt='' style={styleimg}/>
-        </div>
-        <Form onSubmit={this.handleSubmit}>
-          <h2 className='regist-h2'>学生情况<span>/Applicant Information</span></h2>
-          <Row>
-            <Col span={8}>
-              <p className='regist-title'><span>中文姓名</span>/Chinese Name</p>
-              <Form.Item>
-                {getFieldDecorator('chinaName', {
-                  initialValue: initData.chinaName || '',
-                  rules: [{validator:testName}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input' placeholder='请输入中文名...' maxLength={5} autoComplete="off" />
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <p className='regist-title'><span>性别</span>/Gender</p>
-                <Form.Item>
-                  {getFieldDecorator('gender',{
-                    initialValue: initData.gender || '',
-                    rules: [{required: true, message: '请选择你的姓别!'}],
-                  })(
-                   <div className={isIE ? "" : 'regist-radioGroup'}>
-                    <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
-                      <Radio value="1">男</Radio>
-                      <Radio value="0">女</Radio>
-                    </Radio.Group>
-                    </div>
-                  )}
-                </Form.Item>
-              </Col>
-            <Col span={8}>
-                <p className='regist-title'><span>出生年月</span>/Date of Birth</p>
-                {
-                  initData.birthDateStr
-                  ? <Form.Item>
-                    {getFieldDecorator('birthDateStr', {
-                      initialValue:moment(initData.birthDateStr, dateFormat),
-                      rules: [{ required: true, message: '请选择你的出生日期!' }],
-                    })(
-                      <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
-                    )}
-                  </Form.Item>
-                  : <Form.Item>
-                    {getFieldDecorator('birthDateStr', {
-                      rules: [{ required: true, message: '请选择你的出生日期!' }],
-                    })(
-                      <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
-                    )}
-                  </Form.Item>
-                }
-            </Col>
-          </Row>
-          <Row>
-            <Col span={8}>
-              <p className='regist-title'><span>学生身份证号</span>/ID No.<a>(*作为登录信息使用)</a></p>
-              <Form.Item>
-                {getFieldDecorator('idCard', {
-                  initialValue: initData.idCard  || '',
-                  rules: [{validator:testID}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input' readOnly ={readOnly} placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <p className='regist-title'><span>联系电话</span>/Cellphone No.<a>(*作为登录信息使用)</a></p>
-              <Form.Item>
-                {getFieldDecorator('contactPhone', {
-                  initialValue: initData.contactPhone || '',
-                  rules: [{validator:testPhone}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input' placeholder='请输入联系电话...' autoComplete="off" maxLength={11}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <p className='regist-title'><span>是否是南京初中学籍</span>/Student in Nanjing</p>
-              <Form.Item>
-                  {getFieldDecorator('orNkStudent',{
-                    initialValue: initData.orNkStudent || '',
-                    rules: [{required: true, message: '请选择你的学籍!'}],
-                    validateTrigger: 'onBlur'
-                  })(
-                   <div className={isIE ? "" :'regist-radioGroup'}>
-                    <Radio.Group onChange={this.radioGroupChange} value={orNkStudentVal || ''}>
-                      <Radio value="1">是</Radio>
-                      <Radio value="0">否</Radio>
-                    </Radio.Group>
-                    </div>
-                  )}
-                </Form.Item>
-            </Col>
-          </Row>
-          {
-            isShow == 1 && 
-            <Row>
-            <Col span={7}>
-              <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
-              <Form.Item
-              >
-                {getFieldDecorator('schoolSiteIndex', {
-                  initialValue: initData.schoolSiteIndex || '',
-                })(
-                  <div>
-                    <Select
-                      value={schoolSiteIndex}
-                      style={{ width: '85%' }}
-                      onChange={this.handleProvinceChange}
-                    >
-                      {provinceData.map(province => <Option key={province}>{province}</Option>)}
-                    </Select>
-                    <span className='regist-span'>区</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={17}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
-              <Form.Item
-              >
-                {getFieldDecorator('schoolNameIndex', {
-                  initialValue: initData.schoolNameIndex || '',   
-                })(
-                  <div>
-                    <Select
-                      style={{ width: '90%' }}
-                      value={schoolNameIndex}
-                      onChange={this.onSecondCityChange}
-                      onBlur = {this.onSecondCityBlur}
-                    >
-                      {cities.map(city => <Option key={city}>{city}</Option>)}
-                    </Select>
-                    <span className='regist-span'>中学</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          }
-          {
-            isShow == 0 && 
-            <Row>
-            <Col span={6}>
-              <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
-              <Form.Item
-              >
-                {getFieldDecorator('schoolSiteProvince', {
-                  initialValue: initData.schoolSiteProvince || '',
-                  rules: [{ required: true, message: '请输入你的学校信息!' },],
-                  validateTrigger: 'onBlur'
-                })(
-                  <div>
-                    <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off" maxLength={10} value={schoolSiteProvinceVal || ''} onChange={this.inputChang4}/>
-                    <span className='regist-span'>省</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
-              <Form.Item
-              >
-                {getFieldDecorator('schoolSiteCity', {
-                  initialValue: initData.schoolSiteCity || '',
-                  rules: [{ required: true, message: '请输入你的学校信息!' },],
-                  validateTrigger: 'onBlur'
-                })(
-                  <div>
-                    <Input className='regist-input3' placeholder='请输入市...' autoComplete="off" maxLength={10} value={schoolSiteCityVal || ''} onChange={this.inputChang3}/>
-                    <span className='regist-span'>市</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
-              <Form.Item
-              >
-                {getFieldDecorator('schoolSiteArea', {
-                  initialValue: initData.schoolSiteArea || '',
-                  rules: [{ required: true, message: '请输入你的学校信息!' },],
-                  validateTrigger: 'onBlur'
-                })(
-                  <div> 
-                    <Input className='regist-input3' placeholder='请输入区...' autoComplete="off" maxLength={10} value={schoolSiteAreaVal || ''} onChange={this.inputChang2}/>
-                    <span className='regist-span'>区</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
-              <Form.Item
-              >
-                {getFieldDecorator('juniorSchoolName', {
-                  initialValue: initData.juniorSchoolName || '',
-                  rules: [{ required: true, message: '请输入你的学校信息!' },],
-                  validateTrigger: 'onBlur'
-                })(
-                  <div>
-                    <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off" maxLength={30} value={juniorSchoolNameVal || ''} onChange={this.inputChang1}/>
-                    <span className='regist-span'>中学</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          }
-          <Row>
-            <Col span={24}>
-              <p className='regist-title'><span>项目意向</span>/Intended Program</p>
-              <Form.Item>
-                {getFieldDecorator("intendedPrograms", {
-                  initialValue: initData.intendedPrograms,
-                  rules: [{required: true, message: '请选择你的项目意向!'}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <div className={isIE ? "" : 'regist-CheckboxGroup'}>
-                  <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
-                      <Checkbox value="0">中美 /American</Checkbox>
-                      <Checkbox value="1">中英 /British</Checkbox>
-                      <Checkbox value="2">中加 /Canadian</Checkbox>
-                      <Checkbox value="3">待定 /TBA</Checkbox>
-                  </Checkbox.Group>
-                  <span className='regist-CheckboxGroup-span'>*可进行多项选择</span>
-                  </div>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={8}>
-              <p className='regist-title'><span>一模总分</span>/Total Score of Mock Exam 1 (选填)</p>
-              <Form.Item>
-                {getFieldDecorator('exam1Score', {
-                  initialValue: initData.exam1Score || '',
-                  rules: [{validator:testExam1Score}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input' type='number' placeholder='请输入总分...' autoComplete="off" maxLength={3}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <p className='regist-title'><span>一模年级排名</span>/School Ranking (选填)</p>
-              <Form.Item>
-                {getFieldDecorator('exam1Rank', {
-                  initialValue: initData.exam1Rank || '',
-                  rules: [{validator:testExam1Rank}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input' type='number' placeholder='请输入年级排名...' autoComplete="off"/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={8}>
-              <p className='regist-title'><span>上传照片</span>/Photo</p>
-              <Form.Item>
-                <div className={isIE ? "" :"dropbox" }>
-                {imageUrl && <span className='close' onClick={this.closeImg}></span> }
-                {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
-                  <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
-                    <Icon type={this.state.loading ? 'loading' : ''} />
-                  </Upload.Dragger>
-                  }
-                </div>
-              </Form.Item>
-            </Col>
-            <Col span={16}>
-              <div className='regist-tip'>
-                <p className='regist-title'>支持jpg、jpeg、gif、png、bmp格式的图片，大小不超过2MB；</p>
-                <p className='regist-title'>图片宽高尺寸最小为135*180像素；</p>
-              </div>
-            </Col>
-          </Row>
-          <h2 className='regist-h2'>家庭情况<span>/Family Information</span></h2>
-          <Row>
-            <Col span={12}>
-              <p className='regist-title'><span>父亲姓名</span>/Father’s Name</p>
-              <Form.Item>
-                {getFieldDecorator('fatherName', {
-                  initialValue: initData.fatherName || '',
-                  rules: [{validator:testFatherName}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <p className='regist-title'><span>父亲工作单位</span>/Company</p>
-              <Form.Item>
-                {getFieldDecorator('fatherCompany', {
-                  initialValue: initData.fatherCompany || '',
-                  rules: [{required: true, message: '请输入工作单位!'}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off" maxLength={20}/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <p className='regist-title'><span>父亲工作职位</span>/Occupation</p>
-              <Form.Item>
-                {getFieldDecorator('fatherPosition', {
-                  initialValue: initData.fatherPosition || '',
-                  rules: [{required: true, message: '请输入工作职位!'}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off" maxLength={10}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <p className='regist-title'><span>父亲手机</span>/Cellphone No.</p>
-              <Form.Item>
-                {getFieldDecorator('fatherPhone', {
-                  initialValue: initData.fatherPhone || '',
-                  rules: [{validator:testFatherPhone}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off" maxLength={11}/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <p className='regist-title'><span>母亲姓名</span>/Mother’s Name</p>
-              <Form.Item>
-                {getFieldDecorator('matherName', {
-                  initialValue: initData.matherName || '',
-                  rules: [{validator:testMatherName}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <p className='regist-title'><span>母亲工作单位</span>/Company</p>
-              <Form.Item>
-                {getFieldDecorator('matherCompany', {
-                  initialValue: initData.matherCompany || '',
-                  rules: [{required: true, message: '请输入工作单位!'}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off" maxLength={20}/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <p className='regist-title'><span>母亲工作职位</span>/Occupation</p>
-              <Form.Item>
-                {getFieldDecorator('matherPosition', {
-                  initialValue: initData.matherPosition || '',
-                  rules: [{required: true, message: '请输入工作职位!'}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off" maxLength={10}/>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <p className='regist-title'><span>母亲手机</span>/Cellphone No.</p>
-              <Form.Item>
-                {getFieldDecorator('matherPhone', {
-                  initialValue: initData.matherPhone || '',
-                  rules: [{validator:testMatherPhone}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off" maxLength={11}/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <p className='regist-title'><span>家庭住址</span>/Family Address</p>
-              <Form.Item>
-                {getFieldDecorator('familyAddress', {
-                  initialValue: initData.familyAddress || '',
-                  rules: [{required: true, message: '请输入家庭地址!'}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里(最多输入50个汉字)' autoComplete="off" maxLength={50}/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <h2 className='regist-h2'>填表信息<span>/Registration Information</span></h2>
-          <Row>
-            <Col span={12}>
-              <p className='regist-title'><span>填表人姓名</span>/Applicant</p>
-              <Form.Item>
-                {getFieldDecorator('preparerName', {
-                  initialValue: initData.preparerName || '',
-                  rules: [{validator:testPreparerName}],
-                  validateTrigger: 'onBlur'
-                })(
-                  <Input className='regist-input1' placeholder='请输入姓名…' maxLength={5} autoComplete="off"/>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item style={{textAlign:'center'}}>
-            <Button type="primary" htmlType="submit" style={{width:'1.4rem',height:'0.5rem'}}>提交信息</Button>
-          </Form.Item>
-        </Form>
-        {
-          isFailModalShow && 
-          <FailModal onClose={this.closeFailModal}></FailModal>
-        }
-        {
-          isInfoModalShow && 
-          <InfoModal onClose={this.closeInfoModal} studentInfo={studentInfo} imageUrl={imageUrl} upImgUrl={this.state.upImgUrl} flag={flag}></InfoModal>
-        }
+      <div className={ isIE ? "" : 'regist-header' } style={styleimg}>
+        <img src={src1} alt='' style={styleimg}/>
       </div>
+      <Form onSubmit={this.handleSubmit}>
+        <h2 className='regist-h2'>学生情况<span>/Applicant Information</span></h2>
+        <Row>
+          <Col span={8}>
+            <p className='regist-title'><span>中文姓名</span>/Chinese Name</p>
+            <Form.Item>
+              {getFieldDecorator('chinaName', {
+                initialValue: initData.chinaName || '',
+                rules: [{validator:testName}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input' placeholder='请输入中文名...' maxLength={5} autoComplete="off" />
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <p className='regist-title'><span>性别</span>/Gender</p>
+              <Form.Item>
+                {getFieldDecorator('gender',{
+                  initialValue: initData.gender || '',
+                  rules: [{required: true, message: '请选择你的姓别!'}],
+                })(
+                 <div className={isIE ? "" : 'regist-radioGroup'}>
+                  <Radio.Group value={genderVal || ''} onChange={this.genderChange}>
+                    <Radio value="1">男</Radio>
+                    <Radio value="0">女</Radio>
+                  </Radio.Group>
+                  </div>
+                )}
+              </Form.Item>
+            </Col>
+          <Col span={8}>
+              <p className='regist-title'><span>出生年月</span>/Date of Birth</p>
+              {
+                initData.birthDateStr
+                ? <Form.Item>
+                  {getFieldDecorator('birthDateStr', {
+                    initialValue:moment(initData.birthDateStr, dateFormat),
+                    rules: [{ required: true, message: '请选择你的出生日期!' }],
+                  })(
+                    <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
+                  )}
+                </Form.Item>
+                : <Form.Item>
+                  {getFieldDecorator('birthDateStr', {
+                    rules: [{ required: true, message: '请选择你的出生日期!' }],
+                  })(
+                    <DatePicker className='regist-DatePicker' placeholder="请选择你的出生日期..."/>
+                  )}
+                </Form.Item>
+              }
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8}>
+            <p className='regist-title'><span>学生身份证号</span>/ID No.<a>(*作为登录信息使用)</a></p>
+            <Form.Item>
+              {getFieldDecorator('idCard', {
+                initialValue: initData.idCard  || '',
+                rules: [{validator:testID}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input' readOnly ={readOnly} placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <p className='regist-title'><span>联系电话</span>/Cellphone No.<a>(*作为登录信息使用)</a></p>
+            <Form.Item>
+              {getFieldDecorator('contactPhone', {
+                initialValue: initData.contactPhone || '',
+                rules: [{validator:testPhone}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input' placeholder='请输入联系电话...' autoComplete="off" maxLength={11}/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <p className='regist-title'><span>是否是南京初中学籍</span>/Student in Nanjing</p>
+            <Form.Item>
+                {getFieldDecorator('orNkStudent',{
+                  initialValue: initData.orNkStudent || '',
+                  rules: [{required: true, message: '请选择你的学籍!'}],
+                  validateTrigger: 'onBlur'
+                })(
+                 <div className={isIE ? "" :'regist-radioGroup'}>
+                  <Radio.Group onChange={this.radioGroupChange} value={orNkStudentVal || ''}>
+                    <Radio value="1">是</Radio>
+                    <Radio value="0">否</Radio>
+                  </Radio.Group>
+                  </div>
+                )}
+              </Form.Item>
+          </Col>
+        </Row>
+        {
+          isShow == 1 && 
+          <Row>
+          <Col span={7}>
+            <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
+            <Form.Item
+            >
+              {getFieldDecorator('schoolSiteIndex', {
+                initialValue: initData.schoolSiteIndex || '',
+              })(
+                <div>
+                  <Select
+                    value={schoolSiteIndex}
+                    style={{ width: '85%' }}
+                    onChange={this.handleProvinceChange}
+                  >
+                    {provinceData.map(province => <Option key={province}>{province}</Option>)}
+                  </Select>
+                  <span className='regist-span'>区</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={17}>
+            <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
+            <Form.Item
+            >
+              {getFieldDecorator('schoolNameIndex', {
+                initialValue: initData.schoolNameIndex || '',   
+              })(
+                <div>
+                  <Select
+                    style={{ width: '90%' }}
+                    value={schoolNameIndex}
+                    onChange={this.onSecondCityChange}
+                    onBlur = {this.onSecondCityBlur}
+                  >
+                    {cities.map(city => <Option key={city}>{city}</Option>)}
+                  </Select>
+                  <span className='regist-span'>中学</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        }
+        {
+          isShow == 0 && 
+          <Row>
+          <Col span={6}>
+            <p className='regist-title'><span>初中就读学校</span>/Junior High School</p>
+            <Form.Item
+            >
+              {getFieldDecorator('schoolSiteProvince', {
+                initialValue: initData.schoolSiteProvince || '',
+                rules: [{ required: true, message: '请输入你的学校信息!' },],
+                validateTrigger: 'onBlur'
+              })(
+                <div>
+                  <Input className='regist-input3' placeholder='请输入省份...' autoComplete="off" maxLength={10} value={schoolSiteProvinceVal || ''} onChange={this.inputChang4}/>
+                  <span className='regist-span'>省</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
+            <Form.Item
+            >
+              {getFieldDecorator('schoolSiteCity', {
+                initialValue: initData.schoolSiteCity || '',
+                rules: [{ required: true, message: '请输入你的学校信息!' },],
+                validateTrigger: 'onBlur'
+              })(
+                <div>
+                  <Input className='regist-input3' placeholder='请输入市...' autoComplete="off" maxLength={10} value={schoolSiteCityVal || ''} onChange={this.inputChang3}/>
+                  <span className='regist-span'>市</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
+            <Form.Item
+            >
+              {getFieldDecorator('schoolSiteArea', {
+                initialValue: initData.schoolSiteArea || '',
+                rules: [{ required: true, message: '请输入你的学校信息!' },],
+                validateTrigger: 'onBlur'
+              })(
+                <div> 
+                  <Input className='regist-input3' placeholder='请输入区...' autoComplete="off" maxLength={10} value={schoolSiteAreaVal || ''} onChange={this.inputChang2}/>
+                  <span className='regist-span'>区</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <p className='regist-title transparent-p'><span>初中就读学校</span>/Junior High School</p>
+            <Form.Item
+            >
+              {getFieldDecorator('juniorSchoolName', {
+                initialValue: initData.juniorSchoolName || '',
+                rules: [{ required: true, message: '请输入你的学校信息!' },],
+                validateTrigger: 'onBlur'
+              })(
+                <div>
+                  <Input className='regist-input4' placeholder='请输入学校...' autoComplete="off" maxLength={30} value={juniorSchoolNameVal || ''} onChange={this.inputChang1}/>
+                  <span className='regist-span'>中学</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        }
+        <Row>
+          <Col span={24}>
+            <p className='regist-title'><span>项目意向</span>/Intended Program</p>
+            <Form.Item>
+              {getFieldDecorator("intendedPrograms", {
+                initialValue: initData.intendedPrograms,
+                rules: [{required: true, message: '请选择你的项目意向!'}],
+                validateTrigger: 'onBlur'
+              })(
+                <div className={isIE ? "" : 'regist-CheckboxGroup'}>
+                <Checkbox.Group onChange={this.checkboxGroupChange} value={intendedProgramVal}>
+                    <Checkbox value="0">中美 /American</Checkbox>
+                    <Checkbox value="1">中英 /British</Checkbox>
+                    <Checkbox value="2">中加 /Canadian</Checkbox>
+                    <Checkbox value="3">待定 /TBA</Checkbox>
+                </Checkbox.Group>
+                <span className='regist-CheckboxGroup-span'>*可进行多项选择</span>
+                </div>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8}>
+            <p className='regist-title'><span>一模总分</span>/Total Score of Mock Exam 1 (选填)</p>
+            <Form.Item>
+              {getFieldDecorator('exam1Score', {
+                initialValue: initData.exam1Score || '',
+                rules: [{validator:testExam1Score}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input' type='number' placeholder='请输入总分...' autoComplete="off" maxLength={3}/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <p className='regist-title'><span>一模年级排名</span>/School Ranking (选填)</p>
+            <Form.Item>
+              {getFieldDecorator('exam1Rank', {
+                initialValue: initData.exam1Rank || '',
+                rules: [{validator:testExam1Rank}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input' type='number' placeholder='请输入年级排名...' autoComplete="off"/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8}>
+            <p className='regist-title'><span>上传照片</span>/Photo</p>
+            <Form.Item>
+              <div className={isIE ? "" :"dropbox" }>
+              {imageUrl && <span className='close' onClick={this.closeImg}></span> }
+              {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
+                <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
+                  <Icon type={this.state.loading ? 'loading' : ''} />
+                </Upload.Dragger>
+                }
+              </div>
+            </Form.Item>
+          </Col>
+          <Col span={16}>
+            <div className='regist-tip'>
+              <p className='regist-title'>支持jpg、jpeg、gif、png、bmp格式的图片，大小不超过2MB；</p>
+              <p className='regist-title'>图片宽高尺寸最小为135*180像素；</p>
+            </div>
+          </Col>
+        </Row>
+        <h2 className='regist-h2'>家庭情况<span>/Family Information</span></h2>
+        <Row>
+          <Col span={12}>
+            <p className='regist-title'><span>父亲姓名</span>/Father’s Name</p>
+            <Form.Item>
+              {getFieldDecorator('fatherName', {
+                initialValue: initData.fatherName || '',
+                rules: [{validator:testFatherName}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <p className='regist-title'><span>父亲工作单位</span>/Company</p>
+            <Form.Item>
+              {getFieldDecorator('fatherCompany', {
+                initialValue: initData.fatherCompany || '',
+                rules: [{required: true, message: '请输入工作单位!'}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off" maxLength={20}/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <p className='regist-title'><span>父亲工作职位</span>/Occupation</p>
+            <Form.Item>
+              {getFieldDecorator('fatherPosition', {
+                initialValue: initData.fatherPosition || '',
+                rules: [{required: true, message: '请输入工作职位!'}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off" maxLength={10}/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <p className='regist-title'><span>父亲手机</span>/Cellphone No.</p>
+            <Form.Item>
+              {getFieldDecorator('fatherPhone', {
+                initialValue: initData.fatherPhone || '',
+                rules: [{validator:testFatherPhone}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off" maxLength={11}/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <p className='regist-title'><span>母亲姓名</span>/Mother’s Name</p>
+            <Form.Item>
+              {getFieldDecorator('matherName', {
+                initialValue: initData.matherName || '',
+                rules: [{validator:testMatherName}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入姓名...' maxLength={5} autoComplete="off"/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <p className='regist-title'><span>母亲工作单位</span>/Company</p>
+            <Form.Item>
+              {getFieldDecorator('matherCompany', {
+                initialValue: initData.matherCompany || '',
+                rules: [{required: true, message: '请输入工作单位!'}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入工作单位…' autoComplete="off" maxLength={20}/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <p className='regist-title'><span>母亲工作职位</span>/Occupation</p>
+            <Form.Item>
+              {getFieldDecorator('matherPosition', {
+                initialValue: initData.matherPosition || '',
+                rules: [{required: true, message: '请输入工作职位!'}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入工作职位…' autoComplete="off" maxLength={10}/>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <p className='regist-title'><span>母亲手机</span>/Cellphone No.</p>
+            <Form.Item>
+              {getFieldDecorator('matherPhone', {
+                initialValue: initData.matherPhone || '',
+                rules: [{validator:testMatherPhone}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入手机号码…' autoComplete="off" maxLength={11}/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <p className='regist-title'><span>家庭住址</span>/Family Address</p>
+            <Form.Item>
+              {getFieldDecorator('familyAddress', {
+                initialValue: initData.familyAddress || '',
+                rules: [{required: true, message: '请输入家庭地址!'}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input2' placeholder='请输入详细的家庭地址，以方便我们邮寄文件到您家里(最多输入50个汉字)' autoComplete="off" maxLength={50}/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <h2 className='regist-h2'>填表信息<span>/Registration Information</span></h2>
+        <Row>
+          <Col span={12}>
+            <p className='regist-title'><span>填表人姓名</span>/Applicant</p>
+            <Form.Item>
+              {getFieldDecorator('preparerName', {
+                initialValue: initData.preparerName || '',
+                rules: [{validator:testPreparerName}],
+                validateTrigger: 'onBlur'
+              })(
+                <Input className='regist-input1' placeholder='请输入姓名…' maxLength={5} autoComplete="off"/>
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item style={{textAlign:'center'}}>
+          <Button type="primary" htmlType="submit" style={{width:'1.4rem',height:'0.5rem'}}>提交信息</Button>
+        </Form.Item>
+      </Form>
+      {
+        isFailModalShow && 
+        <FailModal onClose={this.closeFailModal}></FailModal>
+      }
+      {
+        isInfoModalShow && 
+        <InfoModal stateRole={this.state.stateRole}  admissionTicket={this.state.admissionTicket} onClose={this.closeInfoModal} studentInfo={studentInfo} imageUrl={imageUrl} upImgUrl={this.state.upImgUrl} flag={flag}></InfoModal>
+      }
+    </div>
     );
   }
 }

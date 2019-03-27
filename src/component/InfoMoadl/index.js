@@ -4,7 +4,7 @@ import MyModal from "../Common/MyModal"
 import { Button, message } from "antd"
 import { withRouter } from "react-router-dom"
 import _ from "lodash"
-import { addStudentInfo, updateStudentInfo } from "../../api"
+import { addStudentInfo, updateStudentInfo,addStudentInfoUpDate } from "../../api"
 import { login } from "../../api/Login"
 class InfoModal extends Component {
   state = {}
@@ -13,15 +13,22 @@ class InfoModal extends Component {
   }
   handleClick2 = () => {
     const { studentInfo, flag } = this.props
+
     if (flag) {
       studentInfo.photo = this.props.upImgUrl
-      updateStudentInfo(studentInfo)
+      var apiList = this.props.stateRole == 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
+      apiList
         .then(res => {
           const code = _.get(res, "data.code")
           const error = _.get(res, "data.error")
           if (code == 200) {
             message.success("修改成功!", 1)
-            this.props.history.push("/choose")
+            if(this.props.stateRole == 2){
+              this.props.history.push("/choose")
+            } else{
+              this.props.history.push(`/management/updatemsg?id=${this.props.admissionTicket}`)
+            }
+            
           } else if (code == "10004") {
             message.info("身份证号已存在")
             return
@@ -69,7 +76,6 @@ class InfoModal extends Component {
   }
   render() {
     const { studentInfo, imageUrl } = this.props
-    console.log({studentInfo})
     let {
       birthDateStr,
       chinaName,
