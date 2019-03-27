@@ -189,7 +189,7 @@ class UpdateMsg extends Component {
 
   //返回上一页
   goBack = () => {
-    this.props.history.goBack();
+    this.props.history.push("/management")
   };
   render() {
     function renderTime(date) {

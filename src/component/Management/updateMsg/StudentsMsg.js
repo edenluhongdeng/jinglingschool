@@ -49,6 +49,7 @@ class StudentsMsg extends Component {
   }
   render() {
     const list = this.props.list;
+    // console.log(list)
     function renderTime(date) {
       var dateee = new Date(date).toJSON();
       return new Date(+new Date(dateee) + 8 * 3600 * 1000)
