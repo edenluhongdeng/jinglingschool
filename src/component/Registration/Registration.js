@@ -367,10 +367,12 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
+
           if(data.photo){
-            imageUrl = `${baseUrl}/enroll/studentController/getPhone`
+            imageUrl = `${baseUrl}/enroll/studentController/getPhone` 
+
           }
-          if(state.role != 2){
+          if(state.role && state.role != 2){
             const {imgUrlAbc} = this.props.location.state;
             imageUrl = imgUrlAbc
           }
@@ -576,20 +578,13 @@ class Registration extends Component {
     }
     if (info.file.status === 'done') {
       message.success('上传成功!')
-      console.log(info)
       const { studentInfo } = this.state
       const imageUrl = _.get(info,'file.response.data')
       studentInfo.photo = imageUrl
-      // this.setState({
-      //   imageUrl,
-      //   loading: false,
-      //   studentInfo,
-      // })
       getBase64(info.file.originFileObj, imageUrl => this.setState({
         imageUrl,
         loading: false,
         studentInfo,
-        upImgUrl:imageUrl
       }));
     }else if (info.file.status === 'error') {
       message.error('照片上传失败!')
@@ -638,6 +633,7 @@ class Registration extends Component {
       schoolSiteIndex,
       isIE,
      } = this.state
+     
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
@@ -658,7 +654,6 @@ class Registration extends Component {
       if(!/^[^\s]*$/.test(nameValue)) callback('姓名不能含有空格!')
       if(!reg.test(nameValue)) callback('请输入汉字!')
       callback()
-      console.log(123)
     }
     const testPreparerName = (rule,value,callback) => {
       const nameValue = getFieldValue('preparerName')
@@ -706,6 +701,7 @@ class Registration extends Component {
       callback()
     }
     const styleimg={width:'500px',height:'60px', marginLeft: "70px",marginBottom: "60px",textAlign: "center"}
+    console.log(imageUrl,'//////////////////////')
     return (
       <div className='regist'>
       <div className={ isIE ? "" : 'regist-header' } style={styleimg}>

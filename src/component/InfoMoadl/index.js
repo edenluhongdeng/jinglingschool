@@ -12,10 +12,10 @@ class InfoModal extends Component {
     this.props.onClose()
   }
   handleClick2 = () => {
-    const { studentInfo, flag, imageUrl } = this.props
+    const { studentInfo, flag } = this.props
+    const { photo } = studentInfo
     if (flag) {
-      console.log(studentInfo,'yas88888888888888888888888')
-      // studentInfo.photo = this.props.upImgUrl
+      if(!photo) studentInfo.photo = this.props.upImgUrl
       var apiList = this.props.stateRole == 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
       apiList
         .then(res => {
