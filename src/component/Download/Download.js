@@ -20,6 +20,8 @@ export default class Download extends Component {
         }
     }
     componentDidMount(){
+        let i = 0
+        this.setState({i})
         var imgUrl = `${baseUrl}/enroll/studentController/getPhone`
         console.log(imgUrl,2312312312)
         this.setState({
@@ -48,6 +50,7 @@ export default class Download extends Component {
     }
   render() {
     const {admissionTicket, chinaName, gender} = this.state.data
+    let { i } = this.state
     return (
       <div>
         <p className='downSchool'>2019年金陵中学河西分校国际部</p>
@@ -70,7 +73,7 @@ export default class Download extends Component {
                 <div><span className='detailWord2'>考场号：</span><span>座位号:</span></div>
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
-           {this.state.typeFlag && <img alt='' src={`${baseUrl}/enroll/studentController/getPhone`} />}
+{this.state.typeFlag && <img key={i++} alt='' src={`${baseUrl}/enroll/studentController/getPhone?t=${new Date().getTime()}`} />}
         </div>
         <table className="customers">
             <tbody>

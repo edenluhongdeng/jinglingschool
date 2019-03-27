@@ -341,6 +341,8 @@ class Registration extends Component {
     stateRole:0
   }
   componentDidMount(){
+    let i = 0
+    this.setState({i})
     
     if(!IEVersion()){
       this.setState({
@@ -357,7 +359,7 @@ class Registration extends Component {
         admissionTicket:state.admissionTicket
       }
       )
-      var listApi = state.role == 2 ? selectForUpdate() : selectStudentBaseInfoForUpdate(state.role)
+      var listApi = state.role === 2 ? selectForUpdate() : selectStudentBaseInfoForUpdate(state.role)
       
       listApi.then(res => {
         const code = _.get(res,'data.code')
@@ -369,8 +371,7 @@ class Registration extends Component {
           const orNkStudentVal = data.orNkStudent
 
           if(data.photo){
-            imageUrl = `${baseUrl}/enroll/studentController/getPhone` 
-
+            imageUrl = `${baseUrl}/enroll/studentController/getPhone?t=${new Date().getTime()}` 
           }
           if(state.role && state.role != 2){
             const {imgUrlAbc} = this.props.location.state;
@@ -612,7 +613,7 @@ class Registration extends Component {
   }
   render() {
     
-    const { 
+    let { 
       isShow=2,
       cities,
       isFailModalShow,
@@ -632,6 +633,7 @@ class Registration extends Component {
       schoolNameIndex,
       schoolSiteIndex,
       isIE,
+      i
      } = this.state
      
     const { getFieldDecorator, getFieldValue } = this.props.form
@@ -972,7 +974,7 @@ class Registration extends Component {
             <Form.Item>
               <div className={isIE ? "" :"dropbox" }>
               {imageUrl && <span className='close' onClick={this.closeImg}></span> }
-              {imageUrl ? <img src={imageUrl} alt="avatar" className='regist-avatar'/> : 
+              {imageUrl ? <img key={i++} src={imageUrl} alt="avatar" className='regist-avatar'/> : 
                 <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
                   <Icon type={this.state.loading ? 'loading' : ''} />
                 </Upload.Dragger>

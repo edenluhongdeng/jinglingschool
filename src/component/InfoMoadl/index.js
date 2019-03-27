@@ -16,7 +16,7 @@ class InfoModal extends Component {
     const { photo } = studentInfo
     if (flag) {
       if(!photo) studentInfo.photo = this.props.upImgUrl
-      var apiList = this.props.stateRole == 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
+      var apiList = this.props.stateRole === 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
       apiList
         .then(res => {
           const code = _.get(res, "data.code")
@@ -63,7 +63,6 @@ class InfoModal extends Component {
               }
             })
           } else if (code == 10004) {
-            alert(msg)
             return
           } else {
             message.error(error)
