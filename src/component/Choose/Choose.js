@@ -54,7 +54,7 @@ export default class Choose extends Component {
   };
   goDownload = () => {
     this.props.history.push({
-      pathname: `/download`
+      pathname: "/download"
     });
   };
   goUpdate = () => {
