@@ -15,13 +15,16 @@ export default class Download extends Component {
                 "admissionTicket": "",
                 "chinaName": "",
                 "gender": ""
-            }
+            },
+            typeFlag:false
         }
     }
     componentDidMount(){
         var imgUrl = `${baseUrl}/enroll/studentController/getPhone`
+        console.log(imgUrl,2312312312)
         this.setState({
-            imgUrl:imgUrl
+            imgUrl:imgUrl,
+            typeFlag:true
         })
         downloadInformation().then(res=>{
             const code = _.get(res,'data.code')
@@ -36,6 +39,12 @@ export default class Download extends Component {
     downloadFile=()=>{
         window.location.href=`${baseUrl}/enroll/studentController/certificate/getCertificate`
         return false
+    }
+    componentWillUnmount(){
+        this.setState({
+            imgUrl:"",
+            typeFlag:false
+        })
     }
   render() {
     const {admissionTicket, chinaName, gender} = this.state.data
@@ -61,7 +70,7 @@ export default class Download extends Component {
                 <div><span className='detailWord2'>考场号：</span><span>座位号:</span></div>
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
-            <img alt='' src={this.state.imgUrl} />
+           {this.state.typeFlag && <img alt='' src={`${baseUrl}/enroll/studentController/getPhone`} />}
         </div>
         <table className="customers">
             <tbody>
