@@ -4,7 +4,7 @@ import { downloadInformation} from '../../api/GetPhoto'
 import { Button } from 'antd';
 import _ from 'lodash'
 import baseUrl from '../../utils/index';
-const imgUrl = `${baseUrl}/enroll/studentController/getPhone`
+
 
 
 export default class Download extends Component {
@@ -19,7 +19,10 @@ export default class Download extends Component {
         }
     }
     componentDidMount(){
-        
+        var imgUrl = `${baseUrl}/enroll/studentController/getPhone`
+        this.setState({
+            imgUrl:imgUrl
+        })
         downloadInformation().then(res=>{
             const code = _.get(res,'data.code')
             if(code == 200){
@@ -58,7 +61,7 @@ export default class Download extends Component {
                 <div><span className='detailWord2'>考场号：</span><span>座位号:</span></div>
                 <div className='reminder'>(*考场号和座位号考试当天到学校获取)</div>
             </div>
-            <img alt='' src={imgUrl} />
+            <img alt='' src={this.state.imgUrl} />
         </div>
         <table className="customers">
             <tbody>

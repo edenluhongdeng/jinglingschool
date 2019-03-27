@@ -43,7 +43,8 @@ class StudentsMsg extends Component {
       pathname: `/registration`,
       state: {
         role :a,
-        admissionTicket:this.props.list.admissionTicket
+        admissionTicket:this.props.list.admissionTicket,
+        imgUrlAbc: `${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${this.props.list.photo}`
       }
     });
   }

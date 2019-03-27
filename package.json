@@ -120,7 +120,7 @@
       "react-app"
     ]
   },
-  "proxy": "http://180.101.225.214:88",
+  "proxy": "http://172.20.244.92:8081",
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
     "encryptjs": "^2.0.0",
@@ -132,6 +132,5 @@
     "react-router-dom": "^4.3.1"
   }
 }
-
 
 

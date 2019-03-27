@@ -341,6 +341,7 @@ class Registration extends Component {
     stateRole:0
   }
   componentDidMount(){
+    
     if(!IEVersion()){
       this.setState({
         isIE:true
@@ -368,6 +369,10 @@ class Registration extends Component {
           const orNkStudentVal = data.orNkStudent
           if(data.photo){
             imageUrl = `${baseUrl}/enroll/studentController/getPhone`
+          }
+          if(state.role != 2){
+            const {imgUrlAbc} = this.props.location.state;
+            imageUrl = imgUrlAbc
           }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
@@ -465,10 +470,6 @@ class Registration extends Component {
     e.preventDefault()
     const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
 
-    // if(!imageUrl) {
-    //   message.warning('请先上传照片!')
-    //   return
-    // }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -568,19 +569,27 @@ class Registration extends Component {
     return isJPG && isLt2M;
   }
   handleChange = (info) => {
+
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
     }
     if (info.file.status === 'done') {
       message.success('上传成功!')
+      console.log(info)
       const { studentInfo } = this.state
       const imageUrl = _.get(info,'file.response.data')
       studentInfo.photo = imageUrl
+      // this.setState({
+      //   imageUrl,
+      //   loading: false,
+      //   studentInfo,
+      // })
       getBase64(info.file.originFileObj, imageUrl => this.setState({
         imageUrl,
         loading: false,
-        studentInfo
+        studentInfo,
+        upImgUrl:imageUrl
       }));
     }else if (info.file.status === 'error') {
       message.error('照片上传失败!')
@@ -697,7 +706,6 @@ class Registration extends Component {
       callback()
     }
     const styleimg={width:'500px',height:'60px', marginLeft: "70px",marginBottom: "60px",textAlign: "center"}
-    
     return (
       <div className='regist'>
       <div className={ isIE ? "" : 'regist-header' } style={styleimg}>
