@@ -376,10 +376,10 @@ class Registration extends Component {
             imageUrl = `${baseUrl}/enroll/studentController/getPhone?t=${new Date().getTime()}` 
           }
           if(state.role && state.role != 2){
-            const {imgUrlAbc} = this.props.location.state;
+            const {imgUrlAbc} = this.props.location.state
             imageUrl = imgUrlAbc
             const a = imageUrl.split('filePath=')[1]
-            if(imageUrl.split('filePath=')[1] == 'null'){
+            if(a == 'null' || a == ''){
               this.setState({
                 isImageShow:false
               })
