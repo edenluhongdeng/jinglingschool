@@ -338,7 +338,8 @@ class Registration extends Component {
     initData:{},
     isIE: false,
     aa:'',
-    stateRole:0
+    stateRole:0,
+    i:0
   }
   componentDidMount(){
     let i = 0
@@ -352,7 +353,7 @@ class Registration extends Component {
     document.title = "2019招生信息登记"
     let flag = false
     const { state } = this.props.location
-    if (state && state.role) flag = true
+    if (state) flag = true
     if(flag){
       this.setState({
         stateRole: state.role,
@@ -424,7 +425,8 @@ class Registration extends Component {
   
   closeImg = () => {
     this.setState({
-      imageUrl:''
+      imageUrl:'',
+      upImgUrl:''
     })
   }
   handleProvinceChange = (value) => {
@@ -703,7 +705,6 @@ class Registration extends Component {
       callback()
     }
     const styleimg={width:'500px',height:'60px', marginLeft: "70px",marginBottom: "60px",textAlign: "center"}
-    console.log(imageUrl,'//////////////////////')
     return (
       <div className='regist'>
       <div className={ isIE ? "" : 'regist-header' } style={styleimg}>

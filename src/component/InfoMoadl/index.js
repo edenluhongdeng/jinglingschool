@@ -7,15 +7,20 @@ import _ from "lodash"
 import { addStudentInfo, updateStudentInfo,addStudentInfoUpDate } from "../../api"
 import { login } from "../../api/Login"
 class InfoModal extends Component {
-  state = {}
+  state = {
+    loading:false,
+  }
   handleClick1 = () => {
     this.props.onClose()
   }
   handleClick2 = () => {
+    this.setState({
+      loading:true
+    })
     const { studentInfo, flag } = this.props
     const { photo } = studentInfo
     if (flag) {
-      if(!photo) studentInfo.photo = this.props.upImgUrl
+      if(!photo) studentInfo.photo = this.props.upImgUrl 
       var apiList = this.props.stateRole === 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
       apiList
         .then(res => {
@@ -23,6 +28,9 @@ class InfoModal extends Component {
           const error = _.get(res, "data.error")
           if (code == 200) {
             message.success("修改成功!", 1)
+            this.setState({
+              loading:false
+            })
             if(this.props.stateRole == 2){
               this.props.history.push("/choose")
             } else{
@@ -31,13 +39,22 @@ class InfoModal extends Component {
             
           } else if (code == "10004") {
             message.info("身份证号已存在")
+            this.setState({
+              loading:false
+            })
             return
           } else {
             message.error(error)
+            this.setState({
+              loading:false
+            })
           }
         })
         .catch(err => {
           message.error(err)
+          this.setState({
+            loading:false
+          })
         })
     } else {
       addStudentInfo(studentInfo)
@@ -46,6 +63,9 @@ class InfoModal extends Component {
           const error = _.get(res, "data.error")
           const msg = _.get(res, "data.msg")
           if (code == 200) {
+            this.setState({
+              loading:false
+            })
             const dataLogin = {
               idCard: studentInfo.idCard,
               contactPhone: studentInfo.contactPhone
@@ -63,17 +83,27 @@ class InfoModal extends Component {
               }
             })
           } else if (code == 10004) {
+            this.setState({
+              loading:false
+            })
             return
           } else {
             message.error(error)
+            this.setState({
+              loading:false
+            })
           }
         })
         .catch(err => {
           message.error(err)
+          this.setState({
+            loading:false
+          })
         })
     }
   }
   render() {
+    const { loading } = this.state
     const { studentInfo, imageUrl } = this.props
     let {
       birthDateStr,
@@ -119,6 +149,7 @@ class InfoModal extends Component {
               className="infoModal-footer-btn"
               type="primary"
               onClick={this.handleClick2}
+              loading={loading}
             >
               确认提交
             </Button>
