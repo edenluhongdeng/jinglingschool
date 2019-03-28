@@ -339,7 +339,8 @@ class Registration extends Component {
     isIE: false,
     aa:'',
     stateRole:0,
-    i:0
+    i:0,
+    isImageShow:false
   }
   componentDidMount(){
     let i = 0
@@ -377,6 +378,16 @@ class Registration extends Component {
           if(state.role && state.role != 2){
             const {imgUrlAbc} = this.props.location.state;
             imageUrl = imgUrlAbc
+            const a = imageUrl.split('filePath=')[1]
+            if(imageUrl.split('filePath=')[1] == 'null'){
+              this.setState({
+                isImageShow:false
+              })
+            }else{
+              this.setState({
+                isImageShow:true
+              })
+            }
           }
           const intendedProgramVal = data.intendedPrograms
           const {schoolNameIndex,schoolSiteIndex,schoolSiteProvince,schoolSiteCity,schoolSiteArea,juniorSchoolName,intendedPrograms} = data
@@ -426,7 +437,8 @@ class Registration extends Component {
   closeImg = () => {
     this.setState({
       imageUrl:'',
-      upImgUrl:''
+      upImgUrl:'',
+      isImageShow:false
     })
   }
   handleProvinceChange = (value) => {
@@ -473,8 +485,14 @@ class Registration extends Component {
   handleSubmit = (e) => {
     
     e.preventDefault()
-    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state;
-
+    const { studentInfo, imageUrl, schoolSiteIndex, schoolNameIndex,orNkStudentVal,intendedPrograms,juniorSchoolNameVal,schoolSiteAreaVal,schoolSiteCityVal,schoolSiteProvinceVal } = this.state
+    if(!intendedPrograms){
+      message.warning('请选择项目意项!')
+        return
+    }else if(intendedPrograms.length==0){
+      message.warning('请选择初项目意项!')
+        return
+    }
     if(orNkStudentVal == undefined){
       message.warning('请选择初中就读学校信息!')
         return
@@ -584,6 +602,9 @@ class Registration extends Component {
       const { studentInfo } = this.state
       const imageUrl = _.get(info,'file.response.data')
       studentInfo.photo = imageUrl
+      this.setState({
+        isImageShow:true
+      })
       getBase64(info.file.originFileObj, imageUrl => this.setState({
         imageUrl,
         loading: false,
@@ -635,9 +656,9 @@ class Registration extends Component {
       schoolNameIndex,
       schoolSiteIndex,
       isIE,
-      i
+      i,
+      isImageShow
      } = this.state
-     
     const { getFieldDecorator, getFieldValue } = this.props.form
     //姓名校验
     const reg = /^[\u4e00-\u9fa5]+$/
@@ -927,7 +948,7 @@ class Registration extends Component {
             <Form.Item>
               {getFieldDecorator("intendedPrograms", {
                 initialValue: initData.intendedPrograms,
-                rules: [{required: true, message: '请选择你的项目意向!'}],
+                // rules: [{required: true, message: '请选择你的项目意向!'}],
                 validateTrigger: 'onBlur'
               })(
                 <div className={isIE ? "" : 'regist-CheckboxGroup'}>
@@ -974,8 +995,8 @@ class Registration extends Component {
             <p className='regist-title'><span>上传照片</span>/Photo</p>
             <Form.Item>
               <div className={isIE ? "" :"dropbox" }>
-              {imageUrl && <span className='close' onClick={this.closeImg}></span> }
-              {imageUrl ? <img key={i++} src={imageUrl} alt="avatar" className='regist-avatar'/> : 
+              {isImageShow && <span className='close' onClick={this.closeImg}></span> }
+              {isImageShow ? <img key={i++} src={imageUrl} alt="avatar" className='regist-avatar'/> : 
                 <Upload.Dragger id='upload' name="file" action="/enroll/fileController/white/uploadFile" beforeUpload={this.beforeUpload} showUploadList={false} onChange={this.handleChange}>
                   <Icon type={this.state.loading ? 'loading' : ''} />
                 </Upload.Dragger>
