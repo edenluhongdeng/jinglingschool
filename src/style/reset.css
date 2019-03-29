@@ -1,7 +1,7 @@
 /* CSS Reset*/
   
 html { font-family:"微软雅黑", "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font-size: 62.5%; }
-  body { margin: 0; font-size:1.4rem; line-height: 20px; color: #000; background-color: #333; height: 100%; overflow-x: hidden; -webkit-overflow-scrolling: touch; color:red }
+  body { margin: 0; font-size:1.4rem; line-height: 20px; color: #000; background-color: #ffffff; height: 100%; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
 a { background: transparent; text-decoration: none; color: #000; }
