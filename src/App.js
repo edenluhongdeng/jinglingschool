@@ -13,6 +13,7 @@ class App extends Component {
     document.title = "考生信息管理"
     message.config({
       top: '50%',
+      duration:1
     })
   }
   render() {

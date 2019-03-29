@@ -671,12 +671,12 @@ class Registration extends Component {
     const isJPG = arr.indexOf(file.type) > -1;
     if (!isJPG) {
       message.warning("照片格式不正确!");
-      return
+      return false
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
       message.warning("照片大小不超过2MB!");
-      return
+      return false
     }
     return isJPG && isLt2M;
   };
@@ -724,6 +724,9 @@ class Registration extends Component {
   inputChang4 = e => {
     this.setState({ schoolSiteProvinceVal: e.target.value });
   };
+  componentWillUnmount(){
+    window.localStorage.removeItem('data')
+  }
   render() {
     let {
       isShow = 2,
