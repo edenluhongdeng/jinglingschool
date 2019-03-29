@@ -19,6 +19,7 @@ class InfoModal extends Component {
     })
     const { studentInfo, flag } = this.props
     const { photo } = studentInfo
+    console.log(flag)
     if (flag) {
       if(!photo) studentInfo.photo = this.props.upImgUrl 
       if(!this.props.stateRole) return
@@ -53,7 +54,7 @@ class InfoModal extends Component {
           }
         })
         .catch(err => {
-          message.error(err)
+          message.error("网络错误")
           this.setState({
             loading:false
           })
@@ -81,7 +82,7 @@ class InfoModal extends Component {
               } else if (code == "10000") {
                 message.error("登陆失败，重新提交")
               } else {
-                message.error(error)
+                message.error("网络错误")
               }
             })
           } else if (code == 10004) {
@@ -142,6 +143,7 @@ class InfoModal extends Component {
       <MyModal onClose={this.props.onClose} w={11}>
       <div className="infoModal-footer">
             <Button
+            
               className="infoModal-footer-btn"
               onClick={this.handleClick1}
             >
@@ -152,6 +154,7 @@ class InfoModal extends Component {
               type="primary"
               onClick={this.handleClick2}
               loading={loading}
+              disabled={loading}
             >
               确认提交
             </Button>
