@@ -22,7 +22,7 @@ export default class Choose extends Component {
     let date = nowDate-startDate
     if(date< 0){
       this.setState({
-        clikeBut: 1
+        clikeBut: 0
       });
     }
     // resultApi().then(res => {
@@ -94,7 +94,7 @@ export default class Choose extends Component {
           <p className="english_1">QUERY RESULTS</p>
         </div>
         }
-        {clikeBut == 0&&<div
+        {clikeBut == 0 &&<div
           className="detail_choose"
           // style={{ background: this.state.clikeBut && "gainsboro" }}
           onClick={this.goGrade.bind(this)}

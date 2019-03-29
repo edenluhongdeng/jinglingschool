@@ -239,20 +239,20 @@ class Search extends Component {
               : "getinfo_box info_notfind"
           }
           onClick={this.onChangeResults}
-          // disabled={
-          //   (function(){
-          //     if(new Date().valueOf() >= new Date('2019-08-01').valueOf()){
-          //     if(reNumberonChange === "2"){
-          //       return !((then.state.pacNumber && then.state.pacNumber.interviewResult)? true: false)
-          //     } else {
-          //       return true
-          //     }
-          //   } else {
-          //     return true
-          //   }
-          //   }())
+          disabled={
+            (function(){
+              if(new Date().valueOf() >= new Date('2019-08-01').valueOf()){
+              if(reNumberonChange === "2"){
+                return !((then.state.pacNumber && then.state.pacNumber.interviewResult)? true: false)
+              } else {
+                return true
+              }
+            } else {
+              return true
+            }
+            }())
             
-          // }
+          }
         >
           <span className="info_text info_notfind">
             查询成绩&nbsp;【查询2019年国际部招生结果】
