@@ -47,7 +47,7 @@ class InfoModal extends Component {
             })
             return
           } else {
-            message.error(error)
+            message.error('网络错误!')
             this.setState({
               loading:false
             })
