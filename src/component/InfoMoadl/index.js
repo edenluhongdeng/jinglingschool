@@ -21,6 +21,7 @@ class InfoModal extends Component {
     const { photo } = studentInfo
     if (flag) {
       if(!photo) studentInfo.photo = this.props.upImgUrl 
+      if(!this.props.stateRole) return
       var apiList = this.props.stateRole === 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
       apiList
         .then(res => {
@@ -38,7 +39,7 @@ class InfoModal extends Component {
             }
             
           } else if (code == "10004") {
-            message.info("身份证号已存在")
+            // message.info("身份证号已存在")
             this.setState({
               loading:false
             })

@@ -371,9 +371,15 @@ class Registration extends Component {
           let imageUrl = ''
           const genderVal = data.gender
           const orNkStudentVal = data.orNkStudent
-
           if(data.photo){
-            imageUrl = `${baseUrl}/enroll/studentController/getPhone?t=${new Date().getTime()}` 
+            imageUrl = `${baseUrl}/enroll/studentController/getPhone?t=${new Date().getTime()}`
+            this.setState({
+              isImageShow:true
+            })
+          }else{
+            this.setState({
+              isImageShow:false
+            })
           }
           if(state.role && state.role != 2){
             const {imgUrlAbc} = this.props.location.state
@@ -414,7 +420,7 @@ class Registration extends Component {
             schoolSiteCityVal:schoolSiteCity,
             schoolSiteAreaVal:schoolSiteArea,
             juniorSchoolNameVal:juniorSchoolName,
-            // readOnly:true,
+            readOnly:true,
             upImgUrl:data.photo,
             intendedPrograms
           })
@@ -652,7 +658,7 @@ class Registration extends Component {
       schoolSiteCityVal,
       schoolSiteAreaVal,
       juniorSchoolNameVal,
-      // readOnly,
+      readOnly,
       schoolNameIndex,
       schoolSiteIndex,
       isIE,
@@ -793,9 +799,8 @@ class Registration extends Component {
                 rules: [{validator:testID}],
                 validateTrigger: 'onBlur'
               })(
-                <Input className='regist-input'  placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
+                <Input className='regist-input' readOnly ={readOnly} placeholder='请输入身份证号...' autoComplete="off" maxLength={18}/>
               )}
-              {/* readOnly ={readOnly} */}
             </Form.Item>
           </Col>
           <Col span={8}>
