@@ -22,7 +22,7 @@ export default class Choose extends Component {
     let date = nowDate-startDate
     if(date< 0){
       this.setState({
-        clikeBut: 0
+        clikeBut: 1
       });
     }
     // resultApi().then(res => {

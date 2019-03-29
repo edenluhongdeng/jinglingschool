@@ -11,6 +11,7 @@ class Demo  extends Component {
     super(props)
     this.state={
       isShow:false,
+      loading: false,
     }
   }
   
@@ -22,6 +23,9 @@ class Demo  extends Component {
       //   return
       // }
       if (!err) {
+        this.setState({
+          loading:true
+        })
         login(values).then(res=>{
           if(res.data.code=='500' || res.data.code=='503'){
             message.info('服务器故障！！')
@@ -32,7 +36,6 @@ class Demo  extends Component {
           }else if(res.data.code=='404'){
             message.info('Not Found')
           }
-          
           else if(res.data.code=='200'&& res.data.data == '0'){
             this.setState({
               isShow:true
@@ -49,10 +52,15 @@ class Demo  extends Component {
           }else if(res.data.code=='200'&&res.data.data == '3'){
             this.props.history.push('/management?type=3')
           }
-          
+          this.setState({
+            loading:false
+          })
         })
         .catch(err=>{
           message.error(err)
+          this.setState({
+            loading:false
+          })
         })
       }
     });
@@ -137,6 +145,7 @@ class Demo  extends Component {
                 type="primary" 
                 htmlType="submit" 
                 className="login-form-button"
+                loading={this.state.loading}
                 style={{
                   background:'#4276D4',
                   borderRadius:'0.3rem',
