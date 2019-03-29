@@ -331,7 +331,8 @@ class StudentsMsg extends Component {
           onOk={this.handleOk}
           confirmLoading={this.confirmLoading}
           onCancel={this.handleCancel}
-          style={{ textAlign: "center" }}
+          style={{ textAlign: "center"}}
+          width = {"30%"}
           footer={[
             <Button key="back" onClick={this.handleCancel}>
               取消

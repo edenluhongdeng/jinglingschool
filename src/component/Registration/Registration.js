@@ -19,7 +19,7 @@ import {
   Icon
 } from "antd";
 import FailModal from "../FailModal";
-import InfoModal from "../InfoMoadl";
+import InfoModal from "../InfoMoadl/antdModal";
 import baseUrl from "../../utils";
 const { Option } = Select;
 const dateFormat = "YYYY-MM-DD";
