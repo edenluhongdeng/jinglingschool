@@ -38,19 +38,28 @@ class StudentsMsg extends Component {
     });
   };
   // 修改学生信息
-  subButtonChange =(a,b)=>{
+  subButtonChange = (a, b) => {
+    const data = {
+      role: a,
+      admissionTicket: this.props.list.admissionTicket,
+      imgUrlAbc: `${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${
+        this.props.list.photo
+      }`
+    };
+    window.localStorage.setItem("data",JSON.stringify(data))
     this.props.history.push({
       pathname: `/registration`,
-      state: {
-        role :a,
-        admissionTicket:this.props.list.admissionTicket,
-        imgUrlAbc: `${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${this.props.list.photo}`
-      }
+      // state: {
+      //   role: a,
+      //   admissionTicket: this.props.list.admissionTicket,
+      //   imgUrlAbc: `${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${
+      //     this.props.list.photo
+      //   }`
+      // }
     });
-  }
+  };
   render() {
     const list = this.props.list;
-    // console.log(list)
     function renderTime(date) {
       var dateee = new Date(date).toJSON();
       return new Date(+new Date(dateee) + 8 * 3600 * 1000)
@@ -60,7 +69,12 @@ class StudentsMsg extends Component {
     }
     return (
       <div className="studentsmsg">
-      <Button className="button_change" onClick={this.subButtonChange.bind(this,list.idCard)}>修改</Button>
+        <Button
+          className="button_change"
+          onClick={this.subButtonChange.bind(this, list.idCard)}
+        >
+          修改
+        </Button>
         <div className="ApplicantInfo">
           <div className="infomsg">
             <span>学生情况</span>
@@ -74,9 +88,7 @@ class StudentsMsg extends Component {
                     <span>中文姓名</span>
                     <span>/Chinese Name</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.chinaName}
-                  </div>
+                  <div className="infomsgcont">{list.chinaName}</div>
                 </div>
                 <div className="2">
                   <div className="infomsgtitle">
@@ -100,9 +112,7 @@ class StudentsMsg extends Component {
                     <span>身份证号</span>
                     <span>/ID No.</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.idCard || ""}
-                  </div>
+                  <div className="infomsgcont">{list.idCard || ""}</div>
                 </div>
                 <div className="5">
                   <div className="infomsgtitle">
@@ -120,9 +130,7 @@ class StudentsMsg extends Component {
                     <span>联系电话</span>
                     <span> /Cellphone No.</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.contactPhone || ""}
-                  </div>
+                  <div className="infomsgcont">{list.contactPhone || ""}</div>
                 </div>
               </div>
               <div className="student_info_top student_info_bottom">
@@ -156,24 +164,34 @@ class StudentsMsg extends Component {
                   </div>
                   <div className="infomsgcont">
                     {list.intendedProgram &&
-                      list.intendedProgram.split(",").map((itom,index) => {
+                      list.intendedProgram.split(",").map((itom, index) => {
                         if (itom == "0") {
                           return (
-                            <span key={index+1} className="chin_contry">中美 /American</span>
+                            <span key={index + 1} className="chin_contry">
+                              中美 /American
+                            </span>
                           );
                         }
                         if (itom == "1") {
                           return (
-                            <span key={index+33} className="chin_contry">中英 /British</span>
+                            <span key={index + 33} className="chin_contry">
+                              中英 /British
+                            </span>
                           );
                         }
                         if (itom == "2") {
                           return (
-                            <span key={index+44} className="chin_contry">中加 /Canadian</span>
+                            <span key={index + 44} className="chin_contry">
+                              中加 /Canadian
+                            </span>
                           );
                         }
                         if (itom == "3") {
-                          return <span key={index+66} className="chin_contry">待定</span>;
+                          return (
+                            <span key={index + 66} className="chin_contry">
+                              待定
+                            </span>
+                          );
                         }
                       })}
                   </div>
@@ -182,7 +200,14 @@ class StudentsMsg extends Component {
             </Col>
             <Col span={3}>
               <div className="photo">
-                { list.photo && <img src={`${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${list.photo}`} alt="" />}
+                {list.photo && (
+                  <img
+                    src={`${baseUrl}/enroll/teacherController/teacherGetStudentPhoto?filePath=${
+                      list.photo
+                    }`}
+                    alt=""
+                  />
+                )}
               </div>
             </Col>
           </Row>
@@ -208,28 +233,21 @@ class StudentsMsg extends Component {
                     <span>父亲工作单位</span>
                     <span> /Company</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.fatherCompany || ""}
-                  </div>
+                  <div className="infomsgcont">{list.fatherCompany || ""}</div>
                 </div>
                 <div className="3 flag">
                   <div className="infomsgtitle">
                     <span>父亲工作职位 </span>
                     <span> /Occupation</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.fatherPosition || ""}
-                  </div>
+                  <div className="infomsgcont">{list.fatherPosition || ""}</div>
                 </div>
                 <div className="4 flag flag4">
                   <div className="infomsgtitle">
                     <span>父亲手机</span>
                     <span>/Cellphone No.</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.fatherPhone ||
-                      ""}
-                  </div>
+                  <div className="infomsgcont">{list.fatherPhone || ""}</div>
                 </div>
               </div>
               <div className="student_info_top">
@@ -238,18 +256,14 @@ class StudentsMsg extends Component {
                     <span>母亲姓名 </span>
                     <span>/Mother’s Name</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.matherName || ""}
-                  </div>
+                  <div className="infomsgcont">{list.matherName || ""}</div>
                 </div>
                 <div className="2 flag">
                   <div className="infomsgtitle">
                     <span>母亲工作单位</span>
                     <span> /Company</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.matherCompany || ""}
-                  </div>
+                  <div className="infomsgcont">{list.matherCompany || ""}</div>
                 </div>
                 <div className="3 flag">
                   <div className="infomsgtitle">
@@ -265,9 +279,7 @@ class StudentsMsg extends Component {
                     <span>母亲手机</span>
                     <span>/Cellphone No.</span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.matherPhone || ""}
-                  </div>
+                  <div className="infomsgcont">{list.matherPhone || ""}</div>
                 </div>
               </div>
               <div className="student_info_top student_info_bottom">
@@ -296,9 +308,7 @@ class StudentsMsg extends Component {
                     <span>填表人姓名</span>
                     <span> /Applicant </span>
                   </div>
-                  <div className="infomsgcont">
-                    {list.preparerName || ""}
-                  </div>
+                  <div className="infomsgcont">{list.preparerName || ""}</div>
                 </div>
                 <div className="2 flagTwo">
                   <div className="infomsgtitle">
@@ -306,8 +316,7 @@ class StudentsMsg extends Component {
                     <span>/Date of Registration</span>
                   </div>
                   <div className="infomsgcont">
-                    {renderTime(list.preparerTime).split(" ")[0] ||
-                      ""}
+                    {renderTime(list.preparerTime).split(" ")[0] || ""}
                   </div>
                 </div>
               </div>
@@ -339,4 +348,4 @@ class StudentsMsg extends Component {
   }
 }
 
-export default withRouter(StudentsMsg) ;
+export default withRouter(StudentsMsg);

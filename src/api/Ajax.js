@@ -37,7 +37,7 @@ axios.interceptors.response.use(response => {
     return response || response;
   } else {
     message.info(response.data.msg);
-    throw Error(response.data.msg || "服务异常");
+    throw Error("服务异常");
   }
 });
 

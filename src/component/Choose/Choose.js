@@ -59,11 +59,15 @@ export default class Choose extends Component {
   };
   goUpdate = () => {
     const role = 2;
+    const data = {
+      role
+    }
+    window.localStorage.setItem("data",JSON.stringify(data))
     this.props.history.push({
       pathname: `/registration`,
-      state: {
-        role
-      }
+      // state: {
+      //   role
+      // }
     });
   };
   render() {

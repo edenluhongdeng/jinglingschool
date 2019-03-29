@@ -22,13 +22,14 @@ class InfoModal extends Component {
     if (flag) {
       if(!photo) studentInfo.photo = this.props.upImgUrl 
       if(!this.props.stateRole) return
-      var apiList = this.props.stateRole === 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
+      var apiList = this.props.stateRole == 2 ? updateStudentInfo(studentInfo) : addStudentInfoUpDate(studentInfo)
       apiList
         .then(res => {
           const code = _.get(res, "data.code")
           const error = _.get(res, "data.error")
           if (code == 200) {
             message.success("修改成功!", 1)
+            window.localStorage.removeItem('data')
             this.setState({
               loading:false
             })

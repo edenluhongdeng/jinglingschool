@@ -57,7 +57,7 @@ class Demo  extends Component {
           })
         })
         .catch(err=>{
-          message.error(err)
+          // message.error(err)
           this.setState({
             loading:false
           })

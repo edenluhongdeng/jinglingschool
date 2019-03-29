@@ -333,7 +333,6 @@ class InterViewData extends Component {
           for (let i = 1;i<=page;i++){
             opactionArr.push(String(100*i))
           }
-          console.log(opactionArr)
           return opactionArr
       }
   render() {

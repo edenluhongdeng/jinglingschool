@@ -23,7 +23,6 @@ export default class Download extends Component {
         let i = 0
         this.setState({i})
         var imgUrl = `${baseUrl}/enroll/studentController/getPhone`
-        console.log(imgUrl,2312312312)
         this.setState({
             imgUrl:imgUrl,
             typeFlag:true

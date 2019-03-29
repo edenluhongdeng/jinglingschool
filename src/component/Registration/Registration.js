@@ -353,7 +353,9 @@ class Registration extends Component {
     }
     document.title = "2019招生信息登记"
     let flag = false
-    const { state } = this.props.location
+    const state = JSON.parse(localStorage.getItem('data'))
+    // const { state } = this.props.location
+    console.log(state.admissionTicket,'///////////////')
     if (state) flag = true
     if(flag){
       this.setState({
@@ -361,7 +363,7 @@ class Registration extends Component {
         admissionTicket:state.admissionTicket
       }
       )
-      var listApi = state.role === 2 ? selectForUpdate() : selectStudentBaseInfoForUpdate(state.role)
+      var listApi = state.role == 2 ? selectForUpdate() : selectStudentBaseInfoForUpdate(state.role)
       
       listApi.then(res => {
         const code = _.get(res,'data.code')
@@ -382,7 +384,7 @@ class Registration extends Component {
             })
           }
           if(state.role && state.role != 2){
-            const {imgUrlAbc} = this.props.location.state
+            const {imgUrlAbc} = state
             imageUrl = imgUrlAbc
             const a = imageUrl.split('filePath=')[1]
             if(a == 'null' || a == ''){

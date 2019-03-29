@@ -79,7 +79,6 @@ class UpdateMsg extends Component {
         })
         .catch(err => {
           message.error("数据错误");
-          console.log(err);
         });
     }
   };
