@@ -413,11 +413,11 @@ getDownloadPramas = (data) => {
           if(code == 200){
             window.location.href = `${baseUrl}/enroll/teacherController/downloadStudentInfo?exelPath=${exelPath}`
           }else{
-            message.error(error)
+            message.error('网络异常!')
           }
         })
         .catch(err=>{
-          message.error(err)
+          message.error('网络异常!')
         })
     },
     onCancel() {},

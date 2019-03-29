@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import "./index.less"
 import MyModal from "../Common/MyModal"
-import { Button, message } from "antd"
+import { Button, message,Modal } from "antd"
 import { withRouter } from "react-router-dom"
 import _ from "lodash"
 import { addStudentInfo, updateStudentInfo,addStudentInfoUpDate } from "../../api"
@@ -140,7 +140,14 @@ class InfoModal extends Component {
     }
             
     return (
-      <MyModal onClose={this.props.onClose} w={11}>
+      <Modal
+        //   title="Basic Modal"
+          visible={true}
+        //   onOk={this.handleOk}
+          onCancel={this.props.onClose}
+          width={'80%'}
+          footer={null}
+        >
       <div className="infoModal-footer">
             <Button
             
@@ -332,7 +339,7 @@ class InfoModal extends Component {
           </div>
           
         </div>
-      </MyModal>
+        </Modal>
     )
   }
 }

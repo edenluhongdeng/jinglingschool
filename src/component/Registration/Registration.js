@@ -19,7 +19,7 @@ import {
   Icon
 } from "antd";
 import FailModal from "../FailModal";
-import InfoModal from "../InfoMoadl";
+import InfoModal from "../InfoMoadl/antdModal";
 import baseUrl from "../../utils";
 const { Option } = Select;
 const dateFormat = "YYYY-MM-DD";
@@ -480,11 +480,11 @@ class Registration extends Component {
               intendedPrograms
             });
           } else {
-            message.error(error);
+            message.error('网络异常!');
           }
         })
         .catch(err => {
-          message.error(err);
+          message.error('网络异常!');
         });
     }
     this.setState({
@@ -555,10 +555,10 @@ class Registration extends Component {
       schoolSiteProvinceVal
     } = this.state;
     if (!intendedPrograms) {
-      message.warning("请选择项目意项!");
+      message.warning("请选择项目意向!");
       return;
     } else if (intendedPrograms.length == 0) {
-      message.warning("请选择初项目意项!");
+      message.warning("请选择初项目意向!");
       return;
     }
     if (orNkStudentVal == undefined) {

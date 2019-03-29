@@ -21,7 +21,7 @@ axios.interceptors.request.use(
     return config;
   },
   err => {
-    return Promise.reject(err);
+    return Promise.reject('网络错误!');
   }
 );
 
@@ -37,7 +37,7 @@ axios.interceptors.response.use(response => {
     return response || response;
   } else {
     message.info(response.data.msg);
-    throw Error("服务异常");
+    throw Error('网络错误!');
   }
 });
 
